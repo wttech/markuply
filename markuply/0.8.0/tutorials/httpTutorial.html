@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HTTP pipeline tutorial :: Markuply reference</title>
+    <link rel="canonical" href="https://docs.demo.com/markuply/0.8.0/tutorials/httpTutorial.html">
+    <link rel="prev" href="classpathTutorial.html">
+    <link rel="next" href="../howto/handleDataNotFound.html">
+    <meta name="description" content="Processing external templates">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">Markuply reference</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="markuply" data-version="0.8.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Markuply</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">What&#8217;s Markuply?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../projectSetup.html">Project setup</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Processing pages</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/httpPageProcessor.html">HTTP pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/classpathPageProcessor.html">Classpath pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Error handling</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/handlingErrors.html">Handling errors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/componentProcessingError.html">Component processing error</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/missingComponent.html">Missing component</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cache</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/requestScopedCache.html">Request scoped cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/parsedTemplateCache.html">Parsed template cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Javascript SSR</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRenderer.html">Javascript renderer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRapidDevelopment.html">Rapid development with Javascript</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="classpathTutorial.html">Classpath pipeline tutorial</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="httpTutorial.html">HTTP pipeline tutorial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Markuply</span>
+    <span class="version">0.8.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Markuply</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.8.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Markuply</a></li>
+    <li>Tutorials</li>
+    <li><a href="httpTutorial.html">HTTP pipeline tutorial</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/tutorials/httpTutorial.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">HTTP pipeline tutorial</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal of this tutorial is to create a simple app processing templates provided by an external HTTP server.</p>
+</div>
+<div class="paragraph">
+<p>It consists of 7 steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Defining jar dependencies.</p>
+</li>
+<li>
+<p>Creating an HTTP processing pipeline.</p>
+</li>
+<li>
+<p>Exposing the pipeline through a controller method.</p>
+</li>
+<li>
+<p>Hosting original HTML on a separate server.</p>
+</li>
+<li>
+<p>Creating the static HTML template.</p>
+</li>
+<li>
+<p>Defining component logic.</p>
+</li>
+<li>
+<p>Testing the controller.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The full code is available in the <code>examples/hello-world-http</code> submodule.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dependencies"><a class="anchor" href="#_dependencies"></a>Dependencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To start using Markuply just add it as a dependency.
+Spring WebFlux is a transitive dependency you don&#8217;t have to add yourself.</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle.kts</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">plugins {
+    java
+    id("org.springframework.boot") version "2.4.1"
+}
+
+group = rootProject.group
+version = rootProject.version
+
+configure&lt;JavaPluginConvention&gt; {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation("com.wundermanthompson.markuply:markuply:0.8.0")
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pipeline"><a class="anchor" href="#_pipeline"></a>Pipeline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we have to define an HTTP pipeline which will process templates hosted on an external server.</p>
+</div>
+<div class="paragraph">
+<p>The easiest option is to define Spring properties in application.yml file.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:8082"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When <code>HttpPipeline</code> is invoked it will retrieve the original HTML from <a href="http://localhost:8082" class="bare">http://localhost:8082</a> server.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_expose_pipeline"><a class="anchor" href="#_expose_pipeline"></a>Expose pipeline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To expose that pipeline to external world let&#8217;s create a controller.</p>
+</div>
+<div class="listingblock">
+<div class="title">TemplatingController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+public class TemplatingController {
+
+  private final HttpPipeline pageProcessor;
+
+  public TemplatingController(HttpPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping(value = "/templating/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; genericPage(@PathVariable String pathToProcess) {
+    return pageProcessor.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>genericPage</code> controller method will handle all requests for HTML pages under the <code>/templating</code> path. All the real work related to retrieving the HTML and processing the content is done by <code>HttpPipeline</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_start_external_server"><a class="anchor" href="#_start_external_server"></a>Start external server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this example we&#8217;ll be using node.js http-server package to host HTML but any server will do.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s create <code>package.json</code> file in the <code>src/main/js</code> folder with the following content.</p>
+</div>
+<div class="listingblock">
+<div class="title">package.json</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "name": "hello-world-http",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx http-server ../resources -c-1 -p 8082 -o"
+  },
+  "devDependencies": {
+    "http-server": "0.12.3"
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run the server on port 8082 and expose all file in the <code>src/main/resources</code> folder execute the <code>npm run start</code> command.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_original_html"><a class="anchor" href="#_original_html"></a>Original HTML</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create an HTML file in <code>/src/main/resources</code> folder named <code>hello-world.html</code> and paste the following content.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/hello-world.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World example&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div data-props="Java"
+         data-markuply-component="hello"&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file will be available under the <code><a href="http://localhost:8082/hello-world.html" class="bare">http://localhost:8082/hello-world.html</a></code> URL and will be processed by the pipeline each time a request to <code><a href="http://localhost:8080/templating/hello-world.html" class="bare">http://localhost:8080/templating/hello-world.html</a></code> is sent.</p>
+</div>
+<div class="paragraph">
+<p>Within it there is a single <code>hello</code> component placeholder with <code>Java</code> string passed as a parameter.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hello_world_component"><a class="anchor" href="#_hello_world_component"></a>Hello World component</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we have to provide the definition for the <code>hello</code> component.</p>
+</div>
+<div class="paragraph">
+<p>To implement it we will use a mechanism similar to configuring request handlers in Spring controllers.</p>
+</div>
+<div class="listingblock">
+<div class="title">HelloComponent.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
+public class HelloComponent {
+
+  @Markuply("hello")
+  public Mono&lt;String&gt; renderHelloComponent(@Props String props) {
+    String name = props == null || props.isEmpty()
+        ? "World"
+        : props;
+    return Mono.just(String.format("&lt;div&gt;Hello %s!&lt;/div&gt;", name));
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Make sure this class is registered as a bean within Spring context either through direct <code>@Import</code> or <code>@ComponentScan</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_render_page"><a class="anchor" href="#_render_page"></a>Render page</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To test that page we need to run the Spring Boot server with <code>./gradlew :bootRun</code>.</p>
+</div>
+<div class="paragraph">
+<p>Once server is up open your favourite browser and go to the <code><a href="http://localhost:8080/hello-world.html" class="bare">http://localhost:8080/hello-world.html</a></code> URL where <code>Hello Java!</code> should appear.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="classpathTutorial.html">Classpath pipeline tutorial</a></span>
+  <span class="next"><a href="../howto/handleDataNotFound.html">Handle 404 from external data source</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

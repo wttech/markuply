@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Component inner content :: Markuply reference</title>
+    <link rel="canonical" href="https://docs.demo.com/markuply/0.8.0/components/componentInnerContent.html">
+    <link rel="prev" href="pageContext.html">
+    <link rel="next" href="nestedComponents.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">Markuply reference</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="markuply" data-version="0.8.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Markuply</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">What&#8217;s Markuply?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../projectSetup.html">Project setup</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="componentRegistration.html">Component registration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pageContext.html">Page context</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="componentInnerContent.html">Component inner content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nestedComponents.html">Nested components</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Processing pages</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/httpPageProcessor.html">HTTP pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/classpathPageProcessor.html">Classpath pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Error handling</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/handlingErrors.html">Handling errors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/componentProcessingError.html">Component processing error</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/missingComponent.html">Missing component</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cache</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/requestScopedCache.html">Request scoped cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/parsedTemplateCache.html">Parsed template cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Javascript SSR</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRenderer.html">Javascript renderer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRapidDevelopment.html">Rapid development with Javascript</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/classpathTutorial.html">Classpath pipeline tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Markuply</span>
+    <span class="version">0.8.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Markuply</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.8.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Markuply</a></li>
+    <li>Components</li>
+    <li><a href="componentInnerContent.html">Component inner content</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/componentInnerContent.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Component inner content</h1>
+<div class="sect1">
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Components not only can be parametrized through <code>data-props</code> attribute but they can also consume the HTML found within the element marked with <code>data-markuply-component</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>What&#8217;s more the inner content can be grouped into separate section so then the component logic can decide which section should be rendered and where.</p>
+</div>
+<div class="paragraph">
+<p>This feature more or less resembles the <code>props.children</code> from React and <code>&lt;ng-template&gt;</code> from Angular.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_wrapper_example"><a class="anchor" href="#_wrapper_example"></a>Wrapper example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s create a component whose only job is to wrap the received inner content into a <code>&lt;span&gt;</code> element.
+It will retrieve the inner content by rendering the default unnamed section which is available
+when there is no direct child element marked with <code>data-markuply-section</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>Component inner content can be accessed through ChildrenRenderer which should be defined as component method argument.</p>
+</div>
+<div class="listingblock">
+<div class="title">MarkuplyComponents.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
+public class MarkuplyComponents {
+
+  @Markuply("wrapper")
+  public Mono&lt;String&gt; wrapper(ChildrenRenderer children) {
+    return children.render().map(innerContent -&gt; "&lt;span&gt;" + innerContent + "&lt;/span&gt;");
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Given the input HTML below</p>
+</div>
+<div class="listingblock">
+<div class="title">input.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div data-markuply-component="wrapper"&gt;
+      Wrapped content
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>the result HTML will be as follows.</p>
+</div>
+<div class="listingblock">
+<div class="title">output.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;span&gt;Wrapped content&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conditional_example"><a class="anchor" href="#_conditional_example"></a>Conditional example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Imagine a component whose only role is to decide if the provided HTML should be displayed or not. Let&#8217;s name that component <code>conditional</code>.</p>
+</div>
+<div class="paragraph">
+<p>If value provided in <code>data-props</code> is <code>true</code> then the content will be displayed. Otherwise a message should be shown.</p>
+</div>
+<div class="paragraph">
+<p>The template HTML can look like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div data-markuply-component="conditional"
+         data-props="true"&gt;
+      &lt;div data-markuply-section="then"&gt;Props equal true&lt;/div&gt;
+      &lt;div data-markuply-section="else"&gt;Otherwise another message is shown&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>conditional</code> component is the parent while two div elements are child sections.</p>
+</div>
+<div class="paragraph">
+<p>To consume the HTML produced based on the child elements we can use the third argument passed to the component render function.</p>
+</div>
+<div class="listingblock">
+<div class="title">MarkuplyComponents.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
+public class MarkuplyComponents {
+
+  @Markuply("conditional")
+  public Mono&lt;String&gt; renderConditionalComponent(@Props String props, PageContext context, ChildrenRenderer children) {
+    if ("true".equals(props)) {
+      return children.render("then");
+    } else {
+      return children.render("else");
+    }
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ChildrenRenderer</code> accepts two optional arguments: section name and new page context.
+Section name governs which child element marked with <code>data-markuply-section</code> should be rendered.
+If no name is provided then the default section will be used.
+As for context we can either use the old one as is, enrich it with new values or create a completely new one.</p>
+</div>
+<div class="paragraph">
+<p>Nested HTML will not be evaluated unless <code>ChildrenRenderer</code> is explicitly called.</p>
+</div>
+<div class="paragraph">
+<p>With conditional component <code>data-props</code> set to true this will be result.</p>
+</div>
+<div class="listingblock">
+<div class="title">data-props="true"</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    Props equal true
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With conditional component data-props set to "false" another section will be rendered instead</p>
+</div>
+<div class="listingblock">
+<div class="title">data-props="false"</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    Otherwise another message is shown
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="pageContext.html">Page context</a></span>
+  <span class="next"><a href="nestedComponents.html">Nested components</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

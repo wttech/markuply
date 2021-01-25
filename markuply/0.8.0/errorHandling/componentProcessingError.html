@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Component processing error :: Markuply reference</title>
+    <link rel="canonical" href="https://docs.demo.com/markuply/0.8.0/errorHandling/componentProcessingError.html">
+    <link rel="prev" href="handlingErrors.html">
+    <link rel="next" href="missingComponent.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">Markuply reference</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="markuply" data-version="0.8.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Markuply</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">What&#8217;s Markuply?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../projectSetup.html">Project setup</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Processing pages</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/httpPageProcessor.html">HTTP pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/classpathPageProcessor.html">Classpath pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Error handling</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="handlingErrors.html">Handling errors</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="componentProcessingError.html">Component processing error</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="missingComponent.html">Missing component</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cache</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/requestScopedCache.html">Request scoped cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/parsedTemplateCache.html">Parsed template cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Javascript SSR</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRenderer.html">Javascript renderer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRapidDevelopment.html">Rapid development with Javascript</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/classpathTutorial.html">Classpath pipeline tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Markuply</span>
+    <span class="version">0.8.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Markuply</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.8.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Markuply</a></li>
+    <li>Error handling</li>
+    <li><a href="componentProcessingError.html">Component processing error</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/errorHandling/componentProcessingError.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Component processing error</h1>
+<div class="sect1">
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Execution of the component rendering method can result in an error represented by an Exception.</p>
+</div>
+<div class="paragraph">
+<p>To handle such cases a common error handler is provided which logs the component name, props and the exception stack.
+Instead of fully stopping the rendering process it behaves as if the faulty component never existed on the page.</p>
+</div>
+<div class="paragraph">
+<p>It can be customized by providing a list of throwable subtypes which should not be handled but rather propagated downstream.</p>
+</div>
+<div class="listingblock">
+<div class="title">SpringConfiguration.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+ComponentErrorHandler handler() {
+  return ComponentErrorHandlers.logAllExcept(RuntimeExceptionSubtypeA.class, RuntimeExceptionSubtypeB.class);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customized_handler"><a class="anchor" href="#_customized_handler"></a>Customized handler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the default behaviour is not enough developers can provide their own implementation.
+To do so just register implementation of the <code>ComponentErrorHandler</code> type as a Spring bean.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an implementation handling all exceptions by logging them and providing an empty string as a fallback value.</p>
+</div>
+<div class="listingblock">
+<div class="title">CatchAllAndLogErrorHandler.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Slf4j
+public class CatchAllAndLogErrorHandler implements ComponentErrorHandler {
+
+  @Override
+  public Mono&lt;String&gt; handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    log.error("Error occurred during component rendering. Component: {}, props: {}", componentId, props, throwable);
+    return Mono.just("");
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The handler can either provide a fallback value or can pass the error along.</p>
+</div>
+<div class="listingblock">
+<div class="title">PropagateError.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class PropagageError implements ComponentErrorHandler {
+
+  @Override
+  public Mono&lt;String&gt; handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    return Mono.error(throwable);
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In some cases it might be useful to handle only a certain class of exceptions on this level.
+To do so use <code>instanceof</code> checks in the handleError method body.</p>
+</div>
+<div class="listingblock">
+<div class="title">HandleErrorSubtype.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class HandleErrorSubtype implements ComponentErrorHandler {
+
+  @Override
+  public Mono&lt;String&gt; handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    if (throwable instanceof CustomExceptionType) {
+      // handle it
+      return Mono.just("fallback value");
+    } else {
+      return Mono.error(throwable);
+    }
+  }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="handlingErrors.html">Handling errors</a></span>
+  <span class="next"><a href="missingComponent.html">Missing component</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

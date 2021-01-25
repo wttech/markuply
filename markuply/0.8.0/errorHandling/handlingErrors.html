@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Handling errors :: Markuply reference</title>
+    <link rel="canonical" href="https://docs.demo.com/markuply/0.8.0/errorHandling/handlingErrors.html">
+    <link rel="prev" href="../processor/classpathPageProcessor.html">
+    <link rel="next" href="componentProcessingError.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">Markuply reference</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="markuply" data-version="0.8.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Markuply</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">What&#8217;s Markuply?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../projectSetup.html">Project setup</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Processing pages</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/httpPageProcessor.html">HTTP pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/classpathPageProcessor.html">Classpath pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Error handling</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="handlingErrors.html">Handling errors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="componentProcessingError.html">Component processing error</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="missingComponent.html">Missing component</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cache</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/requestScopedCache.html">Request scoped cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/parsedTemplateCache.html">Parsed template cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Javascript SSR</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRenderer.html">Javascript renderer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRapidDevelopment.html">Rapid development with Javascript</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/classpathTutorial.html">Classpath pipeline tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Markuply</span>
+    <span class="version">0.8.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Markuply</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.8.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Markuply</a></li>
+    <li>Error handling</li>
+    <li><a href="handlingErrors.html">Handling errors</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/errorHandling/handlingErrors.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Handling errors</h1>
+<div class="paragraph">
+<p>Throughout the whole HTML transformation process a lot can go wrong.
+Here&#8217;s a list of all exceptional scenarios together with information how to handle them.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Exception type</th>
+<th class="tableblock halign-left valign-top">How to handle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input HTML URL is invalid.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PageRepositoryException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either <code>markuply.http.repository.urlPrefix</code> value is incorrect or the path parameter provided to a page processor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input HTML host is unknown.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UnknownHostException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either change the <code>markuply.http.repository.urlPrefix</code> value or make the target host reachable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input HTML response code is not 200.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An expected situation. Such cases will be handled just like 200 OK. The response code will be propagated to the client.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input HTML is not valid.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jsoup used underneath will handle any input HTML. The end result however might not be what you expect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input HTML components could not be parsed. Either all child elements of data-markuply-component are marked with data-markuply-section or none of them.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TemplateParserException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fix the input HTML.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Component defined in data-markuply-component attribute is not registered.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="missingComponent.html" class="page">Missing component</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Component definition method has more than 3 arguments.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComponentDefinitionException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There should be no need for more than 3 arguments in component definition. Otherwise feel free to create an issue on Github.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Two or more components registered under the same name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComponentDefinitionException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Change component ID of one of offending components through the <code>Markuply</code> annotation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Component definition method contains an unsupported parameter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComponentDefinitionException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For the full list of supported parameter types check <a href="../components/componentRegistration.html" class="page">Component registration</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-props</code> JSON content cannot be mapped to the component definition parameter type.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ArgumentResolutionException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure the <code>data-props</code> value is valid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Component definition context parameter cannot be resolved: <code>@Context UnknownType parameter</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IllegalArgumentException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure an instance of UnknownType is added to the page context before rendering starts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exception was thrown during component logic execution.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="componentProcessingError.html" class="page">Component processing error</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Javascript renderer script URL is invalid.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JavascriptRendererException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fix the value of the <code>markuply.javascript.bundle</code> property.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Javascript renderer script host is unknown.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UnknownHostException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either change the <code>markuply.javascript.bundle</code> property value or make the target host reachable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Javascript renderer script response code is not 200.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JavascriptRendererException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify the script file is in fact exposed on the target server and the Markuply is configured correctly.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Javascript renderer script could not be compiled.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PolyglotException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fix the script.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Javascript renderer script threw an error during execution.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PolyglotException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handled the same way as any other component processing error.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Javascript renderer script does not contain a function with signature <code>render(name: string, props: string)</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JavascriptRendererException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define a proper function in the script. In webpack context remember to expose it using <code>global.render = render;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Javascript renderer script render() function returned a value not convertible to String.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JavascriptRendererException</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure the script always returns a value that can be transformed to String.</p></td>
+</tr>
+</tbody>
+</table>
+<nav class="pagination">
+  <span class="prev"><a href="../processor/classpathPageProcessor.html">Classpath pipeline</a></span>
+  <span class="next"><a href="componentProcessingError.html">Component processing error</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

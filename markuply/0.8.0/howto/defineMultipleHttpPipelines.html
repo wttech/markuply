@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Defining multiple HTTP pipelines :: Markuply reference</title>
+    <link rel="canonical" href="https://docs.demo.com/markuply/0.8.0/howto/defineMultipleHttpPipelines.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">Markuply reference</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="markuply" data-version="0.8.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Markuply</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">What&#8217;s Markuply?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../projectSetup.html">Project setup</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Processing pages</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/httpPageProcessor.html">HTTP pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../processor/classpathPageProcessor.html">Classpath pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Error handling</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/handlingErrors.html">Handling errors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/componentProcessingError.html">Component processing error</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/missingComponent.html">Missing component</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cache</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/requestScopedCache.html">Request scoped cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/parsedTemplateCache.html">Parsed template cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Javascript SSR</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRenderer.html">Javascript renderer</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../javascript/javascriptRapidDevelopment.html">Rapid development with Javascript</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/classpathTutorial.html">Classpath pipeline tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="accessLog.html">Maintain access log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Markuply</span>
+    <span class="version">0.8.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Markuply</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.8.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Markuply</a></li>
+    <li>How to</li>
+    <li><a href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/defineMultipleHttpPipelines.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Defining multiple HTTP pipelines</h1>
+<div class="sect1">
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In some cases it might be useful to combine two separate HTTP pipelines processing HTML pages from different sources within the context of a single Spring application.</p>
+</div>
+<div class="paragraph">
+<p>This can be only achieved with Spring code configuration classes as <code>application.yml</code> file supports defining only a single global pipeline.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dependency_injection_qualifiers"><a class="anchor" href="#_dependency_injection_qualifiers"></a>Dependency injection qualifiers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First let&#8217;s define two annotations meta-annotated with <code>@Qualifier</code> to be able to discern both pipeline variants when injecting them into a target bean.</p>
+</div>
+<div class="listingblock">
+<div class="title">MainPipeline.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Qualifier("mainPipeline")
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MainPipeline {
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second one should look exactly the same except for the annotation name and the <code>@Qualifier</code> annotation value.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pipeline_configuration"><a class="anchor" href="#_pipeline_configuration"></a>Pipeline configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The same things achievable with <code>application.yml</code> are also possible with code configuration in a very similar way.</p>
+</div>
+<div class="listingblock">
+<div class="title">SpringConfiguration.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+@MainPipeline
+HttpPipeline mainPipeline(WebClient webClient, RenderFunctionFactory factory) {
+  HttpPageProcessorConfigurator builder = HttpPageProcessorConfigurator.instance(factory);
+  return builder
+      .repository(repository -&gt; repository.urlPrefix("http://localhost:8082/main").webClient(webClient))
+      .requestProxy(proxy -&gt; proxy.proxyHeader("Cookie").setHeader("X-User-Agent", "Markuply Main"))
+      .responseProxy(proxy -&gt; proxy.proxyHeader("Set-Cookie").setHeader("Server", "Markuply Main"))
+      .renderFunctionCache(caffeine -&gt; caffeine.maximumSize(1000).expireAfterAccess(Duration.ofSeconds(5)))
+      .build();
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration above corresponds to the following <code>application.yml</code> snippet except the fact that <code>application.yml</code> variant will register the pipeline without any qualifier.</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:8082/main"
+    proxy:
+      request:
+        copyHeaders:
+          - "Cookie"
+        addHeaders:
+          - "X-User-Agent:Markuply Main"
+      response:
+        copyHeaders:
+          - Set-Cookie
+        addHeaders:
+          - "Server:Markuply Main"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second pipeline can be configured in pretty much the same way. Just use <code>@SecondaryPipeline</code> qualifier annotation or any other of your choosing instead of <code>@MainPipeline</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exposing_pipelines"><a class="anchor" href="#_exposing_pipelines"></a>Exposing pipelines</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have both configurations in place we can expose them both using two different endpoints in a controller class.</p>
+</div>
+<div class="listingblock">
+<div class="title">TemplatingController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+public class TemplatingController {
+
+  private final HttpPipeline main;
+  private final HttpPipeline secondary;
+
+  public TemplatingController(@MainPipeline HttpPipeline main, @SecondaryPipeline HttpPipeline secondary) {
+    this.main = main;
+    this.secondary = secondary;
+  }
+
+  @GetMapping(value = "/main/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; primaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return main.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+  @GetMapping(value = "/secondary/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; secondaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return secondary.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
