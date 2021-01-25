@@ -1,0 +1,89 @@
+= Handling errors
+:page-pagination:
+
+Throughout the whole HTML transformation process a lot can go wrong.
+Here's a list of all exceptional scenarios together with information how to handle them.
+
+|===
+|Scenario|Exception type|How to handle
+
+|Input HTML URL is invalid.
+|PageRepositoryException
+|Either `markuply.http.repository.urlPrefix` value is incorrect or the path parameter provided to a page processor.
+
+|Input HTML host is unknown.
+|UnknownHostException
+|Either change the `markuply.http.repository.urlPrefix` value or make the target host reachable.
+
+|Input HTML response code is not 200.
+|
+|An expected situation. Such cases will be handled just like 200 OK. The response code will be propagated to the client.
+
+|Input HTML is not valid.
+|
+|Jsoup used underneath will handle any input HTML. The end result however might not be what you expect.
+
+|Input HTML components could not be parsed. Either all child elements of data-markuply-component are marked with data-markuply-section or none of them.
+|TemplateParserException
+|Fix the input HTML.
+
+|Component defined in data-markuply-component attribute is not registered.
+|
+|xref:errorHandling/missingComponent.adoc[]
+
+|Component definition method has more than 3 arguments.
+|ComponentDefinitionException
+|There should be no need for more than 3 arguments in component definition. Otherwise feel free to create an issue on Github.
+
+|Two or more components registered under the same name.
+|ComponentDefinitionException
+|Change component ID of one of offending components through the `Markuply` annotation.
+
+|Component definition method contains an unsupported parameter.
+|ComponentDefinitionException
+|For the full list of supported parameter types check xref:components/componentRegistration.adoc[].
+
+|`data-props` JSON content cannot be mapped to the component definition parameter type.
+|ArgumentResolutionException
+|Make sure the `data-props` value is valid.
+
+|Component definition context parameter cannot be resolved: `@Context UnknownType parameter`.
+|IllegalArgumentException
+|Make sure an instance of UnknownType is added to the page context before rendering starts.
+
+|Exception was thrown during component logic execution.
+|
+|xref:errorHandling/componentProcessingError.adoc[]
+
+|Javascript renderer script URL is invalid.
+|JavascriptRendererException
+|Fix the value of the `markuply.javascript.bundle` property.
+
+|Javascript renderer script host is unknown.
+|UnknownHostException
+|Either change the `markuply.javascript.bundle` property value or make the target host reachable.
+
+|Javascript renderer script response code is not 200.
+|JavascriptRendererException
+|Verify the script file is in fact exposed on the target server and the Markuply is configured correctly.
+
+|Javascript renderer script could not be compiled.
+|PolyglotException
+|Fix the script.
+
+|Javascript renderer script threw an error during execution.
+|PolyglotException
+|Handled the same way as any other component processing error.
+
+|Javascript renderer script does not contain a function with signature `render(name: string, props: string)`.
+|JavascriptRendererException
+|Define a proper function in the script. In webpack context remember to expose it using `global.render = render;`
+
+|Javascript renderer script render() function returned a value not convertible to String.
+|JavascriptRendererException
+|Make sure the script always returns a value that can be transformed to String.
+|===
+
+
+
+

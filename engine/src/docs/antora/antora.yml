@@ -1,0 +1,5 @@
+name: markuply
+version: '0.8.0'
+title: Markuply
+nav:
+  - modules/ROOT/nav.adoc

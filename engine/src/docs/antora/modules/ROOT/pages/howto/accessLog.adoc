@@ -1,0 +1,52 @@
+= Maintain access log
+:description: How to persist access logs
+:page-pagination:
+
+Access log can be enabled by performing two steps.
+
+== Netty server
+
+Netty access logs are disabled by default. To enable them a system parameter must be passed when starting the application.
+
+`java -Dreactor.netty.http.server.accessLogEnabled=true -jar application.jar`
+
+It also can be set within the code right before Spring application is started.
+
+.ExampleApplication.java
+[source,java]
+----
+@SpringBootApplication
+public class ExampleApplication {
+
+  public static void main(String[] args) {
+    System.setProperty("reactor.netty.http.server.accessLogEnabled", "true");
+    SpringApplication.run(ExampleApplication.class, args);
+  }
+
+}
+----
+
+== Logger configuration
+
+Now that access logs are enabled they have to be persisted in a file. Proper logback configuration will handle that.
+
+.ExampleApplication.java
+[source,xml]
+----
+<configuration>
+    <appender name="accessLog" class="ch.qos.logback.core.FileAppender">
+        <file>access_log.log</file>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="accessLog" />
+    </appender>
+
+    <logger name="reactor.netty.http.server.AccessLog" level="INFO" additivity="false">
+        <appender-ref ref="async"/>
+    </logger>
+</configuration>
+----

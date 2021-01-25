@@ -1,0 +1,5 @@
+src/main/js/node_modules
+src/main/resources/public/*
+!src/main/resources/public/templates
+access_log.log
+error.log

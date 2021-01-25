@@ -1,0 +1,99 @@
+= Defining multiple HTTP pipelines
+
+== General
+
+In some cases it might be useful to combine two separate HTTP pipelines processing HTML pages from different sources within the context of a single Spring application.
+
+This can be only achieved with Spring code configuration classes as `application.yml` file supports defining only a single global pipeline.
+
+== Dependency injection qualifiers
+
+First let's define two annotations meta-annotated with `@Qualifier` to be able to discern both pipeline variants when injecting them into a target bean.
+
+.MainPipeline.java
+[source,java]
+----
+@Qualifier("mainPipeline")
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MainPipeline {
+
+}
+----
+
+The second one should look exactly the same except for the annotation name and the `@Qualifier` annotation value.
+
+== Pipeline configuration
+
+The same things achievable with `application.yml` are also possible with code configuration in a very similar way.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+@MainPipeline
+HttpPipeline mainPipeline(WebClient webClient, RenderFunctionFactory factory) {
+  HttpPageProcessorConfigurator builder = HttpPageProcessorConfigurator.instance(factory);
+  return builder
+      .repository(repository -> repository.urlPrefix("http://localhost:8082/main").webClient(webClient))
+      .requestProxy(proxy -> proxy.proxyHeader("Cookie").setHeader("X-User-Agent", "Markuply Main"))
+      .responseProxy(proxy -> proxy.proxyHeader("Set-Cookie").setHeader("Server", "Markuply Main"))
+      .renderFunctionCache(caffeine -> caffeine.maximumSize(1000).expireAfterAccess(Duration.ofSeconds(5)))
+      .build();
+  }
+----
+
+The configuration above corresponds to the following `application.yml` snippet except the fact that `application.yml` variant will register the pipeline without any qualifier.
+
+.application.yml
+[source,yaml]
+----
+markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:8082/main"
+    proxy:
+      request:
+        copyHeaders:
+          - "Cookie"
+        addHeaders:
+          - "X-User-Agent:Markuply Main"
+      response:
+        copyHeaders:
+          - Set-Cookie
+        addHeaders:
+          - "Server:Markuply Main"
+----
+
+The second pipeline can be configured in pretty much the same way. Just use `@SecondaryPipeline` qualifier annotation or any other of your choosing instead of `@MainPipeline`.
+
+== Exposing pipelines
+
+Now that we have both configurations in place we can expose them both using two different endpoints in a controller class.
+
+.TemplatingController.java
+[source,java]
+----
+@RestController
+public class TemplatingController {
+
+  private final HttpPipeline main;
+  private final HttpPipeline secondary;
+
+  public TemplatingController(@MainPipeline HttpPipeline main, @SecondaryPipeline HttpPipeline secondary) {
+    this.main = main;
+    this.secondary = secondary;
+  }
+
+  @GetMapping(value = "/main/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono<String> primaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return main.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+  @GetMapping(value = "/secondary/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono<String> secondaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return secondary.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+}
+----

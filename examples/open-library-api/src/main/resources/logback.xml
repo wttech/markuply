@@ -1,0 +1,24 @@
+<configuration>
+
+    <include file="accessLogConfiguration.xml"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d [%thread] %-5level  %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>error.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d [%thread] %-5level  %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="fileAppender" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>

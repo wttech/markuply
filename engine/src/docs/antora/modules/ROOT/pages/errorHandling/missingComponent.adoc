@@ -1,0 +1,85 @@
+= Missing component
+:page-pagination:
+
+== General
+
+Given the following HTML
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World page</title>
+  </head>
+  <body>
+    <div data-props="Fry"
+         data-markuply-component="hello">
+    </div>
+  </body>
+</html>
+----
+
+what should happen if the `hello` component is not defined?
+
+== HTML Comment
+
+By default Markuply inserts an appropriate HTML comment instead of real generated HTML and moves on to process the rest of the page.
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World page</title>
+  </head>
+  <body>
+    <!-- Component (hello) is not registered. -->
+  </body>
+</html>
+----
+
+== Noop
+
+To silently drop the error register the `NoopHandler` bean.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+MissingComponentHandler provideMissingComponentHandler() {
+  return NoopHandler.instance();
+}
+----
+
+== Custom handler
+
+To handle missing component definitions in a custom way register a bean implementing the `MissingComponentHandler` interface.
+
+Its main method has access to componentId, props and page context.
+
+You can throw an exception with
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+MissingComponentHandler missingComponentHandler() {
+  return (componentId, props, context) -> {
+    return Mono.error(new IllegalStateException());
+  };
+}
+----
+
+or generate substitute HTML.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+MissingComponentHandler missingComponentHandler() {
+  return (componentId, props, context) -> {
+    return Mono.just("<h1>Component missing!!!<h1>");
+  };
+}
+----

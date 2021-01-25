@@ -1,0 +1,133 @@
+= Classpath pipeline tutorial
+:description: Processing classpath templates
+:page-pagination:
+
+The goal of this tutorial is to create a simple app processing templates located on the classpath.
+
+It consists of 6 steps:
+
+* Defining jar dependencies.
+* Creating a classpath processing pipeline.
+* Exposing the pipeline through a controller method.
+* Creating the static HTML template.
+* Defining component logic.
+* Testing the controller.
+
+The full code is available in the `examples/hello-world-classpath` submodule.
+
+== Dependencies
+
+To start using Markuply just add it as a dependency.
+Spring WebFlux is a transitive dependency you don't have to add yourself.
+
+.build.gradle.kts
+[source,kotlin,subs="attributes+"]
+----
+plugins {
+    java
+    id("org.springframework.boot") version "2.4.1"
+}
+
+group = rootProject.group
+version = rootProject.version
+
+configure<JavaPluginConvention> {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation("com.wundermanthompson.markuply:markuply:{page-version}")
+}
+
+----
+
+== Pipeline
+
+Classpath pipeline is available out of the box without any configuration required.
+
+== Expose pipeline
+
+To expose that page to external world let's create a controller.
+
+.TemplatingController.java
+[source,java]
+----
+@RestController
+public class TemplatingController {
+
+  private final ClasspathPipeline pageProcessor;
+
+  public TemplatingController(ClasspathPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping(value = "/templating/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono<String> genericPage(@PathVariable String pathToProcess) {
+    return pageProcessor.render(pathToProcess);
+  }
+
+}
+----
+
+The `genericPage` controller method will handle all requests for HTML pages under the `/templating` path. All the real work related to retrieving the HTML and processing the content is done by `ClasspathPipeline`.
+
+== Original HTML
+
+Create an HTML file in `/src/main/resources` folder named `hello-world.html` and paste the following content.
+
+.src/main/resources/hello-world.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World example</title>
+  </head>
+  <body>
+    <div data-props="Java"
+         data-markuply-component="hello">
+    </div>
+  </body>
+</html>
+----
+
+This file will be processed by the pipeline each time a request to `/templating/hello-world.html` is sent.
+
+Within it there is a single `hello` component placeholder with `Java` string passed as a parameter.
+
+== Hello World component
+
+Now we have to provide the definition for the `hello` component.
+
+To implement it we will use a mechanism similar to configuring request handlers in Spring controllers.
+
+.HelloComponent.java
+[source,java]
+----
+@Component
+public class HelloComponent {
+
+  @Markuply("hello")
+  public Mono<String> renderHelloComponent(@Props String props) {
+    String name = props == null || props.isEmpty()
+        ? "World"
+        : props;
+    return Mono.just(String.format("<div>Hello %s!</div>", name));
+  }
+
+}
+----
+
+Make sure this class is registered as a bean within Spring context either through direct `@Import` or `@ComponentScan`.
+
+== Render page
+
+To test that page we need to run the Spring Boot server with `./gradlew :bootRun`.
+
+Once server is up open your favourite browser and go to the `http://localhost:8080/hello-world.html` URL where `Hello Java!` should appear.

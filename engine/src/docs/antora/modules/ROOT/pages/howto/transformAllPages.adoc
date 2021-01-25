@@ -1,0 +1,42 @@
+= Process all pages
+:description: How to process all requested pages
+:page-pagination:
+
+In order to act as a transparent proxy processing every requested page Markuply must be invoked within a catch-all Spring request handler.
+
+First configure the HTTP pipeline as described xref:processor/httpPageProcessor.adoc[here].
+
+Then define a `@RequestMapping` controller method or a `RouterFunction`.
+
+.TemplatingController.java
+[source,java]
+----
+@RestController
+public class TemplatingController {
+
+  private final HttpPipeline genericPageProcessor;
+
+  @GetMapping(value = "/templating/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono<String> genericPage(@PathVariable String pathToProcess) {
+    return genericPageProcessor.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+}
+----
+
+.TemplatingConfiguration.java
+[source,java]
+----
+@Configuration
+public class TemplatingConfiguration {
+
+  @Bean
+  RouterFunction<ServerResponse> getEmployeeByIdRoute(HttpPipeline processor) {
+      return route(GET("/templating/{*pathToProcess}"),
+        req -> ok().body(processor.render(req.pathVariable("pathToProcess"))).map(HttpPageResponse::getBody));
+  }
+
+}
+----
+
+The `/templating` prefix is not mandatory. It's only used to avoid conflicts with other HTTP endpoints which can be registered under the `/api` path.

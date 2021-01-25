@@ -1,0 +1,81 @@
+= Component processing error
+:page-pagination:
+
+== General
+
+Execution of the component rendering method can result in an error represented by an Exception.
+
+To handle such cases a common error handler is provided which logs the component name, props and the exception stack.
+Instead of fully stopping the rendering process it behaves as if the faulty component never existed on the page.
+
+It can be customized by providing a list of throwable subtypes which should not be handled but rather propagated downstream.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+ComponentErrorHandler handler() {
+  return ComponentErrorHandlers.logAllExcept(RuntimeExceptionSubtypeA.class, RuntimeExceptionSubtypeB.class);
+}
+----
+
+== Customized handler
+
+If the default behaviour is not enough developers can provide their own implementation.
+To do so just register implementation of the `ComponentErrorHandler` type as a Spring bean.
+
+Here's an implementation handling all exceptions by logging them and providing an empty string as a fallback value.
+
+.CatchAllAndLogErrorHandler.java
+[source,java]
+----
+@Slf4j
+public class CatchAllAndLogErrorHandler implements ComponentErrorHandler {
+
+  @Override
+  public Mono<String> handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    log.error("Error occurred during component rendering. Component: {}, props: {}", componentId, props, throwable);
+    return Mono.just("");
+  }
+
+}
+----
+
+The handler can either provide a fallback value or can pass the error along.
+
+.PropagateError.java
+[source,java]
+----
+public class PropagageError implements ComponentErrorHandler {
+
+  @Override
+  public Mono<String> handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    return Mono.error(throwable);
+  }
+
+}
+----
+
+In some cases it might be useful to handle only a certain class of exceptions on this level.
+To do so use `instanceof` checks in the handleError method body.
+
+.HandleErrorSubtype.java
+[source,java]
+----
+public class HandleErrorSubtype implements ComponentErrorHandler {
+
+  @Override
+  public Mono<String> handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    if (throwable instanceof CustomExceptionType) {
+      // handle it
+      return Mono.just("fallback value");
+    } else {
+      return Mono.error(throwable);
+    }
+  }
+
+}
+----

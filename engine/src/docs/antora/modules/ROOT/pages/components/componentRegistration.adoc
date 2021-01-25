@@ -1,0 +1,37 @@
+= Component registration
+:page-pagination:
+
+== General
+
+Component registration can be achieved using an approach similar to how request handlers are registered in Spring controller classes.  
+
+First make sure that the class containing methods for component rendering is registered as a Spring bean either with `@Component` annotation or through `@ComponentScan`.
+
+Then define a method that will handle a particular Markuply component.
+
+To provide custom component ID use `@Markuply("componentId")` annotation on that method.
+If it is not provided then the method name will be used instead.
+
+.HelloWorldComponent.java
+[source,java]
+----
+@Component
+public class HelloWorldComponent {
+
+  @Markuply("componentId")
+  public Mono<String> render(@Props String props, PageContext context) {
+    // details omitted
+  }
+
+}
+----
+
+== Parameter resolution
+
+There are 5 types of arguments you can define in your component render method:
+
+* `@Props String parameter` - unchanged `data-props` attribute value
+* `@Props T parameter` - `data-props` attribute value parsed as the `<T>` type using Jackson
+* `PageContext context` - full page context object
+* `@Context T context` - value extracted from PageContext using the provided `<T>` type as the key
+* `ChildrenRenderer children` - allows evaluating component inner content

@@ -1,0 +1,137 @@
+= Component inner content
+:page-pagination:
+
+== General
+
+Components not only can be parametrized through `data-props` attribute but they can also consume the HTML found within the element marked with `data-markuply-component` attribute.
+
+What's more the inner content can be grouped into separate section so then the component logic can decide which section should be rendered and where.
+
+This feature more or less resembles the `props.children` from React and `<ng-template>` from Angular.
+
+== Wrapper example
+
+Let's create a component whose only job is to wrap the received inner content into a `<span>` element.
+It will retrieve the inner content by rendering the default unnamed section which is available
+when there is no direct child element marked with `data-markuply-section` attribute.
+
+Component inner content can be accessed through ChildrenRenderer which should be defined as component method argument.
+
+.MarkuplyComponents.java
+[source,java]
+----
+@Component
+public class MarkuplyComponents {
+
+  @Markuply("wrapper")
+  public Mono<String> wrapper(ChildrenRenderer children) {
+    return children.render().map(innerContent -> "<span>" + innerContent + "</span>");
+  }
+
+}
+----
+
+Given the input HTML below
+
+.input.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <body>
+    <div data-markuply-component="wrapper">
+      Wrapped content
+    </div>
+  </body>
+</html>
+----
+
+the result HTML will be as follows.
+
+.output.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <body>
+    <span>Wrapped content</span>
+  </body>
+</html>
+----
+
+== Conditional example
+
+Imagine a component whose only role is to decide if the provided HTML should be displayed or not. Let's name that component `conditional`.
+
+If value provided in `data-props` is `true` then the content will be displayed. Otherwise a message should be shown.
+
+The template HTML can look like this.
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <body>
+    <div data-markuply-component="conditional"
+         data-props="true">
+      <div data-markuply-section="then">Props equal true</div>
+      <div data-markuply-section="else">Otherwise another message is shown</div>
+    </div>
+  </body>
+</html>
+----
+
+The `conditional` component is the parent while two div elements are child sections.
+
+To consume the HTML produced based on the child elements we can use the third argument passed to the component render function.
+
+.MarkuplyComponents.java
+[source,java]
+----
+@Component
+public class MarkuplyComponents {
+
+  @Markuply("conditional")
+  public Mono<String> renderConditionalComponent(@Props String props, PageContext context, ChildrenRenderer children) {
+    if ("true".equals(props)) {
+      return children.render("then");
+    } else {
+      return children.render("else");
+    }
+  }
+
+}
+----
+
+`ChildrenRenderer` accepts two optional arguments: section name and new page context.
+Section name governs which child element marked with `data-markuply-section` should be rendered.
+If no name is provided then the default section will be used.
+As for context we can either use the old one as is, enrich it with new values or create a completely new one.
+
+Nested HTML will not be evaluated unless `ChildrenRenderer` is explicitly called.
+
+With conditional component `data-props` set to true this will be result.
+
+.data-props="true"
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <body>
+    Props equal true
+  </body>
+</html>
+----
+
+With conditional component data-props set to "false" another section will be rendered instead
+
+.data-props="false"
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <body>
+    Otherwise another message is shown
+  </body>
+</html>
+----

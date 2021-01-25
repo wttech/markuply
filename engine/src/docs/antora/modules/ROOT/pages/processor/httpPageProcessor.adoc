@@ -1,0 +1,83 @@
+= HTTP pipeline
+:page-pagination:
+
+== General
+
+To load content from an external server first define your own HttpPageRepository bean.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+HttpPageRepository providePageRepository(HttpPageRepositorySpringConfigurator configurator) {
+  return configurator
+      .uriPrefix("http://some-server/")
+      .build();
+}
+----
+
+.application.properties alternative
+[source,properties]
+----
+markuply.http.repository.urlPrefix=http://some-server/
+----
+
+.application.yml alternative
+[source,yaml]
+----
+markuply:
+  http:
+    repository:
+      urlPrefix: "http://some-server/"
+----
+
+Autoconfiguration will pick up the HttpPageRepository created using any of the methods defined above and will create a HttpPipeline bean which acts as a facade for transforming content retrieved from an external server.
+
+When invoking the `HttpPipeline.render(String path)` method the `path` parameter will be appended to the configured `urlPrefix`.
+
+== Static header proxy configuration
+
+`HttpPipeline` can be configured to copy original request headers to the external server request
+and to copy external server response headers to the original client response.
+
+Each entry in copyHeaders property is treated as a regular expression. 
+If any regex on the list is matched then the headers is carried over.
+
+Each entry in addHeaders property is added to each request or response.
+
+.application.properties
+[source,properties]
+----
+markuply.http.proxy.request.copyHeaders[0]=Accept.*
+markuply.http.proxy.request.copyHeaders[1]=Cookie
+markuply.http.proxy.request.addHeaders[0]=Custom-Header-Name:Custom-Header-Value
+markuply.http.proxy.response.copyHeaders[0]=Cache-Control
+markuply.http.proxy.response.copyHeaders[1]=Set-Cookie
+markuply.http.proxy.response.addHeaders[0]=Custom-Header-Name:Custom-Header-Value
+----
+
+.application.yml alternative
+[source,yaml]
+----
+markuply:
+  http:
+    proxy:
+      request:
+        copyHeaders:
+          - "Accept.*"
+          - Cookie
+        addHeaders:
+          - "Custom-Header-Name:Custom-Header-Value"
+      response:
+        copyHeaders:
+          - Cache-Control
+          - Set-Cookie
+        addHeaders:
+          - "Custom-Header-Name:Custom-Header-Value"
+----
+
+== Dynamic header proxy configuration
+
+Some of the `HttpPipeline.render` method overloads accept the `RequestEnricher` parameter which can be used to modify the outgoing request on per request basis.
+
+Additionally the `render` method returns details about the outgoing exchange response which can be used to modify the incoming exchange response.

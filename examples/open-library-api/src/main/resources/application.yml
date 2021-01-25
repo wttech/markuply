@@ -1,0 +1,86 @@
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+  instances:
+    base:
+      registerHealthIndicator: true
+      slidingWindowSize: 100
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:3000"
+    proxy:
+      request:
+        copyHeaders:
+          - "Accept.*"
+          - Authorization
+          - Connection
+          - Cookie
+          - Date
+          - "Edge.*"
+          - Host
+          - Origin
+          - Pragma
+          - Proxy-Authorization
+          - "Surrogate.*"
+          - User-Agent
+          - Via
+          - "X-.*"
+        addHeaders:
+          - "X-User-Agent:Markuply"
+      response:
+        copyHeaders:
+          - Access-Control-Allow-Origin
+          - Allow
+          - Cache-Control
+          - Content-Disposition
+          - Content-Encoding
+          - Content-Language
+          - Content-Location
+          - Content-MD5
+          - Content-Range
+          - Content-Type
+          - Content-Length
+          - Content-Security-Policy
+          - Date
+          - Edge-Control
+          - ETag
+          - Expires
+          - Last-Modified
+          - Location
+          - Pragma
+          - Proxy-Authenticate
+          - Server
+          - Set-Cookie
+          - Status
+          - Surrogate-Control
+          - Vary
+          - Via
+          - X-Frame-Options
+          - X-XSS-Protection
+          - X-Content-Type-Options
+          - X-UA-Compatible
+          - X-Request-ID
+          - X-Server
+        addHeaders:
+          - "Server:Markuply"
+  javascript:
+    bundle: "http://localhost:3000/bundle.js"
+
+
+

@@ -1,0 +1,30 @@
+= Architecture
+:page-pagination:
+
+Markuply is a platform for enriching static HTML template with dynamic parts using a template engine of your choosing. It's designed as a library so you have full control where and how it is used in your app.
+
+== Integration
+
+In order to make use of Markuply every project has to complete the following steps:
+
+* Configure the template processing pipeline.
+* Expose the pipeline through a controller method or a `RouterFunction`.
+* Create original HTML with component placeholders to be retrieved by the pipeline.
+* Register component logic.
+
+== Request flow
+
+image::architecture.svg[Markuply architecture]
+
+Standard flow consists of the following steps:
+
+* External client (browser) sends an HTTP request to a server hosting Spring application.
+* Request is intercepted by one of handlers registered within Spring. It can be a controller method or a RouterFunction bean.
+* (optional) Page context data is retrieved.
+* Markuply pipeline is invoked with page path and page context data.
+* Original HTML template is retrieved using the configured page repository.
+* HTML template is parsed.
+* For each component placeholder found in the HTML Markuply tries to find the corresponding component definition and execute it to produce the dynamic HTML part.
+* Placeholders are substituted with generated HTML.
+* Fully processed HTML is returned by the Markuply pipeline.
+* Request handler sends the generated HTML as response body.

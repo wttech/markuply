@@ -1,0 +1,170 @@
+= HTTP pipeline tutorial
+:description: Processing external templates
+:page-pagination:
+
+The goal of this tutorial is to create a simple app processing templates provided by an external HTTP server.
+
+It consists of 7 steps:
+
+* Defining jar dependencies.
+* Creating an HTTP processing pipeline.
+* Exposing the pipeline through a controller method.
+* Hosting original HTML on a separate server.
+* Creating the static HTML template.
+* Defining component logic.
+* Testing the controller.
+
+The full code is available in the `examples/hello-world-http` submodule.
+
+== Dependencies
+
+To start using Markuply just add it as a dependency.
+Spring WebFlux is a transitive dependency you don't have to add yourself.
+
+.build.gradle.kts
+[source,kotlin,subs="attributes+"]
+----
+plugins {
+    java
+    id("org.springframework.boot") version "2.4.1"
+}
+
+group = rootProject.group
+version = rootProject.version
+
+configure<JavaPluginConvention> {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation("com.wundermanthompson.markuply:markuply:{page-version}")
+}
+
+----
+
+== Pipeline
+
+Now we have to define an HTTP pipeline which will process templates hosted on an external server.
+
+The easiest option is to define Spring properties in application.yml file.
+
+.src/main/resources/application.yml
+[source,properties]
+----
+markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:8082"
+----
+
+When `HttpPipeline` is invoked it will retrieve the original HTML from http://localhost:8082 server.
+
+== Expose pipeline
+
+To expose that pipeline to external world let's create a controller.
+
+.TemplatingController.java
+[source,java]
+----
+@RestController
+public class TemplatingController {
+
+  private final HttpPipeline pageProcessor;
+
+  public TemplatingController(HttpPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping(value = "/templating/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono<String> genericPage(@PathVariable String pathToProcess) {
+    return pageProcessor.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+}
+----
+
+The `genericPage` controller method will handle all requests for HTML pages under the `/templating` path. All the real work related to retrieving the HTML and processing the content is done by `HttpPipeline`.
+
+== Start external server
+
+In this example we'll be using node.js http-server package to host HTML but any server will do.
+
+Let's create `package.json` file in the `src/main/js` folder with the following content.
+
+.package.json
+[source,json]
+----
+{
+  "name": "hello-world-http",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx http-server ../resources -c-1 -p 8082 -o"
+  },
+  "devDependencies": {
+    "http-server": "0.12.3"
+  }
+}
+----
+
+To run the server on port 8082 and expose all file in the `src/main/resources` folder execute the `npm run start` command.
+
+== Original HTML
+
+Create an HTML file in `/src/main/resources` folder named `hello-world.html` and paste the following content.
+
+.src/main/resources/hello-world.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World example</title>
+  </head>
+  <body>
+    <div data-props="Java"
+         data-markuply-component="hello">
+    </div>
+  </body>
+</html>
+----
+
+This file will be available under the `http://localhost:8082/hello-world.html` URL and will be processed by the pipeline each time a request to `http://localhost:8080/templating/hello-world.html` is sent.
+
+Within it there is a single `hello` component placeholder with `Java` string passed as a parameter.
+
+== Hello World component
+
+Now we have to provide the definition for the `hello` component.
+
+To implement it we will use a mechanism similar to configuring request handlers in Spring controllers.
+
+.HelloComponent.java
+[source,java]
+----
+@Component
+public class HelloComponent {
+
+  @Markuply("hello")
+  public Mono<String> renderHelloComponent(@Props String props) {
+    String name = props == null || props.isEmpty()
+        ? "World"
+        : props;
+    return Mono.just(String.format("<div>Hello %s!</div>", name));
+  }
+
+}
+----
+
+Make sure this class is registered as a bean within Spring context either through direct `@Import` or `@ComponentScan`.
+
+== Render page
+
+To test that page we need to run the Spring Boot server with `./gradlew :bootRun`.
+
+Once server is up open your favourite browser and go to the `http://localhost:8080/hello-world.html` URL where `Hello Java!` should appear.

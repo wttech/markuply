@@ -1,0 +1,65 @@
+= Handle 404 from external data source
+:page-pagination:
+
+== Problem
+
+You want to serve under `/books/{isbn}` a dynamically generated page for every book retrieved from an external API .
+
+When sending GET requests to external API to retrieve book details for some ISBNs the API returns 404 Not Found status.
+
+How to make Spring return 404 as well?
+
+== Solution
+
+To handle special cases in an uniform way Spring `@ResponseStatus` can be applied to a custom exception class.
+
+.BookNotFoundException.java
+[source,java]
+----
+@ResponseStatus(value=HttpStatus.NOT_FOUND)
+public class BookNotFoundException extends RuntimeException {
+  // ...
+}
+----
+
+When controller encounters such exception Spring will set the response type according to the value defined in the annotation.
+
+Exceptions should be thrown right away so the best place to so is the service class responsible for invoking the external API.
+
+.BookApiClient.java
+[source,java]
+----
+@ResponseStatus(value=HttpStatus.NOT_FOUND)
+@Component
+public class BookApiClient {
+
+  private final WebClient webClient = WebClient.builder().build();
+
+  public Mono<Book> getBook(String isbn) {
+    webClient.get()
+      .uri("https://book.api/books/" + isbn)
+      .retrieve()
+      .onStatus(status -> status.equals(HttpStatus.NOT_FOUND),
+          response -> Mono.error(new BookNotFoundException()))
+      .bodyToMono(Book.class);
+  }
+
+}
+----
+
+If `getBook()` method is invoked outside Markuply context (in controller) then `BookNotFoundException` will reach Spring
+exception handling mechanism.
+
+However if that same method is invoked within Markuply component then it will be swallowed by the default `ComponentErrorHandler`.
+
+To mitigate that we have to customize the error handler by providing it with exception types which should be passed downstream
+as they should affect the generation of the whole page rather than just a fragment.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+ComponentErrorHandler handler() {
+  return ComponentErrorHandlers.logAllExcept(BookNotFoundException.class);
+}
+----

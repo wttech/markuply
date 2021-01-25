@@ -1,0 +1,25 @@
+{
+  "name": "antora-documentation",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build:prod": "cross-env DOCSEARCH_ENABLED=true DOCSEARCH_ENGINE=lunr npx antora --clean --fetch --generator antora-site-generator-lunr antora-playbook.yml",
+    "build:local": "cross-env DOCSEARCH_ENABLED=true DOCSEARCH_ENGINE=lunr npx antora --generator antora-site-generator-lunr antora-playbook.local.yml",
+    "watch:local": "npx nodemon --watch ../engine/src/docs/antora -e adoc -x \"npm run build:local\"",
+    "start-server": "npx http-server ./dist -c-1 -p 8081 -o",
+    "serve:local": "npx concurrently -i -k npm:watch:local npm:start-server",
+    "clean": "rm -rf ./dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@antora/cli": "2.3.4",
+    "antora-site-generator-lunr": "0.5.0",
+    "http-server": "0.12.3",
+    "npm-run-all": "4.1.5",
+    "nodemon": "2.0.6",
+    "concurrently": "5.3.0",
+    "cross-env": "7.0.3"
+  },
+  "dependencies": {}
+}

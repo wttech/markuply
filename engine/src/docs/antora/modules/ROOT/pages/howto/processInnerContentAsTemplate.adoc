@@ -1,0 +1,82 @@
+= Process inner content as a component template
+:description: How to process inner content as a component template
+:page-pagination:
+
+While components usually use their own templates to render the final markup there's nothing stopping you from implementing a component which will process the template passed to Markuply inside component placeholder.
+
+In this example I'll be using Pebble templating engine but any other can be integrated in the same way. It's a very simplistic implementation and should not be considered production ready.
+
+== Pebble component
+
+First let's define the Pebble Markuply component which will handle all incoming templates.
+
+.PebbleRenderer.java
+[source,java]
+----
+public class PebbleRenderer {
+
+  private final PebbleEngine engine;
+
+  @Markuply("pebble")
+  public Mono<String> render(@Props Map<String, Object> props, ChildrenRenderer children) {
+    // process the inner content
+    return children.render()
+        // and pass it to the Pebble engine
+        .map(innerContent -> processTemplate(innerContent, props));
+  }
+
+  private String processTemplate(String template, Map<String, Object> props) {
+    try {
+      // compile the template
+      PebbleTemplate compiledTemplate = engine.getLiteralTemplate(template);
+
+      // render to a String using props
+      Writer writer = new StringWriter();
+      compiledTemplate.evaluate(writer, props);
+
+      // trim() to remove the additional new line characters around the template itself
+      // not mandatory
+      return writer.toString().trim();
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
+
+}
+----
+
+== Usage
+
+Now we have to create the original HTML page with the pebble component placeholder.
+
+.pebbleInput.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pebble processing example</title>
+  </head>
+  <body>
+    <div data-props='{"name": "Mitchell"}' data-markuply-component="pebble">
+      <p>The provided name parameter value is: {{ name }}</p>
+    </div>
+  </body>
+</html>
+----
+
+After being processed by Markuply the following HTML will be returned.
+
+.pebbleInput.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pebble processing example</title>
+  </head>
+  <body>
+    <p>The provided name parameter value is: Mitchell</p>
+  </body>
+</html>
+----

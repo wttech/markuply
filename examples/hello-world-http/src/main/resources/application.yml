@@ -1,0 +1,4 @@
+markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:8082"

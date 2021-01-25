@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pebble example</title>
+  </head>
+  <body>
+    <div data-props='{"nested": {"show": true, "name": "Mitchell"} }' data-markuply-component="pebble">
+      {% if nested.show %}
+      <p>Value is: {{ nested.name }}</p>
+      {% else %}
+      <p>Nothing to see</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

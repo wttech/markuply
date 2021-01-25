@@ -1,0 +1,45 @@
+= Parsed template cache
+:description: Parsed template cache
+:page-pagination:
+
+== General
+
+Once template is retrieved from the defined source it must be parsed and transformed into a render function. The input HTML does not change often so caching the result of parsing should improve the overall performance.
+
+Cache entries are keyed by the template path and the input HTML. In case the template changes for a given path a new entry will be created. Old entries will be evicted based on the configuration.
+
+== Configuration
+
+By default this cache is disabled. To configure it either use the properties file or define the cache directly in code.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+RenderFunctionCache parsedTemplateCache(RenderFunctionFactory factory) {
+  Caffeine<Object, Object> cacheConfiguration = Caffeine.newBuilder()
+      .maximumSize(1000)
+      .expireAfterAccess(Duration.ofSeconds(1));
+  return RenderFunctionCache.instance(factory, cacheConfiguration);
+}
+----
+
+.application.properties alternative
+[source,properties]
+----
+markuply.cache.render.enabled=true // false by default
+markuply.cache.render.maxSize=1000
+markuply.cache.render.expireAfterAccess=1s
+----
+
+.application.yml alternative
+[source,yaml]
+----
+markuply:
+  cache:
+    render:
+      enabled: true // false by default
+      maxSize: 1000
+      expireAfterAccess: 1s
+----
+

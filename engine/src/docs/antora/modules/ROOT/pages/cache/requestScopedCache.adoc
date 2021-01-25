@@ -1,0 +1,21 @@
+= Request scoped cache
+:description: Request scoped cache description
+:page-pagination:
+
+== General
+
+If there are multiple components using the same data on a single page you might want to cache this data in the scope of the current request.
+This mechanism proves especially useful for data retrieved over the network from an external server.
+
+To cache method invocation result just annotate that method with `@RequestCache`. For caching to work this method must return either Mono or Flux.
+
+Returned value is cached based on method parameters so be sure to pass objects properly implementing `equals()` and `hashcode()`. 
+
+== Other caching layers
+
+Using request scoped cache does not interfere with other caching mechanism. If a cache layer spanning multiple requests is needed then you can 
+introduce any available caching solution into your project. Markuply won't complain.
+
+== Limitations
+
+`@RequestCache` annotation must be placed on a method returning either `Mono<>` or `Flux<>`.

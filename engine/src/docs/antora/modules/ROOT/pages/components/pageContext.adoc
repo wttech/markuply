@@ -1,0 +1,79 @@
+= Page context
+:page-pagination:
+
+== General
+
+Think of page context as a place to expose to components information about path parameters, query parameters, header values and any other information related to a particular page components on that page would like to consume.
+
+== Controller
+
+First let's define a new controller method handling the `/hello/{name}` URL. There we will extract the path parameter and pass it to page context keyed under `String.class`.
+This is the simplest example. Normally you would use your custom data class instead of `String`.
+
+.TemplatingController.java
+[source,java]
+----
+@RestController
+public class TemplatingController {
+
+  private final HttpPipeline pageProcessor;
+
+  @Inject
+  public TemplatingController(HttpPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping("/hello/{name}")
+  public Mono<String> helloWorldPage(@PathVariable String name) {
+    // manually create the context
+    PageContext context = PageContext.of(name);
+    // explicitly indicate which HTML resource should be used
+    return pageProcessor.render("/helloWorld.html", context);
+  }
+
+}
+----
+
+== Component definition
+Now we have to implement the Hello component.
+
+.HelloComponent.java
+[source,java]
+----
+@Component
+public class HelloComponent {
+
+  @Markuply("hello")
+  public Mono<String> renderHelloComponent(PageContext context) {
+    String nameFromContext = context.get(String.class);
+    String name = nameFromContext.isEmpty()
+        ? "World"
+        : nameFromContext;
+    return Mono.just(String.format("<div>Hello %s!</div>", name));
+  }
+
+}
+----
+
+== Component usage
+
+The `helloWorld.html` looks really similar to other examples. The only difference is that `data-props` attribute is not needed.
+
+.helloWorld.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World page</title>
+  </head>
+  <body>
+    <div data-markuply-component="hello">
+    </div>
+  </body>
+</html>
+----
+
+== Testing
+
+Start the server with `./gradlew :bootRun` and open the `http://localhost:8080/hello/Leela` page to see `Hello Leela!` printed out. Change the last part of URL to pass any other name.

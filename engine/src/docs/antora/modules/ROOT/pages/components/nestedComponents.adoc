@@ -1,0 +1,58 @@
+= Nested components
+:page-pagination:
+
+== General
+
+Up to this point component inner content included only static HTML but in fact other Markuply components can be included there as well.
+
+== Wrapper with nested component
+
+Let's define a wrapper component just like the one in xref:components/componentInnerContent.adoc[].
+On top on that we create a simple Hello World component definition.
+
+.MarkuplyComponents.java
+[source,java]
+----
+@Component
+public class MarkuplyComponents {
+
+  @Markuply("wrapper")
+  public Mono<String> wrapper(ChildrenRenderer children) {
+    return children.render().map(innerContent -> "<span>" + innerContent + "</span>");
+  }
+
+  @Markuply("hello")
+  public Mono<String> wrapper() {
+    return Mono.just("Hello World!");
+  }
+
+}
+----
+
+Given the input HTML below
+
+.input.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <body>
+    <div data-markuply-component="wrapper">
+      <div data-markuply-component="hello" />
+    </div>
+  </body>
+</html>
+----
+
+the result HTML will be as follows.
+
+.output.html
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <body>
+    <span>Hello World!</span>
+  </body>
+</html>
+----

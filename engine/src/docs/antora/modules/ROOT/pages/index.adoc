@@ -1,0 +1,17 @@
+= What's Markuply?
+:description: Markuply documentation
+:sectanchors:
+:page-pagination:
+
+Markuply is a Spring Boot library used to fill static HTML templates with dynamic data from external data sources.
+
+image::architecture.svg[Markuply architecture]
+
+Features:
+
+* Fully reactive
+* Nested components
+* Propagating headers both ways
+* Javascript Server Side Rendering support on GraalVM
+* Rapid development with webpack-dev-server
+

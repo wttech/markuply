@@ -1,0 +1,35 @@
+= Project setup
+:page-pagination:
+
+== Dependencies
+
+To start using Markuply just add it as a dependency.
+Spring WebFlux is a transitive dependency so you don't have to add yourself. 
+
+.build.gradle.kts
+[source,kotlin,subs="attributes+"]
+----
+dependencies {
+    implementation("com.wundermanthompson.markuply:markuply:{page-version}")
+    implementation("com.wundermanthompson.markuply:js-renderer:{page-version}")
+}
+----
+
+Maven
+
+.pom.xml
+[source,xml,subs="attributes+"]
+----
+<dependencies>
+  <dependency>
+    <groupId>com.wundermanthompson.markuply</groupId>
+    <artifactId>markuply</artifactId>
+    <version>{page-version}</version>
+  </dependency>
+  <dependency>
+    <groupId>com.wundermanthompson.markuply</groupId>
+    <artifactId>js-renderer</artifactId>
+    <version>{page-version}</version>
+  </dependency>
+</dependencies>
+----

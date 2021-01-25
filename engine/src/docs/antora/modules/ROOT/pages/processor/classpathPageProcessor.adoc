@@ -1,0 +1,31 @@
+= Classpath pipeline
+:page-pagination:
+
+`ClasspathPipeline` is a processor available out of the box transforming HTML content retrieved from classpath resources.
+
+To transform a resource located in `/src/main/resources/templates/homepage.html` 
+just call `classpathPipeline.render("/templates/homepage.html")`.
+
+The controller defined below will retrieve an HTML page from classpath based on the request path
+and then evaluate.
+
+.TemplatingController.java
+[source,java]
+----
+@RestController
+public class TemplatingController {
+
+  private final ClasspathPipeline pageProcessor;
+
+  public TemplatingController(ClasspathPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping("/**")
+  public Mono<String> genericPage(ServerHttpRequest request) {
+    String path = request.getPath().toString();
+    return pageProcessor.render(path);
+  }
+
+}
+----
