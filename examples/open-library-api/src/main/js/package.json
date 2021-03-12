@@ -10,10 +10,12 @@
     "build:prod": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "contributors": [{
-    "name": "Tomasz Krug",
-    "email": "tomasz.krug@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Tomasz Krug",
+      "email": "tomasz.krug@gmail.com"
+    }
+  ],
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/core": "7.8.6",
@@ -45,6 +47,7 @@
   "dependencies": {
     "bootstrap": "4.4.1",
     "react": "16.13.0",
-    "react-dom": "16.13.0"
+    "react-dom": "16.13.0",
+    "@wttech/graal-bridge-react": "0.1.0"
   }
 }

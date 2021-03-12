@@ -32,6 +32,7 @@
   "dependencies": {
     "bootstrap": "4.4.1",
     "react": "16.13.0",
-    "react-dom": "16.13.0"
+    "react-dom": "16.13.0",
+    "@wttech/graal-bridge-react": "0.1.0"
   }
 }

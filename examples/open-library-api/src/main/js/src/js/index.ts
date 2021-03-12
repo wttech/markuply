@@ -1,4 +1,4 @@
-import Markuply from '@/templating/markuply';
+import GraalBridgeReact from '@wttech/graal-bridge-react';
 
 import Accordion from '@/accordion/Accordion';
 import Hello from '@/test/Hello';
@@ -7,7 +7,7 @@ import BookMetadata from "@/book/BookMetadata";
 import '../css/app';
 import '../css/page';
 
-const templating = new Markuply();
+const templating = new GraalBridgeReact();
 
 templating.registerReact('hello', Hello);
 templating.registerReact('accordion', Accordion);
