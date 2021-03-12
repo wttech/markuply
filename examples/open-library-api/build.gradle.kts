@@ -18,52 +18,6 @@ repositories {
     mavenLocal()
 }
 
-// In fact it works without this part but I'll leave it here for now.
-//
-// NOTE: This is really important, some graalvm runtime libs need to be 'unpacked' when bundled by Spring Boot in order
-// for the ScriptEngine classes to load properly.
-//
-// Example exception if this is not done:
-// ScriptEngineManager providers.next(): javax.script.ScriptEngineFactory: Provider com.oracle.truffle.js.scriptengine.GraalJSEngineFactory could not be instantiated
-// tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-//     requiresUnpack("**/*js*.*", "**/*regex*.*")
-// }
-
-//
-// Graal compiler section
-//
-//val graal by configurations.creating
-//
-//val copyToLib = tasks.register<Copy>("copyToLib") {
-//    into("$buildDir/compiler")
-//    from(graal)
-//}
-//
-//tasks.getByName<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
-//    args=listOf("-ea",
-//            "-XX:+UnlockExperimentalVMOptions",
-//            "-XX:+EnableJVMCI",
-//            "--module-path=build/compiler",
-//            "--upgrade-module-path=build/compiler/compiler-20.0.0.jar")
-//    dependsOn(copyToLib)
-//}
-//
-//tasks.withType<Jar> {
-//    dependsOn(copyToLib)
-//}
-//
-//dependencies {
-//    // GraalVM compiler, only for performance
-//    implementation("org.graalvm.compiler:compiler:20.0.0")
-//    implementation("org.graalvm.truffle:truffle-api:20.0.0")
-//    graal("org.graalvm.compiler:compiler:20.0.0")
-//    graal("org.graalvm.truffle:truffle-api:20.0.0")
-//    graal("org.graalvm.sdk:graal-sdk:20.0.0")
-//}
-//
-// end of GraalVM compiler section
-//
-
 val installNpmDependencies = tasks.register<com.moowork.gradle.node.npm.NpmTask>("installNpmDependencies") {
     description = "Installs dependencies from package.json"
     group = "build"
@@ -88,7 +42,7 @@ val resilience4jVersion: String = "1.6.1"
 dependencies {
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
     implementation(project(":engine"))
-    implementation(project(":js-renderer"))
+    implementation("io.wttech.graal.templating:templating-spring-boot-starter:0.1.0-SNAPSHOT")
     // disabled due to LambdaMetafactory producing error with dev tools enabled
 //    developmentOnly("org.springframework.boot:spring-boot-devtools")
     // for @Inject annotation

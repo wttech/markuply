@@ -22,6 +22,7 @@ There are several example projects in the `/examples` subfolder showing how to i
 * `inner-content-as-template` - treating component inner content as pebble template
 * `multiple-pipelines` - defining and exposing two distinct processing pipelines with code configuration
 * `open-library-api` - integration with Open Library API rendering book details based on the provided ISBN
+* `spring-dev-tools` - processing templates located on the classpath with server restart on code / resource change
 
 ## Contributing
 

@@ -4,12 +4,11 @@ plugins {
     id("pl.allegro.tech.build.axion-release")
 }
 
-group = "com.wundermanthompson.markuply"
+group = "io.wttech.markuply"
 version = scmVersion.version
 
 configure<VersionConfig> {
     checks.aheadOfRemote = false
-    checks.isSnapshotDependencies = false
 
     hooks.pre("fileUpdate", mutableMapOf(
             "files" to listOf("README.md"),

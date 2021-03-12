@@ -14,6 +14,7 @@ configure<JavaPluginConvention> {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 val installNpmDependencies = tasks.register<com.moowork.gradle.node.npm.NpmTask>("installNpmDependencies") {
@@ -36,7 +37,6 @@ val watchDev = tasks.register<com.moowork.gradle.node.npm.NpmTask>("watchDev") {
 }
 
 dependencies {
-    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
     implementation(project(":engine"))
-    implementation(project(":js-renderer"))
+    implementation("io.wttech.graal.templating:templating-spring-boot-starter:0.1.0-SNAPSHOT")
 }

@@ -1,0 +1,10 @@
+= Integrate with Javascript
+:page-pagination:
+
+
+Thanks to GraalVM we can now execute any JS script from within Java.
+
+Conveniently there's already a library developed specifically to treat Javascript code as a rendering engine which can be used within Markuply context.
+
+For more information visit https://wttech.github.io/graal-templating[Graal templating library homepage].
+

@@ -12,6 +12,10 @@ Features:
 * Fully reactive
 * Nested components
 * Propagating headers both ways
+* Templating engine independent
+
+When combined with Graal templating:
+
 * Javascript Server Side Rendering support on GraalVM
-* Rapid development with webpack-dev-server
+* Rapid development with webpack dev server
 

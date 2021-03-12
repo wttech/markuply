@@ -79,8 +79,6 @@ markuply:
           - X-Server
         addHeaders:
           - "Server:Markuply"
-  javascript:
-    bundle: "http://localhost:3000/bundle.js"
 
 
 

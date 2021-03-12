@@ -1,0 +1,33 @@
+= Develop with Spring dev tools
+:description: How to develop with Spring Dev tools
+:page-pagination:
+
+Spring Dev tools can be used in a Markuply project to speed up the development process when implementing the Java logic or changing the contents of resources located on the classpath ie. page templates.
+
+== Enabling dev tools
+
+To enable Dev tools just add the `spring-boot-devtools` dependency to the `developmentOnly` configuration which is provided automatically by the Spring Boot Gradle plugin.
+
+.build.gradle.kts
+[source,kotlin,subs="attributes+"]
+----
+dependencies {
+    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation("io.wttech.markuply:markuply:{page-version}")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+}
+----
+
+When `:bootRun` task is executed the Spring application will listen for classpath changes and restart the server.
+
+== Watching changes
+
+Depending on your IDE and configuration changing the source code might not result in Spring app classpath being modified.
+
+To make sure all changes are in fact reflected on the server execute the following command `./gradlew -t :your-module:build`.
+
+== Limitations
+
+If Dev tools are enabled then Markuply invokes component logic methods through standard reflections API instead of Lambda Metafactory.
+
+Avoid running performance tests with Dev tools enabled.

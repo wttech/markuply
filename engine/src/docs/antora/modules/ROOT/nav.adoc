@@ -16,9 +16,6 @@
 * Cache
 ** xref:cache/requestScopedCache.adoc[]
 ** xref:cache/parsedTemplateCache.adoc[]
-* Javascript SSR
-** xref:javascript/javascriptRenderer.adoc[]
-** xref:javascript/javascriptRapidDevelopment.adoc[]
 * Tutorials
 ** xref:tutorials/classpathTutorial.adoc[]
 ** xref:tutorials/httpTutorial.adoc[]
@@ -28,5 +25,6 @@
 ** xref:howto/transformAllPages.adoc[]
 ** xref:howto/defineMultipleHttpPipelines.adoc[]
 ** xref:howto/processInnerContentAsTemplate.adoc[]
+** xref:howto/developWithJavascript.adoc[]
 
 

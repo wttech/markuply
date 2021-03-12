@@ -42,7 +42,7 @@ repositories {
 
 dependencies {
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
-    implementation("com.wundermanthompson.markuply:markuply:{page-version}")
+    implementation("io.wttech.markuply:markuply:{page-version}")
 }
 
 ----

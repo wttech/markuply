@@ -10,8 +10,7 @@ Spring WebFlux is a transitive dependency so you don't have to add yourself.
 [source,kotlin,subs="attributes+"]
 ----
 dependencies {
-    implementation("com.wundermanthompson.markuply:markuply:{page-version}")
-    implementation("com.wundermanthompson.markuply:js-renderer:{page-version}")
+    implementation("io.wttech.markuply:markuply:{page-version}")
 }
 ----
 
@@ -22,13 +21,8 @@ Maven
 ----
 <dependencies>
   <dependency>
-    <groupId>com.wundermanthompson.markuply</groupId>
+    <groupId>io.wttech.markuply</groupId>
     <artifactId>markuply</artifactId>
-    <version>{page-version}</version>
-  </dependency>
-  <dependency>
-    <groupId>com.wundermanthompson.markuply</groupId>
-    <artifactId>js-renderer</artifactId>
     <version>{page-version}</version>
   </dependency>
 </dependencies>

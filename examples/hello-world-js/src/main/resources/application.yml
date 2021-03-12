@@ -2,8 +2,6 @@ markuply:
   http:
     repository:
       urlPrefix: "http://localhost:3000"
-  javascript:
-    bundle: "http://localhost:3000/bundle.js"
 
 
 

@@ -1,13 +1,13 @@
 rootProject.name = "markuply"
 
 include("engine")
-include("js-renderer")
 include("examples:hello-world-classpath")
 include("examples:hello-world-http")
 include("examples:hello-world-js")
 include("examples:multiple-pipelines")
 include("examples:inner-content-as-template")
 include("examples:open-library-api")
+include("examples:spring-dev-tools")
 
 pluginManagement {
     plugins {

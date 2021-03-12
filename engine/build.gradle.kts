@@ -15,22 +15,15 @@ configure<JavaPluginConvention> {
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 tasks.getByName<Jar>("jar") {
-    archiveBaseName.set("markuply")
+    archiveBaseName.set("markuply-spring-boot-starter")
 }
 
-val sourcesJar = tasks.register<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get().allJava)
-}
-
-val javadocJar = tasks.register<Jar>("javadocJar") {
-    archiveClassifier.set("javadoc")
-    dependsOn("javadoc")
-    from(tasks.javadoc.get().destinationDir)
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 tasks.getByName<Javadoc>("javadoc") {
@@ -44,9 +37,39 @@ publishing {
         create<MavenPublication>("markuply") {
             from(components["java"])
 
-            artifactId = "markuply"
-            artifact(sourcesJar.get())
-            artifact(javadocJar.get())
+            artifactId = "markuply-spring-boot-starter"
+
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+
+            pom {
+                name.set("Markuply")
+                description.set("Spring library enriching static templates with dynamic data")
+                url.set("https://wttech.github.io/markuply/markuply")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("tokrug")
+                        name.set("Tomasz Krug")
+                        email.set("tomasz.krug@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/wttech/markuply.git")
+                    url.set("https://github.com/wttech/markuply")
+                }
+            }
         }
     }
 }
@@ -85,7 +108,6 @@ dependencies {
     testImplementation("org.assertj:assertj-core:${assertVersion}")
     testImplementation("com.squareup.okhttp3:mockwebserver:${mockServerVersion}")
     // Spring
-    testAnnotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage", "junit-vintage-engine")
     }
