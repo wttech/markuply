@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Classpath pipeline tutorial :: Markuply reference</title>
-    <link rel="canonical" href="https://docs.demo.com/markuply/0.8.0/tutorials/classpathTutorial.html">
-    <link rel="prev" href="../javascript/javascriptRapidDevelopment.html">
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/tutorials/classpathTutorial.html">
+    <link rel="prev" href="../cache/parsedTemplateCache.html">
     <link rel="next" href="httpTutorial.html">
     <meta name="description" content="Processing classpath templates">
     <meta name="generator" content="Antora 2.3.4">
@@ -17,7 +17,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://docs.demo.com">Markuply reference</a>
+      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -110,18 +110,6 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Javascript SSR</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../javascript/javascriptRenderer.html">Javascript renderer</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../javascript/javascriptRapidDevelopment.html">Rapid development with Javascript</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
     <span class="nav-text">Tutorials</span>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
@@ -150,6 +138,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
   </li>
 </ul>
   </li>
@@ -260,7 +251,7 @@ repositories {
 
 dependencies {
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
-    implementation("com.wundermanthompson.markuply:markuply:0.8.0")
+    implementation("io.wttech.markuply:markuply:0.8.0")
 }</code></pre>
 </div>
 </div>
@@ -378,7 +369,7 @@ public class HelloComponent {
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../javascript/javascriptRapidDevelopment.html">Rapid development with Javascript</a></span>
+  <span class="prev"><a href="../cache/parsedTemplateCache.html">Parsed template cache</a></span>
   <span class="next"><a href="httpTutorial.html">HTTP pipeline tutorial</a></span>
 </nav>
 </article>

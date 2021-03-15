@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Component registration :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/components/componentRegistration.html">
-    <link rel="prev" href="../projectSetup.html">
-    <link rel="next" href="pageContext.html">
+    <title>Integrate with Javascript :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/howto/developWithJavascript.html">
+    <link rel="prev" href="processInnerContentAsTemplate.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -54,17 +53,17 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Components</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="componentRegistration.html">Component registration</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pageContext.html">Page context</a>
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="componentInnerContent.html">Component inner content</a>
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="nestedComponents.html">Nested components</a>
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
   </li>
 </ul>
   </li>
@@ -124,22 +123,22 @@
     <span class="nav-text">How to</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+    <a class="nav-link" href="accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
   </li>
 </ul>
   </li>
@@ -174,80 +173,29 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>Components</li>
-    <li><a href="componentRegistration.html">Component registration</a></li>
+    <li>How to</li>
+    <li><a href="developWithJavascript.html">Integrate with Javascript</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/componentRegistration.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/developWithJavascript.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Component registration</h1>
-<div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
-<div class="sectionbody">
+<h1 class="page">Integrate with Javascript</h1>
 <div class="paragraph">
-<p>Component registration can be achieved using an approach similar to how request handlers are registered in Spring controller classes.</p>
+<p>Thanks to GraalVM we can now execute any JS script from within Java.</p>
 </div>
 <div class="paragraph">
-<p>First make sure that the class containing methods for component rendering is registered as a Spring bean either with <code>@Component</code> annotation or through <code>@ComponentScan</code>.</p>
+<p>Conveniently there&#8217;s already a library developed specifically to treat Javascript code as a rendering engine which can be used within Markuply context.</p>
 </div>
 <div class="paragraph">
-<p>Then define a method that will handle a particular Markuply component.</p>
-</div>
-<div class="paragraph">
-<p>To provide custom component ID use <code>@Markuply("componentId")</code> annotation on that method.
-If it is not provided then the method name will be used instead.</p>
-</div>
-<div class="listingblock">
-<div class="title">HelloWorldComponent.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
-public class HelloWorldComponent {
-
-  @Markuply("componentId")
-  public Mono&lt;String&gt; render(@Props String props, PageContext context) {
-    // details omitted
-  }
-
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_parameter_resolution"><a class="anchor" href="#_parameter_resolution"></a>Parameter resolution</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>There are 5 types of arguments you can define in your component render method:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>@Props String parameter</code> - unchanged <code>data-props</code> attribute value</p>
-</li>
-<li>
-<p><code>@Props T parameter</code> - <code>data-props</code> attribute value parsed as the <code>&lt;T&gt;</code> type using Jackson</p>
-</li>
-<li>
-<p><code>PageContext context</code> - full page context object</p>
-</li>
-<li>
-<p><code>@Context T context</code> - value extracted from PageContext using the provided <code>&lt;T&gt;</code> type as the key</p>
-</li>
-<li>
-<p><code>ChildrenRenderer children</code> - allows evaluating component inner content</p>
-</li>
-</ul>
-</div>
-</div>
+<p>For more information visit <a href="https://wttech.github.io/graal-templating">Graal templating library homepage</a>.</p>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../projectSetup.html">Project setup</a></span>
-  <span class="next"><a href="pageContext.html">Page context</a></span>
+  <span class="prev"><a href="processInnerContentAsTemplate.html">Process inner content as a component template</a></span>
 </nav>
 </article>
   </div>
@@ -256,7 +204,7 @@ public class HelloWorldComponent {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.8.0/components/componentRegistration.html'
+  window.antora.pagePath = '/markuply/0.8.0/howto/developWithJavascript.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

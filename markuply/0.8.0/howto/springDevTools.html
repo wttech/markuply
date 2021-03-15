@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Rapid development with Javascript :: Markuply reference</title>
-    <link rel="canonical" href="https://docs.demo.com/markuply/0.8.0/javascript/javascriptRapidDevelopment.html">
-    <link rel="prev" href="javascriptRenderer.html">
-    <link rel="next" href="../tutorials/classpathTutorial.html">
+    <title>Develop with Spring dev tools :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/howto/springDevTools.html">
+    <meta name="description" content="How to develop with Spring Dev tools">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -16,7 +15,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://docs.demo.com">Markuply reference</a>
+      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -109,18 +108,6 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Javascript SSR</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="javascriptRenderer.html">Javascript renderer</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="javascriptRapidDevelopment.html">Rapid development with Javascript</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
     <span class="nav-text">Tutorials</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
@@ -136,19 +123,22 @@
     <span class="nav-text">How to</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+    <a class="nav-link" href="accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
   </li>
 </ul>
   </li>
@@ -183,119 +173,67 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>Javascript SSR</li>
-    <li><a href="javascriptRapidDevelopment.html">Rapid development with Javascript</a></li>
+    <li><a href="springDevTools.html">Develop with Spring dev tools</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/javascript/javascriptRapidDevelopment.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/springDevTools.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Rapid development with Javascript</h1>
-<div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<h1 class="page">Develop with Spring dev tools</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Javascript renderer can retrieve the script from the classpath as well as from external server.</p>
-</div>
-<div class="paragraph">
-<p>We can use this feature together with <code>webpack</code> and <code>webpack-dev-server</code> to prepare a setup for rapid development of templating and view logic.</p>
+<p>Spring Dev tools can be used in a Markuply project to speed up the development process when implementing the Java logic or changing the contents of resources located on the classpath ie. page templates.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_script_development"><a class="anchor" href="#_script_development"></a>Script development</h2>
+<h2 id="_enabling_dev_tools"><a class="anchor" href="#_enabling_dev_tools"></a>Enabling dev tools</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>First let&#8217;s define the Javascript renderer bean tailored for development.</p>
+<p>To enable Dev tools just add the <code>spring-boot-devtools</code> dependency to the <code>developmentOnly</code> configuration which is provided automatically by the Spring Boot Gradle plugin.</p>
 </div>
 <div class="listingblock">
-<div class="title">SpringConfiguration.java</div>
+<div class="title">build.gradle.kts</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-JavascriptRenderer provideJavascriptRenderer(WebClient webClient, ObjectMapper mapper) {
-  return JavascriptRendererConfigurator.instance()
-      .objectMapper(mapper)
-      .externalScript(builder -&gt; builder
-          .webClient(webClient)
-          .uri("http://localhost:3000/bundle.js"))
-      .buildDevelopment();
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">dependencies {
+    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation("io.wttech.markuply:markuply:0.8.0")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="title">application.properties alternative</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">markuply.javascript.bundle=http://localhost:3000/bundle.js</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">application.yml alternative</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
-  javascript:
-    bundle: "http://localhost:3000/bundle.js"</code></pre>
-</div>
-</div>
 <div class="paragraph">
-<p>The second step is to setup webpack build and start the dev server.</p>
-</div>
-<div class="paragraph">
-<p>The server starting command should look like this: <code>webpack-dev-server --open --no-inline</code>.
-<code>no-inline</code> parameter is important as otherwise <code>webpack</code> will inject not server side friendly code into the final JS bundle.</p>
-</div>
-<div class="paragraph">
-<p>Markuply will now reload the script each time webpack produces a new bundle.</p>
+<p>When <code>:bootRun</code> task is executed the Spring application will listen for classpath changes and restart the server.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_template_development"><a class="anchor" href="#_template_development"></a>Template development</h2>
+<h2 id="_watching_changes"><a class="anchor" href="#_watching_changes"></a>Watching changes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>While <code>webpack-dev-server</code> is mainly about fast script development it can also be used to provide and modify the original HTML content processed by Markuply.</p>
+<p>Depending on your IDE and configuration changing the source code might not result in Spring app classpath being modified.</p>
 </div>
 <div class="paragraph">
-<p>As with any other customization you just have to define your own <code>HttpPageRepository</code> bean.</p>
-</div>
-<div class="listingblock">
-<div class="title">SpringConfiguration.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-HttpPageRepository providePageRepository(HttpPageRepositorySpringConfigurator configurator) {
-  return configurator
-      .urlPrefix("http://localhost:3000/pages")
-      .build();
-}</code></pre>
+<p>To make sure all changes are in fact reflected on the server execute the following command <code>./gradlew -t :your-module:build</code>.</p>
 </div>
 </div>
-<div class="listingblock">
-<div class="title">application.properties variant</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">markuply.http.repository.baseUrl=http://localhost:3000/pages</code></pre>
 </div>
-</div>
-<div class="listingblock">
-<div class="title">application.yml variant</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
-  http:
-    repository:
-      baseUrl: "http://localhost:3000/pages"</code></pre>
-</div>
+<div class="sect1">
+<h2 id="_limitations"><a class="anchor" href="#_limitations"></a>Limitations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If Dev tools are enabled then Markuply invokes component logic methods through standard reflections API instead of Lambda Metafactory.</p>
 </div>
 <div class="paragraph">
-<p>The definition above assumes HTML files are exposed by <code>webpack-dev-server</code> under the <code>/pages</code> path.</p>
+<p>Avoid running performance tests with Dev tools enabled.</p>
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="javascriptRenderer.html">Javascript renderer</a></span>
-  <span class="next"><a href="../tutorials/classpathTutorial.html">Classpath pipeline tutorial</a></span>
-</nav>
 </article>
   </div>
 </main>
@@ -303,7 +241,7 @@ HttpPageRepository providePageRepository(HttpPageRepositorySpringConfigurator co
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.8.0/javascript/javascriptRapidDevelopment.html'
+  window.antora.pagePath = '/markuply/0.8.0/howto/springDevTools.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
