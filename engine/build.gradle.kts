@@ -3,6 +3,7 @@ plugins {
     id("io.freefair.lombok")
     id("maven-publish")
     id("com.github.hierynomus.license-report")
+    signing
 }
 
 group = rootProject.group
@@ -72,6 +73,13 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications["templating"])
 }
 
 val springBootVersion = "2.4.1"
