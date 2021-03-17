@@ -51,7 +51,7 @@ publishing {
             pom {
                 name.set("Markuply")
                 description.set("Spring library enriching static templates with dynamic data")
-                url.set("https://wttech.github.io/markuply/markuply")
+                url.set("https://wttech.github.io/markuply")
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
