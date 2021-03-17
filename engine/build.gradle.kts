@@ -79,7 +79,7 @@ signing {
     val signingKey: String? by project
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(publishing.publications["templating"])
+    sign(publishing.publications["markuply"])
 }
 
 val springBootVersion = "2.4.1"
