@@ -42,7 +42,7 @@ val resilience4jVersion: String = "1.6.1"
 dependencies {
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
     implementation(project(":engine"))
-    implementation("io.wttech.graal.templating:templating-spring-boot-starter:0.1.0-SNAPSHOT")
+    implementation("io.wttech.graal.templating:templating-spring-boot-starter:0.3.0")
     // disabled due to LambdaMetafactory producing error with dev tools enabled
 //    developmentOnly("org.springframework.boot:spring-boot-devtools")
     // for @Inject annotation

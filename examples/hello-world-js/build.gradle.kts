@@ -38,5 +38,5 @@ val watchDev = tasks.register<com.moowork.gradle.node.npm.NpmTask>("watchDev") {
 
 dependencies {
     implementation(project(":engine"))
-    implementation("io.wttech.graal.templating:templating-spring-boot-starter:0.1.0-SNAPSHOT")
+    implementation("io.wttech.graal.templating:templating-spring-boot-starter:0.3.0")
 }
