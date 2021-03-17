@@ -3,10 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Handle 404 from external data source :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/howto/handleDataNotFound.html">
-    <link rel="prev" href="../tutorials/httpTutorial.html">
-    <link rel="next" href="accessLog.html">
+    <title>Defining multiple HTTP pipelines :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/defineMultipleHttpPipelines.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -32,7 +30,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.8.0">
+<div class="nav-container" data-component="markuply" data-version="0.9.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -123,7 +121,7 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">How to</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -132,7 +130,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="transformAllPages.html">Process all pages</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -151,14 +149,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.8.0</span>
+    <span class="version">0.9.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.8.0</a>
+          <a href="../index.html">0.9.0</a>
         </li>
       </ul>
     </li>
@@ -175,99 +173,135 @@
   <ul>
     <li><a href="../index.html">Markuply</a></li>
     <li>How to</li>
-    <li><a href="handleDataNotFound.html">Handle 404 from external data source</a></li>
+    <li><a href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/handleDataNotFound.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/defineMultipleHttpPipelines.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Handle 404 from external data source</h1>
+<h1 class="page">Defining multiple HTTP pipelines</h1>
 <div class="sect1">
-<h2 id="_problem"><a class="anchor" href="#_problem"></a>Problem</h2>
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You want to serve under <code>/books/{isbn}</code> a dynamically generated page for every book retrieved from an external API .</p>
+<p>In some cases it might be useful to combine two separate HTTP pipelines processing HTML pages from different sources within the context of a single Spring application.</p>
 </div>
 <div class="paragraph">
-<p>When sending GET requests to external API to retrieve book details for some ISBNs the API returns 404 Not Found status.</p>
-</div>
-<div class="paragraph">
-<p>How to make Spring return 404 as well?</p>
+<p>This can be only achieved with Spring code configuration classes as <code>application.yml</code> file supports defining only a single global pipeline.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_solution"><a class="anchor" href="#_solution"></a>Solution</h2>
+<h2 id="_dependency_injection_qualifiers"><a class="anchor" href="#_dependency_injection_qualifiers"></a>Dependency injection qualifiers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To handle special cases in an uniform way Spring <code>@ResponseStatus</code> can be applied to a custom exception class.</p>
+<p>First let&#8217;s define two annotations meta-annotated with <code>@Qualifier</code> to be able to discern both pipeline variants when injecting them into a target bean.</p>
 </div>
 <div class="listingblock">
-<div class="title">BookNotFoundException.java</div>
+<div class="title">MainPipeline.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ResponseStatus(value=HttpStatus.NOT_FOUND)
-public class BookNotFoundException extends RuntimeException {
-  // ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>When controller encounters such exception Spring will set the response type according to the value defined in the annotation.</p>
-</div>
-<div class="paragraph">
-<p>Exceptions should be thrown right away so the best place to so is the service class responsible for invoking the external API.</p>
-</div>
-<div class="listingblock">
-<div class="title">BookApiClient.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ResponseStatus(value=HttpStatus.NOT_FOUND)
-@Component
-public class BookApiClient {
-
-  private final WebClient webClient = WebClient.builder().build();
-
-  public Mono&lt;Book&gt; getBook(String isbn) {
-    webClient.get()
-      .uri("https://book.api/books/" + isbn)
-      .retrieve()
-      .onStatus(status -&gt; status.equals(HttpStatus.NOT_FOUND),
-          response -&gt; Mono.error(new BookNotFoundException()))
-      .bodyToMono(Book.class);
-  }
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Qualifier("mainPipeline")
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MainPipeline {
 
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If <code>getBook()</code> method is invoked outside Markuply context (in controller) then <code>BookNotFoundException</code> will reach Spring
-exception handling mechanism.</p>
+<p>The second one should look exactly the same except for the annotation name and the <code>@Qualifier</code> annotation value.</p>
 </div>
-<div class="paragraph">
-<p>However if that same method is invoked within Markuply component then it will be swallowed by the default <code>ComponentErrorHandler</code>.</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_pipeline_configuration"><a class="anchor" href="#_pipeline_configuration"></a>Pipeline configuration</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>To mitigate that we have to customize the error handler by providing it with exception types which should be passed downstream
-as they should affect the generation of the whole page rather than just a fragment.</p>
+<p>The same things achievable with <code>application.yml</code> are also possible with code configuration in a very similar way.</p>
 </div>
 <div class="listingblock">
 <div class="title">SpringConfiguration.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-ComponentErrorHandler handler() {
-  return ComponentErrorHandlers.logAllExcept(BookNotFoundException.class);
+@MainPipeline
+HttpPipeline mainPipeline(WebClient webClient, RenderFunctionFactory factory) {
+  HttpPageProcessorConfigurator builder = HttpPageProcessorConfigurator.instance(factory);
+  return builder
+      .repository(repository -&gt; repository.urlPrefix("http://localhost:8082/main").webClient(webClient))
+      .requestProxy(proxy -&gt; proxy.proxyHeader("Cookie").setHeader("X-User-Agent", "Markuply Main"))
+      .responseProxy(proxy -&gt; proxy.proxyHeader("Set-Cookie").setHeader("Server", "Markuply Main"))
+      .renderFunctionCache(caffeine -&gt; caffeine.maximumSize(1000).expireAfterAccess(Duration.ofSeconds(5)))
+      .build();
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration above corresponds to the following <code>application.yml</code> snippet except the fact that <code>application.yml</code> variant will register the pipeline without any qualifier.</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:8082/main"
+    proxy:
+      request:
+        copyHeaders:
+          - "Cookie"
+        addHeaders:
+          - "X-User-Agent:Markuply Main"
+      response:
+        copyHeaders:
+          - Set-Cookie
+        addHeaders:
+          - "Server:Markuply Main"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second pipeline can be configured in pretty much the same way. Just use <code>@SecondaryPipeline</code> qualifier annotation or any other of your choosing instead of <code>@MainPipeline</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exposing_pipelines"><a class="anchor" href="#_exposing_pipelines"></a>Exposing pipelines</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have both configurations in place we can expose them both using two different endpoints in a controller class.</p>
+</div>
+<div class="listingblock">
+<div class="title">TemplatingController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+public class TemplatingController {
+
+  private final HttpPipeline main;
+  private final HttpPipeline secondary;
+
+  public TemplatingController(@MainPipeline HttpPipeline main, @SecondaryPipeline HttpPipeline secondary) {
+    this.main = main;
+    this.secondary = secondary;
+  }
+
+  @GetMapping(value = "/main/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; primaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return main.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+  @GetMapping(value = "/secondary/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; secondaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return secondary.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
 }</code></pre>
 </div>
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a></span>
-  <span class="next"><a href="accessLog.html">Maintain access log</a></span>
-</nav>
 </article>
   </div>
 </main>
@@ -275,7 +309,7 @@ ComponentErrorHandler handler() {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.8.0/howto/handleDataNotFound.html'
+  window.antora.pagePath = '/markuply/0.9.0/howto/defineMultipleHttpPipelines.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

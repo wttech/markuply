@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Component registration :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/components/componentRegistration.html">
-    <link rel="prev" href="../projectSetup.html">
-    <link rel="next" href="pageContext.html">
+    <title>Process inner content as a component template :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/processInnerContentAsTemplate.html">
+    <link rel="prev" href="defineMultipleHttpPipelines.html">
+    <link rel="next" href="developWithJavascript.html">
+    <meta name="description" content="How to process inner content as a component template">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -32,7 +33,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.8.0">
+<div class="nav-container" data-component="markuply" data-version="0.9.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -54,17 +55,17 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Components</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="componentRegistration.html">Component registration</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pageContext.html">Page context</a>
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="componentInnerContent.html">Component inner content</a>
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="nestedComponents.html">Nested components</a>
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
   </li>
 </ul>
   </li>
@@ -124,22 +125,22 @@
     <span class="nav-text">How to</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+    <a class="nav-link" href="accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
+    <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
   </li>
 </ul>
   </li>
@@ -151,14 +152,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.8.0</span>
+    <span class="version">0.9.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.8.0</a>
+          <a href="../index.html">0.9.0</a>
         </li>
       </ul>
     </li>
@@ -174,43 +175,64 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>Components</li>
-    <li><a href="componentRegistration.html">Component registration</a></li>
+    <li>How to</li>
+    <li><a href="processInnerContentAsTemplate.html">Process inner content as a component template</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/componentRegistration.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/processInnerContentAsTemplate.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Component registration</h1>
-<div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<h1 class="page">Process inner content as a component template</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Component registration can be achieved using an approach similar to how request handlers are registered in Spring controller classes.</p>
+<p>While components usually use their own templates to render the final markup there&#8217;s nothing stopping you from implementing a component which will process the template passed to Markuply inside component placeholder.</p>
 </div>
 <div class="paragraph">
-<p>First make sure that the class containing methods for component rendering is registered as a Spring bean either with <code>@Component</code> annotation or through <code>@ComponentScan</code>.</p>
+<p>In this example I&#8217;ll be using Pebble templating engine but any other can be integrated in the same way. It&#8217;s a very simplistic implementation and should not be considered production ready.</p>
 </div>
-<div class="paragraph">
-<p>Then define a method that will handle a particular Markuply component.</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_pebble_component"><a class="anchor" href="#_pebble_component"></a>Pebble component</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>To provide custom component ID use <code>@Markuply("componentId")</code> annotation on that method.
-If it is not provided then the method name will be used instead.</p>
+<p>First let&#8217;s define the Pebble Markuply component which will handle all incoming templates.</p>
 </div>
 <div class="listingblock">
-<div class="title">HelloWorldComponent.java</div>
+<div class="title">PebbleRenderer.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
-public class HelloWorldComponent {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class PebbleRenderer {
 
-  @Markuply("componentId")
-  public Mono&lt;String&gt; render(@Props String props, PageContext context) {
-    // details omitted
+  private final PebbleEngine engine;
+
+  @Markuply("pebble")
+  public Mono&lt;String&gt; render(@Props Map&lt;String, Object&gt; props, ChildrenRenderer children) {
+    // process the inner content
+    return children.render()
+        // and pass it to the Pebble engine
+        .map(innerContent -&gt; processTemplate(innerContent, props));
+  }
+
+  private String processTemplate(String template, Map&lt;String, Object&gt; props) {
+    try {
+      // compile the template
+      PebbleTemplate compiledTemplate = engine.getLiteralTemplate(template);
+
+      // render to a String using props
+      Writer writer = new StringWriter();
+      compiledTemplate.evaluate(writer, props);
+
+      // trim() to remove the additional new line characters around the template itself
+      // not mandatory
+      return writer.toString().trim();
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
 }</code></pre>
@@ -219,35 +241,49 @@ public class HelloWorldComponent {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_parameter_resolution"><a class="anchor" href="#_parameter_resolution"></a>Parameter resolution</h2>
+<h2 id="_usage"><a class="anchor" href="#_usage"></a>Usage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There are 5 types of arguments you can define in your component render method:</p>
+<p>Now we have to create the original HTML page with the pebble component placeholder.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>@Props String parameter</code> - unchanged <code>data-props</code> attribute value</p>
-</li>
-<li>
-<p><code>@Props T parameter</code> - <code>data-props</code> attribute value parsed as the <code>&lt;T&gt;</code> type using Jackson</p>
-</li>
-<li>
-<p><code>PageContext context</code> - full page context object</p>
-</li>
-<li>
-<p><code>@Context T context</code> - value extracted from PageContext using the provided <code>&lt;T&gt;</code> type as the key</p>
-</li>
-<li>
-<p><code>ChildrenRenderer children</code> - allows evaluating component inner content</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="title">pebbleInput.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Pebble processing example&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div data-props='{"name": "Mitchell"}' data-markuply-component="pebble"&gt;
+      &lt;p&gt;The provided name parameter value is: {{ name }}&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After being processed by Markuply the following HTML will be returned.</p>
+</div>
+<div class="listingblock">
+<div class="title">pebbleInput.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Pebble processing example&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;The provided name parameter value is: Mitchell&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../projectSetup.html">Project setup</a></span>
-  <span class="next"><a href="pageContext.html">Page context</a></span>
+  <span class="prev"><a href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a></span>
+  <span class="next"><a href="developWithJavascript.html">Integrate with Javascript</a></span>
 </nav>
 </article>
   </div>
@@ -256,7 +292,7 @@ public class HelloWorldComponent {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.8.0/components/componentRegistration.html'
+  window.antora.pagePath = '/markuply/0.9.0/howto/processInnerContentAsTemplate.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

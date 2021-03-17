@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HTTP pipeline :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/processor/httpPageProcessor.html">
+    <link rel="prev" href="../components/nestedComponents.html">
+    <link rel="next" href="classpathPageProcessor.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+<link rel="stylesheet" href="../../../_/css/search.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+        <div class="navbar-item">
+          <input id="search-input" type="text" placeholder="Search docs">
+        </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="markuply" data-version="0.9.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Markuply</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">What&#8217;s Markuply?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../projectSetup.html">Project setup</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Processing pages</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="httpPageProcessor.html">HTTP pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="classpathPageProcessor.html">Classpath pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Error handling</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/handlingErrors.html">Handling errors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/componentProcessingError.html">Component processing error</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/missingComponent.html">Missing component</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Cache</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/requestScopedCache.html">Request scoped cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/parsedTemplateCache.html">Parsed template cache</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/classpathTutorial.html">Classpath pipeline tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Markuply</span>
+    <span class="version">0.9.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Markuply</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.9.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Markuply</a></li>
+    <li>Processing pages</li>
+    <li><a href="httpPageProcessor.html">HTTP pipeline</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/processor/httpPageProcessor.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">HTTP pipeline</h1>
+<div class="sect1">
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To load content from an external server first define your own HttpPageRepository bean.</p>
+</div>
+<div class="listingblock">
+<div class="title">SpringConfiguration.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+HttpPageRepository providePageRepository(HttpPageRepositorySpringConfigurator configurator) {
+  return configurator
+      .uriPrefix("http://some-server/")
+      .build();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">application.properties alternative</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">markuply.http.repository.urlPrefix=http://some-server/</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">application.yml alternative</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
+  http:
+    repository:
+      urlPrefix: "http://some-server/"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Autoconfiguration will pick up the HttpPageRepository created using any of the methods defined above and will create a HttpPipeline bean which acts as a facade for transforming content retrieved from an external server.</p>
+</div>
+<div class="paragraph">
+<p>When invoking the <code>HttpPipeline.render(String path)</code> method the <code>path</code> parameter will be appended to the configured <code>urlPrefix</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_static_header_proxy_configuration"><a class="anchor" href="#_static_header_proxy_configuration"></a>Static header proxy configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>HttpPipeline</code> can be configured to copy original request headers to the external server request
+and to copy external server response headers to the original client response.</p>
+</div>
+<div class="paragraph">
+<p>Each entry in copyHeaders property is treated as a regular expression.
+If any regex on the list is matched then the headers is carried over.</p>
+</div>
+<div class="paragraph">
+<p>Each entry in addHeaders property is added to each request or response.</p>
+</div>
+<div class="listingblock">
+<div class="title">application.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">markuply.http.proxy.request.copyHeaders[0]=Accept.*
+markuply.http.proxy.request.copyHeaders[1]=Cookie
+markuply.http.proxy.request.addHeaders[0]=Custom-Header-Name:Custom-Header-Value
+markuply.http.proxy.response.copyHeaders[0]=Cache-Control
+markuply.http.proxy.response.copyHeaders[1]=Set-Cookie
+markuply.http.proxy.response.addHeaders[0]=Custom-Header-Name:Custom-Header-Value</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">application.yml alternative</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
+  http:
+    proxy:
+      request:
+        copyHeaders:
+          - "Accept.*"
+          - Cookie
+        addHeaders:
+          - "Custom-Header-Name:Custom-Header-Value"
+      response:
+        copyHeaders:
+          - Cache-Control
+          - Set-Cookie
+        addHeaders:
+          - "Custom-Header-Name:Custom-Header-Value"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dynamic_header_proxy_configuration"><a class="anchor" href="#_dynamic_header_proxy_configuration"></a>Dynamic header proxy configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some of the <code>HttpPipeline.render</code> method overloads accept the <code>RequestEnricher</code> parameter which can be used to modify the outgoing request on per request basis.</p>
+</div>
+<div class="paragraph">
+<p>Additionally the <code>render</code> method returns details about the outgoing exchange response which can be used to modify the incoming exchange response.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../components/nestedComponents.html">Nested components</a></span>
+  <span class="next"><a href="classpathPageProcessor.html">Classpath pipeline</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<script>
+  window.antora = window.antora || {}
+  window.antora.basePath = '../../..'
+  window.antora.pagePath = '/markuply/0.9.0/processor/httpPageProcessor.html'
+</script>
+<script src="../../../_/js/site.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/search.js"></script>
+<script async src="../../../_/../search-index.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

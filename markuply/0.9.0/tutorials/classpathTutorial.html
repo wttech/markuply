@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Component inner content :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/components/componentInnerContent.html">
-    <link rel="prev" href="pageContext.html">
-    <link rel="next" href="nestedComponents.html">
+    <title>Classpath pipeline tutorial :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/tutorials/classpathTutorial.html">
+    <link rel="prev" href="../cache/parsedTemplateCache.html">
+    <link rel="next" href="httpTutorial.html">
+    <meta name="description" content="Processing classpath templates">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -32,7 +33,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.8.0">
+<div class="nav-container" data-component="markuply" data-version="0.9.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -55,16 +56,16 @@
     <span class="nav-text">Components</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="componentRegistration.html">Component registration</a>
+    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pageContext.html">Page context</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="componentInnerContent.html">Component inner content</a>
+    <a class="nav-link" href="../components/pageContext.html">Page context</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="nestedComponents.html">Nested components</a>
+    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
   </li>
 </ul>
   </li>
@@ -111,11 +112,11 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Tutorials</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorials/classpathTutorial.html">Classpath pipeline tutorial</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="classpathTutorial.html">Classpath pipeline tutorial</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a>
+    <a class="nav-link" href="httpTutorial.html">HTTP pipeline tutorial</a>
   </li>
 </ul>
   </li>
@@ -151,14 +152,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.8.0</span>
+    <span class="version">0.9.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.8.0</a>
+          <a href="../index.html">0.9.0</a>
         </li>
       </ul>
     </li>
@@ -174,181 +175,202 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>Components</li>
-    <li><a href="componentInnerContent.html">Component inner content</a></li>
+    <li>Tutorials</li>
+    <li><a href="classpathTutorial.html">Classpath pipeline tutorial</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/componentInnerContent.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/tutorials/classpathTutorial.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Component inner content</h1>
-<div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<h1 class="page">Classpath pipeline tutorial</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Components not only can be parametrized through <code>data-props</code> attribute but they can also consume the HTML found within the element marked with <code>data-markuply-component</code> attribute.</p>
+<p>The goal of this tutorial is to create a simple app processing templates located on the classpath.</p>
 </div>
 <div class="paragraph">
-<p>What&#8217;s more the inner content can be grouped into separate section so then the component logic can decide which section should be rendered and where.</p>
+<p>It consists of 6 steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Defining jar dependencies.</p>
+</li>
+<li>
+<p>Creating a classpath processing pipeline.</p>
+</li>
+<li>
+<p>Exposing the pipeline through a controller method.</p>
+</li>
+<li>
+<p>Creating the static HTML template.</p>
+</li>
+<li>
+<p>Defining component logic.</p>
+</li>
+<li>
+<p>Testing the controller.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>This feature more or less resembles the <code>props.children</code> from React and <code>&lt;ng-template&gt;</code> from Angular.</p>
+<p>The full code is available in the <code>examples/hello-world-classpath</code> submodule.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_wrapper_example"><a class="anchor" href="#_wrapper_example"></a>Wrapper example</h2>
+<h2 id="_dependencies"><a class="anchor" href="#_dependencies"></a>Dependencies</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s create a component whose only job is to wrap the received inner content into a <code>&lt;span&gt;</code> element.
-It will retrieve the inner content by rendering the default unnamed section which is available
-when there is no direct child element marked with <code>data-markuply-section</code> attribute.</p>
-</div>
-<div class="paragraph">
-<p>Component inner content can be accessed through ChildrenRenderer which should be defined as component method argument.</p>
+<p>To start using Markuply just add it as a dependency.
+Spring WebFlux is a transitive dependency you don&#8217;t have to add yourself.</p>
 </div>
 <div class="listingblock">
-<div class="title">MarkuplyComponents.java</div>
+<div class="title">build.gradle.kts</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
-public class MarkuplyComponents {
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">plugins {
+    java
+    id("org.springframework.boot") version "2.4.1"
+}
 
-  @Markuply("wrapper")
-  public Mono&lt;String&gt; wrapper(ChildrenRenderer children) {
-    return children.render().map(innerContent -&gt; "&lt;span&gt;" + innerContent + "&lt;/span&gt;");
+group = rootProject.group
+version = rootProject.version
+
+configure&lt;JavaPluginConvention&gt; {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation("io.wttech.markuply:markuply:0.9.0")
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pipeline"><a class="anchor" href="#_pipeline"></a>Pipeline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Classpath pipeline is available out of the box without any configuration required.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_expose_pipeline"><a class="anchor" href="#_expose_pipeline"></a>Expose pipeline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To expose that page to external world let&#8217;s create a controller.</p>
+</div>
+<div class="listingblock">
+<div class="title">TemplatingController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+public class TemplatingController {
+
+  private final ClasspathPipeline pageProcessor;
+
+  public TemplatingController(ClasspathPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping(value = "/templating/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; genericPage(@PathVariable String pathToProcess) {
+    return pageProcessor.render(pathToProcess);
   }
 
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Given the input HTML below</p>
-</div>
-<div class="listingblock">
-<div class="title">input.html</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;body&gt;
-    &lt;div data-markuply-component="wrapper"&gt;
-      Wrapped content
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>the result HTML will be as follows.</p>
-</div>
-<div class="listingblock">
-<div class="title">output.html</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;body&gt;
-    &lt;span&gt;Wrapped content&lt;/span&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</div>
+<p>The <code>genericPage</code> controller method will handle all requests for HTML pages under the <code>/templating</code> path. All the real work related to retrieving the HTML and processing the content is done by <code>ClasspathPipeline</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_conditional_example"><a class="anchor" href="#_conditional_example"></a>Conditional example</h2>
+<h2 id="_original_html"><a class="anchor" href="#_original_html"></a>Original HTML</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Imagine a component whose only role is to decide if the provided HTML should be displayed or not. Let&#8217;s name that component <code>conditional</code>.</p>
-</div>
-<div class="paragraph">
-<p>If value provided in <code>data-props</code> is <code>true</code> then the content will be displayed. Otherwise a message should be shown.</p>
-</div>
-<div class="paragraph">
-<p>The template HTML can look like this.</p>
+<p>Create an HTML file in <code>/src/main/resources</code> folder named <code>hello-world.html</code> and paste the following content.</p>
 </div>
 <div class="listingblock">
+<div class="title">src/main/resources/hello-world.html</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World example&lt;/title&gt;
+  &lt;/head&gt;
   &lt;body&gt;
-    &lt;div data-markuply-component="conditional"
-         data-props="true"&gt;
-      &lt;div data-markuply-section="then"&gt;Props equal true&lt;/div&gt;
-      &lt;div data-markuply-section="else"&gt;Otherwise another message is shown&lt;/div&gt;
+    &lt;div data-props="Java"
+         data-markuply-component="hello"&gt;
     &lt;/div&gt;
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>conditional</code> component is the parent while two div elements are child sections.</p>
+<p>This file will be processed by the pipeline each time a request to <code>/templating/hello-world.html</code> is sent.</p>
 </div>
 <div class="paragraph">
-<p>To consume the HTML produced based on the child elements we can use the third argument passed to the component render function.</p>
+<p>Within it there is a single <code>hello</code> component placeholder with <code>Java</code> string passed as a parameter.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hello_world_component"><a class="anchor" href="#_hello_world_component"></a>Hello World component</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we have to provide the definition for the <code>hello</code> component.</p>
+</div>
+<div class="paragraph">
+<p>To implement it we will use a mechanism similar to configuring request handlers in Spring controllers.</p>
 </div>
 <div class="listingblock">
-<div class="title">MarkuplyComponents.java</div>
+<div class="title">HelloComponent.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
-public class MarkuplyComponents {
+public class HelloComponent {
 
-  @Markuply("conditional")
-  public Mono&lt;String&gt; renderConditionalComponent(@Props String props, PageContext context, ChildrenRenderer children) {
-    if ("true".equals(props)) {
-      return children.render("then");
-    } else {
-      return children.render("else");
-    }
+  @Markuply("hello")
+  public Mono&lt;String&gt; renderHelloComponent(@Props String props) {
+    String name = props == null || props.isEmpty()
+        ? "World"
+        : props;
+    return Mono.just(String.format("&lt;div&gt;Hello %s!&lt;/div&gt;", name));
   }
 
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>ChildrenRenderer</code> accepts two optional arguments: section name and new page context.
-Section name governs which child element marked with <code>data-markuply-section</code> should be rendered.
-If no name is provided then the default section will be used.
-As for context we can either use the old one as is, enrich it with new values or create a completely new one.</p>
+<p>Make sure this class is registered as a bean within Spring context either through direct <code>@Import</code> or <code>@ComponentScan</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_render_page"><a class="anchor" href="#_render_page"></a>Render page</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To test that page we need to run the Spring Boot server with <code>./gradlew :bootRun</code>.</p>
 </div>
 <div class="paragraph">
-<p>Nested HTML will not be evaluated unless <code>ChildrenRenderer</code> is explicitly called.</p>
-</div>
-<div class="paragraph">
-<p>With conditional component <code>data-props</code> set to true this will be result.</p>
-</div>
-<div class="listingblock">
-<div class="title">data-props="true"</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;body&gt;
-    Props equal true
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>With conditional component data-props set to "false" another section will be rendered instead</p>
-</div>
-<div class="listingblock">
-<div class="title">data-props="false"</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;body&gt;
-    Otherwise another message is shown
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</div>
+<p>Once server is up open your favourite browser and go to the <code><a href="http://localhost:8080/hello-world.html" class="bare">http://localhost:8080/hello-world.html</a></code> URL where <code>Hello Java!</code> should appear.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="pageContext.html">Page context</a></span>
-  <span class="next"><a href="nestedComponents.html">Nested components</a></span>
+  <span class="prev"><a href="../cache/parsedTemplateCache.html">Parsed template cache</a></span>
+  <span class="next"><a href="httpTutorial.html">HTTP pipeline tutorial</a></span>
 </nav>
 </article>
   </div>
@@ -357,7 +379,7 @@ As for context we can either use the old one as is, enrich it with new values or
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.8.0/components/componentInnerContent.html'
+  window.antora.pagePath = '/markuply/0.9.0/tutorials/classpathTutorial.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

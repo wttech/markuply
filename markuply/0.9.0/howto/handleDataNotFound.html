@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Missing component :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/errorHandling/missingComponent.html">
-    <link rel="prev" href="componentProcessingError.html">
-    <link rel="next" href="../cache/requestScopedCache.html">
+    <title>Handle 404 from external data source :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/handleDataNotFound.html">
+    <link rel="prev" href="../tutorials/httpTutorial.html">
+    <link rel="next" href="accessLog.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -32,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.8.0">
+<div class="nav-container" data-component="markuply" data-version="0.9.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -85,13 +85,13 @@
     <span class="nav-text">Error handling</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="handlingErrors.html">Handling errors</a>
+    <a class="nav-link" href="../errorHandling/handlingErrors.html">Handling errors</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="componentProcessingError.html">Component processing error</a>
+    <a class="nav-link" href="../errorHandling/componentProcessingError.html">Component processing error</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="missingComponent.html">Missing component</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../errorHandling/missingComponent.html">Missing component</a>
   </li>
 </ul>
   </li>
@@ -123,23 +123,23 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">How to</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
+    <a class="nav-link" href="accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
+    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
+    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
+    <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
   </li>
 </ul>
   </li>
@@ -151,14 +151,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.8.0</span>
+    <span class="version">0.9.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.8.0</a>
+          <a href="../index.html">0.9.0</a>
         </li>
       </ul>
     </li>
@@ -174,124 +174,99 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>Error handling</li>
-    <li><a href="missingComponent.html">Missing component</a></li>
+    <li>How to</li>
+    <li><a href="handleDataNotFound.html">Handle 404 from external data source</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/errorHandling/missingComponent.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/handleDataNotFound.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Missing component</h1>
+<h1 class="page">Handle 404 from external data source</h1>
 <div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<h2 id="_problem"><a class="anchor" href="#_problem"></a>Problem</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Given the following HTML</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Hello World page&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;div data-props="Fry"
-         data-markuply-component="hello"&gt;
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</div>
+<p>You want to serve under <code>/books/{isbn}</code> a dynamically generated page for every book retrieved from an external API .</p>
 </div>
 <div class="paragraph">
-<p>what should happen if the <code>hello</code> component is not defined?</p>
+<p>When sending GET requests to external API to retrieve book details for some ISBNs the API returns 404 Not Found status.</p>
+</div>
+<div class="paragraph">
+<p>How to make Spring return 404 as well?</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_html_comment"><a class="anchor" href="#_html_comment"></a>HTML Comment</h2>
+<h2 id="_solution"><a class="anchor" href="#_solution"></a>Solution</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default Markuply inserts an appropriate HTML comment instead of real generated HTML and moves on to process the rest of the page.</p>
+<p>To handle special cases in an uniform way Spring <code>@ResponseStatus</code> can be applied to a custom exception class.</p>
 </div>
 <div class="listingblock">
+<div class="title">BookNotFoundException.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Hello World page&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;!-- Component (hello) is not registered. --&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_noop"><a class="anchor" href="#_noop"></a>Noop</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To silently drop the error register the <code>NoopHandler</code> bean.</p>
-</div>
-<div class="listingblock">
-<div class="title">SpringConfiguration.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-MissingComponentHandler provideMissingComponentHandler() {
-  return NoopHandler.instance();
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_custom_handler"><a class="anchor" href="#_custom_handler"></a>Custom handler</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To handle missing component definitions in a custom way register a bean implementing the <code>MissingComponentHandler</code> interface.</p>
-</div>
-<div class="paragraph">
-<p>Its main method has access to componentId, props and page context.</p>
-</div>
-<div class="paragraph">
-<p>You can throw an exception with</p>
-</div>
-<div class="listingblock">
-<div class="title">SpringConfiguration.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-MissingComponentHandler missingComponentHandler() {
-  return (componentId, props, context) -&gt; {
-    return Mono.error(new IllegalStateException());
-  };
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ResponseStatus(value=HttpStatus.NOT_FOUND)
+public class BookNotFoundException extends RuntimeException {
+  // ...
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or generate substitute HTML.</p>
+<p>When controller encounters such exception Spring will set the response type according to the value defined in the annotation.</p>
+</div>
+<div class="paragraph">
+<p>Exceptions should be thrown right away so the best place to so is the service class responsible for invoking the external API.</p>
+</div>
+<div class="listingblock">
+<div class="title">BookApiClient.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ResponseStatus(value=HttpStatus.NOT_FOUND)
+@Component
+public class BookApiClient {
+
+  private final WebClient webClient = WebClient.builder().build();
+
+  public Mono&lt;Book&gt; getBook(String isbn) {
+    webClient.get()
+      .uri("https://book.api/books/" + isbn)
+      .retrieve()
+      .onStatus(status -&gt; status.equals(HttpStatus.NOT_FOUND),
+          response -&gt; Mono.error(new BookNotFoundException()))
+      .bodyToMono(Book.class);
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>getBook()</code> method is invoked outside Markuply context (in controller) then <code>BookNotFoundException</code> will reach Spring
+exception handling mechanism.</p>
+</div>
+<div class="paragraph">
+<p>However if that same method is invoked within Markuply component then it will be swallowed by the default <code>ComponentErrorHandler</code>.</p>
+</div>
+<div class="paragraph">
+<p>To mitigate that we have to customize the error handler by providing it with exception types which should be passed downstream
+as they should affect the generation of the whole page rather than just a fragment.</p>
 </div>
 <div class="listingblock">
 <div class="title">SpringConfiguration.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-MissingComponentHandler missingComponentHandler() {
-  return (componentId, props, context) -&gt; {
-    return Mono.just("&lt;h1&gt;Component missing!!!&lt;h1&gt;");
-  };
+ComponentErrorHandler handler() {
+  return ComponentErrorHandlers.logAllExcept(BookNotFoundException.class);
 }</code></pre>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="componentProcessingError.html">Component processing error</a></span>
-  <span class="next"><a href="../cache/requestScopedCache.html">Request scoped cache</a></span>
+  <span class="prev"><a href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a></span>
+  <span class="next"><a href="accessLog.html">Maintain access log</a></span>
 </nav>
 </article>
   </div>
@@ -300,7 +275,7 @@ MissingComponentHandler missingComponentHandler() {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.8.0/errorHandling/missingComponent.html'
+  window.antora.pagePath = '/markuply/0.9.0/howto/handleDataNotFound.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Integrate with Javascript :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.8.0/howto/developWithJavascript.html">
-    <link rel="prev" href="processInnerContentAsTemplate.html">
+    <title>Classpath pipeline :: Markuply reference</title>
+    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/processor/classpathPageProcessor.html">
+    <link rel="prev" href="httpPageProcessor.html">
+    <link rel="next" href="../errorHandling/handlingErrors.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -31,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.8.0">
+<div class="nav-container" data-component="markuply" data-version="0.9.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -72,10 +73,10 @@
     <span class="nav-text">Processing pages</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../processor/httpPageProcessor.html">HTTP pipeline</a>
+    <a class="nav-link" href="httpPageProcessor.html">HTTP pipeline</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../processor/classpathPageProcessor.html">Classpath pipeline</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="classpathPageProcessor.html">Classpath pipeline</a>
   </li>
 </ul>
   </li>
@@ -123,22 +124,22 @@
     <span class="nav-text">How to</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="accessLog.html">Maintain access log</a>
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
   </li>
 </ul>
   </li>
@@ -150,14 +151,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.8.0</span>
+    <span class="version">0.9.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.8.0</a>
+          <a href="../index.html">0.9.0</a>
         </li>
       </ul>
     </li>
@@ -173,29 +174,53 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>How to</li>
-    <li><a href="developWithJavascript.html">Integrate with Javascript</a></li>
+    <li>Processing pages</li>
+    <li><a href="classpathPageProcessor.html">Classpath pipeline</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/developWithJavascript.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/processor/classpathPageProcessor.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Integrate with Javascript</h1>
+<h1 class="page">Classpath pipeline</h1>
 <div class="paragraph">
-<p>Thanks to GraalVM we can now execute any JS script from within Java.</p>
+<p><code>ClasspathPipeline</code> is a processor available out of the box transforming HTML content retrieved from classpath resources.</p>
 </div>
 <div class="paragraph">
-<p>Conveniently there&#8217;s already a library developed specifically to treat Javascript code as a rendering engine which can be used within Markuply context.</p>
+<p>To transform a resource located in <code>/src/main/resources/templates/homepage.html</code>
+just call <code>classpathPipeline.render("/templates/homepage.html")</code>.</p>
 </div>
 <div class="paragraph">
-<p>For more information visit <a href="https://wttech.github.io/graal-templating">Graal templating library homepage</a>.</p>
+<p>The controller defined below will retrieve an HTML page from classpath based on the request path
+and then evaluate.</p>
+</div>
+<div class="listingblock">
+<div class="title">TemplatingController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+public class TemplatingController {
+
+  private final ClasspathPipeline pageProcessor;
+
+  public TemplatingController(ClasspathPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping("/**")
+  public Mono&lt;String&gt; genericPage(ServerHttpRequest request) {
+    String path = request.getPath().toString();
+    return pageProcessor.render(path);
+  }
+
+}</code></pre>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="processInnerContentAsTemplate.html">Process inner content as a component template</a></span>
+  <span class="prev"><a href="httpPageProcessor.html">HTTP pipeline</a></span>
+  <span class="next"><a href="../errorHandling/handlingErrors.html">Handling errors</a></span>
 </nav>
 </article>
   </div>
@@ -204,7 +229,7 @@
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.8.0/howto/developWithJavascript.html'
+  window.antora.pagePath = '/markuply/0.9.0/processor/classpathPageProcessor.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
