@@ -13,7 +13,7 @@ To enable Dev tools just add the `spring-boot-devtools` dependency to the `devel
 ----
 dependencies {
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
-    implementation("io.wttech.markuply:markuply:{page-version}")
+    implementation("io.wttech.markuply:markuply-spring-boot-starter:{page-version}")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 ----
