@@ -1,6 +1,7 @@
 rootProject.name = "markuply"
 
 include("engine")
+include("spring-boot-starter")
 include("examples:hello-world-classpath")
 include("examples:hello-world-http")
 include("examples:hello-world-js")

@@ -33,6 +33,7 @@ import io.wttech.markuply.engine.renderer.spring.MarkuplyBeanPostProcessor;
 import io.wttech.markuply.engine.renderer.spring.MarkuplyReflectiveBeanPostProcessor;
 import io.wttech.markuply.engine.template.parser.TemplateParser;
 import io.wttech.markuply.engine.template.parser.atto.AttoTemplateParser;
+import io.wttech.markuply.engine.template.parser.TemplateParserConfiguration;
 import io.wttech.markuply.engine.webclient.WebClientBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -87,8 +88,14 @@ public class MarkuplyAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  TemplateParser provideDefaultTemplateParser() {
-    return AttoTemplateParser.instance();
+  TemplateParserConfiguration provideDefaultTemplateParserConfiguration() {
+    return TemplateParserConfiguration.builder().build();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  TemplateParser provideDefaultTemplateParser(TemplateParserConfiguration configuration) {
+    return AttoTemplateParser.instance(configuration);
   }
 
   @Bean

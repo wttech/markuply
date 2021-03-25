@@ -1,5 +1,6 @@
 package io.wttech.markuply.engine;
 
+import io.wttech.markuply.engine.template.parser.TemplateParserConfiguration;
 import io.wttech.markuply.engine.template.parser.atto.AttoTemplateParser;
 import io.wttech.markuply.engine.template.parser.jsoup.JsoupTemplateParser;
 import io.wttech.markuply.engine.utils.ClasspathFileLoader;

@@ -19,7 +19,7 @@ repositories {
 }
 
 tasks.getByName<Jar>("jar") {
-    archiveBaseName.set("markuply-spring-boot-starter")
+    archiveBaseName.set("markuply")
 }
 
 java {
@@ -38,7 +38,7 @@ publishing {
         create<MavenPublication>("markuply") {
             from(components["java"])
 
-            artifactId = "markuply-spring-boot-starter"
+            artifactId = "markuply"
 
             versionMapping {
                 usage("java-api") {
@@ -76,6 +76,9 @@ publishing {
 }
 
 signing {
+    setRequired({
+        (!version.toString().endsWith("SNAPSHOT") && gradle.taskGraph.hasTask("publish"))
+    })
     val signingKey: String? by project
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
@@ -99,6 +102,8 @@ dependencies {
     implementation(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}"))
     api("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-aop")
+    // to force lombok annotation processor execution before configuration metadata
+    annotationProcessor("org.projectlombok:lombok:1.18.16")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
     annotationProcessor("org.springframework.boot:spring-boot-autoconfigure-processor:${springBootVersion}")
     // HTML parsers

@@ -57,7 +57,8 @@ public class BaseHttpPageProcessor implements HttpPipeline {
   }
 
   private Mono<HttpPageResponse> processContent(String path, HttpPageResponse response, PageContext context) {
-    return renderFunctionProvider.get(path, response.getBody())
+    String body = response.getBody() != null ? response.getBody() : "";
+    return renderFunctionProvider.get(path, body)
         .flatMap(renderFunction -> renderFunction.render(context))
         .map(response::withBody);
   }

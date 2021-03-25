@@ -26,5 +26,6 @@
 ** xref:howto/defineMultipleHttpPipelines.adoc[]
 ** xref:howto/processInnerContentAsTemplate.adoc[]
 ** xref:howto/developWithJavascript.adoc[]
+** xref:howto/disableDataPropsDecoding.adoc[]
 
 

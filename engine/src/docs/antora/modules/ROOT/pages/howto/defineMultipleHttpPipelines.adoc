@@ -1,4 +1,5 @@
 = Defining multiple HTTP pipelines
+:page-pagination:
 
 == General
 
@@ -40,7 +41,7 @@ HttpPipeline mainPipeline(WebClient webClient, RenderFunctionFactory factory) {
       .responseProxy(proxy -> proxy.proxyHeader("Set-Cookie").setHeader("Server", "Markuply Main"))
       .renderFunctionCache(caffeine -> caffeine.maximumSize(1000).expireAfterAccess(Duration.ofSeconds(5)))
       .build();
-  }
+}
 ----
 
 The configuration above corresponds to the following `application.yml` snippet except the fact that `application.yml` variant will register the pipeline without any qualifier.

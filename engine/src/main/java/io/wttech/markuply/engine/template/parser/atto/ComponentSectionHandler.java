@@ -2,6 +2,7 @@ package io.wttech.markuply.engine.template.parser.atto;
 
 import io.wttech.markuply.engine.template.graph.node.ComponentFragment;
 import io.wttech.markuply.engine.template.graph.node.ComponentSectionFragment;
+import io.wttech.markuply.engine.template.parser.TemplateParserConfiguration;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.attoparser.AbstractMarkupHandler;
@@ -16,13 +17,14 @@ public class ComponentSectionHandler extends AbstractMarkupHandler implements Fr
   private final StackContext stackContext;
 
   private final DepthlessContentHandler depthlessContentHandler = DepthlessContentHandler.instance();
+  private final TemplateParserConfiguration configuration;
   private StaticHandler bufferHandler;
   private IMarkupHandler targetHandler = depthlessContentHandler;
 
-  private final MarkuplyAttributesWrapper attributes = MarkuplyAttributesWrapper.instance();
+  private final MarkuplyAttributesWrapper attributes;
 
-  public static ComponentSectionHandler instance(String name, StackContext stack) {
-    return new ComponentSectionHandler(name, stack);
+  public static ComponentSectionHandler instance(String name, StackContext stack, TemplateParserConfiguration configuration) {
+    return new ComponentSectionHandler(name, stack, configuration, MarkuplyAttributesWrapper.instance(configuration));
   }
 
   public ComponentSectionFragment getResult() {
@@ -47,7 +49,7 @@ public class ComponentSectionHandler extends AbstractMarkupHandler implements Fr
     endStaticMode();
     String componentId = attributes.getComponentId();
     String props = attributes.getProps();
-    stackContext.push(ComponentHandler.instance(componentId, props, stackContext));
+    stackContext.push(ComponentHandler.instance(componentId, props, stackContext, configuration));
     startStaticMode();
   }
 

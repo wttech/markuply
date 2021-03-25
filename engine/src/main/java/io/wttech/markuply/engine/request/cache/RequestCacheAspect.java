@@ -20,11 +20,11 @@ public class RequestCacheAspect {
   public void annotatedMethod() {
   }
 
-  @Pointcut("execution(public reactor.core.publisher.Mono+ *(..))")
+  @Pointcut("execution(reactor.core.publisher.Mono+ *(..))")
   public void monoReturnType() {
   }
 
-  @Pointcut("execution(public reactor.core.publisher.Flux+ *(..))")
+  @Pointcut("execution(reactor.core.publisher.Flux+ *(..))")
   public void fluxReturnType() {
   }
 

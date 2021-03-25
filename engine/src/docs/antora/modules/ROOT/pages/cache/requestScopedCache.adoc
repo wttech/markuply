@@ -19,3 +19,5 @@ introduce any available caching solution into your project. Markuply won't compl
 == Limitations
 
 `@RequestCache` annotation must be placed on a method returning either `Mono<>` or `Flux<>`.
+
+`@RequestCache` annotation cannot be placed on a method in the same class where other methods are annotated with `@Markuply`.

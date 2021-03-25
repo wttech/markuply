@@ -1,0 +1,15 @@
+= Disable data-props decoding
+:page-pagination:
+
+The `data-props` attribute usually contains a JSON string so by default the template parser automatically transforms encoded HTML entities eg. `\&quot;` back to their original representation.
+
+If this behaviour causes issues through double decoding then it can be disabled in Spring configuration.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+TemplateParserConfiguration parserConfiguration() {
+  return TemplateParserConfiguration.builder().propsDecodingEnabled(true).build();
+}
+----

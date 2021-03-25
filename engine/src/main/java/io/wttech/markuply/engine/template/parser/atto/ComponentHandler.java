@@ -2,6 +2,7 @@ package io.wttech.markuply.engine.template.parser.atto;
 
 import io.wttech.markuply.engine.template.graph.node.ComponentFragment;
 import io.wttech.markuply.engine.template.graph.node.ComponentSectionFragment;
+import io.wttech.markuply.engine.template.parser.TemplateParserConfiguration;
 import io.wttech.markuply.engine.template.parser.TemplateParserException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +23,16 @@ public class ComponentHandler extends AbstractMarkupHandler implements FragmentH
   private final StackContext stackContext;
 
   private final DepthlessContentHandler depthlessContentHandler = DepthlessContentHandler.instance();
+  private final TemplateParserConfiguration configuration;
   private StaticHandler bufferHandler;
   private IMarkupHandler targetHandler = depthlessContentHandler;
 
   private final List<ComponentSectionFragment> sections = new ArrayList<>();
 
-  private final MarkuplyAttributesWrapper attributes = MarkuplyAttributesWrapper.instance();
+  private final MarkuplyAttributesWrapper attributes;
 
-  public static ComponentHandler instance(String name, String props, StackContext stack) {
-    return new ComponentHandler(name, props, stack);
+  public static ComponentHandler instance(String name, String props, StackContext stack, TemplateParserConfiguration configuration) {
+    return new ComponentHandler(name, props, stack, configuration, MarkuplyAttributesWrapper.instance(configuration));
   }
 
   public ComponentFragment getResult() {
@@ -57,7 +59,7 @@ public class ComponentHandler extends AbstractMarkupHandler implements FragmentH
   private void startSectionMode() {
     endStaticMode();
     String sectionName = attributes.getSectionName();
-    stackContext.push(ComponentSectionHandler.instance(sectionName, stackContext));
+    stackContext.push(ComponentSectionHandler.instance(sectionName, stackContext, configuration));
     startStaticMode();
   }
 
@@ -65,7 +67,7 @@ public class ComponentHandler extends AbstractMarkupHandler implements FragmentH
     endStaticMode();
     String componentId = attributes.getComponentId();
     String props = attributes.getProps();
-    stackContext.push(ComponentHandler.instance(componentId, props, stackContext));
+    stackContext.push(ComponentHandler.instance(componentId, props, stackContext, configuration));
     startStaticMode();
   }
 

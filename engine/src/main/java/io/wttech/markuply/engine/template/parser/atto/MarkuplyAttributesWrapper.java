@@ -1,10 +1,13 @@
 package io.wttech.markuply.engine.template.parser.atto;
 
 import io.wttech.markuply.engine.template.parser.TemplateParser;
+import io.wttech.markuply.engine.template.parser.TemplateParserConfiguration;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(staticName = "instance")
 public class MarkuplyAttributesWrapper {
+
+  private final TemplateParserConfiguration configuration;
 
   private MarkuplyAttributes attributes;
 
@@ -47,7 +50,8 @@ public class MarkuplyAttributesWrapper {
       if (this.attributes == null) {
         this.attributes = MarkuplyAttributes.instance();
       }
-      this.attributes.setProps(attributeValue);
+      String finalValue = configuration.isPropsDecodingEnabled() ? org.jsoup.parser.Parser.unescapeEntities(attributeValue, true) : attributeValue;
+      this.attributes.setProps(finalValue);
     }
     if (checkMatch(buffer, offset, length, TemplateParser.SECTION_ATTRIBUTE)) {
       String attributeValue = new String(buffer, valueOffset, valueLength);

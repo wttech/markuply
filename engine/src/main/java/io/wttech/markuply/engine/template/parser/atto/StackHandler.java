@@ -1,6 +1,7 @@
 package io.wttech.markuply.engine.template.parser.atto;
 
 import io.wttech.markuply.engine.template.graph.node.RootFragment;
+import io.wttech.markuply.engine.template.parser.TemplateParserConfiguration;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.attoparser.AbstractMarkupHandler;
@@ -9,15 +10,17 @@ import org.attoparser.ParseException;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class StackHandler extends AbstractMarkupHandler {
 
-  private RootHandler rootHandler;
   private final StackContext stackContext;
+  private final TemplateParserConfiguration configuration;
 
-  public static StackHandler instance() {
-    return new StackHandler(StackContext.instance());
+  private RootHandler rootHandler;
+
+  public static StackHandler instance(TemplateParserConfiguration configuration) {
+    return new StackHandler(StackContext.instance(), configuration);
   }
 
   private void startRootMode() {
-    rootHandler = RootHandler.instance(stackContext);
+    rootHandler = RootHandler.instance(stackContext, configuration);
     stackContext.push(rootHandler);
   }
 
