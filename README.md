@@ -1,5 +1,8 @@
 # Markuply
 
+![Maven Central](https://img.shields.io/maven-central/v/io.wttech.markuply/markuply)
+[![javadoc](https://javadoc.io/badge2/io.wttech.markuply/markuply/javadoc.svg)](https://javadoc.io/doc/io.wttech.markuply/markuply)
+
 Spring based template enriching library with support for Javascript execution on GraalVM.
 
 Markuply itself is not a rendering engine but rather a platform for introducing dynamic markup into static templates using an engine of your choosing.
