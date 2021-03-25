@@ -27,5 +27,6 @@
 ** xref:howto/processInnerContentAsTemplate.adoc[]
 ** xref:howto/developWithJavascript.adoc[]
 ** xref:howto/disableDataPropsDecoding.adoc[]
+* https://javadoc.io/doc/io.wttech.markuply/markuply/{page-version}[Javadoc]
 
 
