@@ -38,8 +38,7 @@ public class ComponentRegistry {
       throw new ComponentDefinitionException("Component of name " + name + " already exists.");
     }
     components.put(name, component);
-    log.info("Registered component named {} of class {}", name,
-        component.getClass().getSimpleName());
+    log.info("Registered component named {}", name);
   }
 
 }
