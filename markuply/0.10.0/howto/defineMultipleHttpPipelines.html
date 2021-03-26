@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Maintain access log :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/accessLog.html">
-    <link rel="prev" href="handleDataNotFound.html">
-    <link rel="next" href="transformAllPages.html">
-    <meta name="description" content="How to persist access logs">
+    <title>Defining multiple HTTP pipelines :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/howto/defineMultipleHttpPipelines.html">
+    <link rel="prev" href="transformAllPages.html">
+    <link rel="next" href="processInnerContentAsTemplate.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -17,7 +16,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -33,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -127,13 +126,13 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="transformAllPages.html">Process all pages</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -142,7 +141,13 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disableDataPropsDecoding.html">Disable data-props decoding</a>
+  </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -152,14 +157,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -176,45 +181,128 @@
   <ul>
     <li><a href="../index.html">Markuply</a></li>
     <li>How to</li>
-    <li><a href="accessLog.html">Maintain access log</a></li>
+    <li><a href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/accessLog.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/defineMultipleHttpPipelines.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Maintain access log</h1>
-<div id="preamble">
+<h1 class="page">Defining multiple HTTP pipelines</h1>
+<div class="sect1">
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Access log can be enabled by performing two steps.</p>
+<p>In some cases it might be useful to combine two separate HTTP pipelines processing HTML pages from different sources within the context of a single Spring application.</p>
+</div>
+<div class="paragraph">
+<p>This can be only achieved with Spring code configuration classes as <code>application.yml</code> file supports defining only a single global pipeline.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_netty_server"><a class="anchor" href="#_netty_server"></a>Netty server</h2>
+<h2 id="_dependency_injection_qualifiers"><a class="anchor" href="#_dependency_injection_qualifiers"></a>Dependency injection qualifiers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Netty access logs are disabled by default. To enable them a system parameter must be passed when starting the application.</p>
-</div>
-<div class="paragraph">
-<p><code>java -Dreactor.netty.http.server.accessLogEnabled=true -jar application.jar</code></p>
-</div>
-<div class="paragraph">
-<p>It also can be set within the code right before Spring application is started.</p>
+<p>First let&#8217;s define two annotations meta-annotated with <code>@Qualifier</code> to be able to discern both pipeline variants when injecting them into a target bean.</p>
 </div>
 <div class="listingblock">
-<div class="title">ExampleApplication.java</div>
+<div class="title">MainPipeline.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@SpringBootApplication
-public class ExampleApplication {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Qualifier("mainPipeline")
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MainPipeline {
 
-  public static void main(String[] args) {
-    System.setProperty("reactor.netty.http.server.accessLogEnabled", "true");
-    SpringApplication.run(ExampleApplication.class, args);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second one should look exactly the same except for the annotation name and the <code>@Qualifier</code> annotation value.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pipeline_configuration"><a class="anchor" href="#_pipeline_configuration"></a>Pipeline configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The same things achievable with <code>application.yml</code> are also possible with code configuration in a very similar way.</p>
+</div>
+<div class="listingblock">
+<div class="title">SpringConfiguration.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+@MainPipeline
+HttpPipeline mainPipeline(WebClient webClient, RenderFunctionFactory factory) {
+  HttpPageProcessorConfigurator builder = HttpPageProcessorConfigurator.instance(factory);
+  return builder
+      .repository(repository -&gt; repository.urlPrefix("http://localhost:8082/main").webClient(webClient))
+      .requestProxy(proxy -&gt; proxy.proxyHeader("Cookie").setHeader("X-User-Agent", "Markuply Main"))
+      .responseProxy(proxy -&gt; proxy.proxyHeader("Set-Cookie").setHeader("Server", "Markuply Main"))
+      .renderFunctionCache(caffeine -&gt; caffeine.maximumSize(1000).expireAfterAccess(Duration.ofSeconds(5)))
+      .build();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration above corresponds to the following <code>application.yml</code> snippet except the fact that <code>application.yml</code> variant will register the pipeline without any qualifier.</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
+  http:
+    repository:
+      urlPrefix: "http://localhost:8082/main"
+    proxy:
+      request:
+        copyHeaders:
+          - "Cookie"
+        addHeaders:
+          - "X-User-Agent:Markuply Main"
+      response:
+        copyHeaders:
+          - Set-Cookie
+        addHeaders:
+          - "Server:Markuply Main"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second pipeline can be configured in pretty much the same way. Just use <code>@SecondaryPipeline</code> qualifier annotation or any other of your choosing instead of <code>@MainPipeline</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exposing_pipelines"><a class="anchor" href="#_exposing_pipelines"></a>Exposing pipelines</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have both configurations in place we can expose them both using two different endpoints in a controller class.</p>
+</div>
+<div class="listingblock">
+<div class="title">TemplatingController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+public class TemplatingController {
+
+  private final HttpPipeline main;
+  private final HttpPipeline secondary;
+
+  public TemplatingController(@MainPipeline HttpPipeline main, @SecondaryPipeline HttpPipeline secondary) {
+    this.main = main;
+    this.secondary = secondary;
+  }
+
+  @GetMapping(value = "/main/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; primaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return main.render(pathToProcess).map(HttpPageResponse::getBody);
+  }
+
+  @GetMapping(value = "/secondary/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
+  public Mono&lt;String&gt; secondaryPipelineEndpoint(@PathVariable String pathToProcess) {
+    return secondary.render(pathToProcess).map(HttpPageResponse::getBody);
   }
 
 }</code></pre>
@@ -222,38 +310,9 @@ public class ExampleApplication {
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_logger_configuration"><a class="anchor" href="#_logger_configuration"></a>Logger configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Now that access logs are enabled they have to be persisted in a file. Proper logback configuration will handle that.</p>
-</div>
-<div class="listingblock">
-<div class="title">ExampleApplication.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;configuration&gt;
-    &lt;appender name="accessLog" class="ch.qos.logback.core.FileAppender"&gt;
-        &lt;file&gt;access_log.log&lt;/file&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%msg%n&lt;/pattern&gt;
-        &lt;/encoder&gt;
-    &lt;/appender&gt;
-
-    &lt;appender name="async" class="ch.qos.logback.classic.AsyncAppender"&gt;
-        &lt;appender-ref ref="accessLog" /&gt;
-    &lt;/appender&gt;
-
-    &lt;logger name="reactor.netty.http.server.AccessLog" level="INFO" additivity="false"&gt;
-        &lt;appender-ref ref="async"/&gt;
-    &lt;/logger&gt;
-&lt;/configuration&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
 <nav class="pagination">
-  <span class="prev"><a href="handleDataNotFound.html">Handle 404 from external data source</a></span>
-  <span class="next"><a href="transformAllPages.html">Process all pages</a></span>
+  <span class="prev"><a href="transformAllPages.html">Process all pages</a></span>
+  <span class="next"><a href="processInnerContentAsTemplate.html">Process inner content as a component template</a></span>
 </nav>
 </article>
   </div>
@@ -262,7 +321,7 @@ public class ExampleApplication {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/howto/accessLog.html'
+  window.antora.pagePath = '/markuply/0.10.0/howto/defineMultipleHttpPipelines.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

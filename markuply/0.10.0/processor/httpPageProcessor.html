@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Develop with Spring dev tools :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/springDevTools.html">
-    <meta name="description" content="How to develop with Spring Dev tools">
+    <title>HTTP pipeline :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/processor/httpPageProcessor.html">
+    <link rel="prev" href="../components/nestedComponents.html">
+    <link rel="next" href="classpathPageProcessor.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -15,7 +16,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -31,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -71,11 +72,11 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Processing pages</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../processor/httpPageProcessor.html">HTTP pipeline</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="httpPageProcessor.html">HTTP pipeline</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../processor/classpathPageProcessor.html">Classpath pipeline</a>
+    <a class="nav-link" href="classpathPageProcessor.html">Classpath pipeline</a>
   </li>
 </ul>
   </li>
@@ -123,24 +124,30 @@
     <span class="nav-text">How to</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="accessLog.html">Maintain access log</a>
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
+    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/disableDataPropsDecoding.html">Disable data-props decoding</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -150,14 +157,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -173,67 +180,120 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li><a href="springDevTools.html">Develop with Spring dev tools</a></li>
+    <li>Processing pages</li>
+    <li><a href="httpPageProcessor.html">HTTP pipeline</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/springDevTools.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/processor/httpPageProcessor.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Develop with Spring dev tools</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Spring Dev tools can be used in a Markuply project to speed up the development process when implementing the Java logic or changing the contents of resources located on the classpath ie. page templates.</p>
-</div>
-</div>
-</div>
+<h1 class="page">HTTP pipeline</h1>
 <div class="sect1">
-<h2 id="_enabling_dev_tools"><a class="anchor" href="#_enabling_dev_tools"></a>Enabling dev tools</h2>
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To enable Dev tools just add the <code>spring-boot-devtools</code> dependency to the <code>developmentOnly</code> configuration which is provided automatically by the Spring Boot Gradle plugin.</p>
+<p>To load content from an external server first define your own HttpPageRepository bean.</p>
 </div>
 <div class="listingblock">
-<div class="title">build.gradle.kts</div>
+<div class="title">SpringConfiguration.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">dependencies {
-    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
-    implementation("io.wttech.markuply:markuply-spring-boot-starter:0.9.0")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+HttpPageRepository providePageRepository(HttpPageRepositorySpringConfigurator configurator) {
+  return configurator
+      .uriPrefix("http://some-server/")
+      .build();
 }</code></pre>
 </div>
 </div>
+<div class="listingblock">
+<div class="title">application.properties alternative</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">markuply.http.repository.urlPrefix=http://some-server/</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">application.yml alternative</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
+  http:
+    repository:
+      urlPrefix: "http://some-server/"</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>When <code>:bootRun</code> task is executed the Spring application will listen for classpath changes and restart the server.</p>
+<p>Autoconfiguration will pick up the HttpPageRepository created using any of the methods defined above and will create a HttpPipeline bean which acts as a facade for transforming content retrieved from an external server.</p>
+</div>
+<div class="paragraph">
+<p>When invoking the <code>HttpPipeline.render(String path)</code> method the <code>path</code> parameter will be appended to the configured <code>urlPrefix</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_watching_changes"><a class="anchor" href="#_watching_changes"></a>Watching changes</h2>
+<h2 id="_static_header_proxy_configuration"><a class="anchor" href="#_static_header_proxy_configuration"></a>Static header proxy configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Depending on your IDE and configuration changing the source code might not result in Spring app classpath being modified.</p>
+<p><code>HttpPipeline</code> can be configured to copy original request headers to the external server request
+and to copy external server response headers to the original client response.</p>
 </div>
 <div class="paragraph">
-<p>To make sure all changes are in fact reflected on the server execute the following command <code>./gradlew -t :your-module:build</code>.</p>
+<p>Each entry in copyHeaders property is treated as a regular expression.
+If any regex on the list is matched then the headers is carried over.</p>
+</div>
+<div class="paragraph">
+<p>Each entry in addHeaders property is added to each request or response.</p>
+</div>
+<div class="listingblock">
+<div class="title">application.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">markuply.http.proxy.request.copyHeaders[0]=Accept.*
+markuply.http.proxy.request.copyHeaders[1]=Cookie
+markuply.http.proxy.request.addHeaders[0]=Custom-Header-Name:Custom-Header-Value
+markuply.http.proxy.response.copyHeaders[0]=Cache-Control
+markuply.http.proxy.response.copyHeaders[1]=Set-Cookie
+markuply.http.proxy.response.addHeaders[0]=Custom-Header-Name:Custom-Header-Value</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">application.yml alternative</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
+  http:
+    proxy:
+      request:
+        copyHeaders:
+          - "Accept.*"
+          - Cookie
+        addHeaders:
+          - "Custom-Header-Name:Custom-Header-Value"
+      response:
+        copyHeaders:
+          - Cache-Control
+          - Set-Cookie
+        addHeaders:
+          - "Custom-Header-Name:Custom-Header-Value"</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_limitations"><a class="anchor" href="#_limitations"></a>Limitations</h2>
+<h2 id="_dynamic_header_proxy_configuration"><a class="anchor" href="#_dynamic_header_proxy_configuration"></a>Dynamic header proxy configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If Dev tools are enabled then Markuply invokes component logic methods through standard reflections API instead of Lambda Metafactory.</p>
+<p>Some of the <code>HttpPipeline.render</code> method overloads accept the <code>RequestEnricher</code> parameter which can be used to modify the outgoing request on per request basis.</p>
 </div>
 <div class="paragraph">
-<p>Avoid running performance tests with Dev tools enabled.</p>
+<p>Additionally the <code>render</code> method returns details about the outgoing exchange response which can be used to modify the incoming exchange response.</p>
 </div>
 </div>
 </div>
+<nav class="pagination">
+  <span class="prev"><a href="../components/nestedComponents.html">Nested components</a></span>
+  <span class="next"><a href="classpathPageProcessor.html">Classpath pipeline</a></span>
+</nav>
 </article>
   </div>
 </main>
@@ -241,7 +301,7 @@
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/howto/springDevTools.html'
+  window.antora.pagePath = '/markuply/0.10.0/processor/httpPageProcessor.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

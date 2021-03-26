@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Component registration :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/components/componentRegistration.html">
-    <link rel="prev" href="../projectSetup.html">
-    <link rel="next" href="pageContext.html">
+    <title>Nested components :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/components/nestedComponents.html">
+    <link rel="prev" href="componentInnerContent.html">
+    <link rel="next" href="../processor/httpPageProcessor.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -16,7 +16,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -32,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -54,7 +54,7 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Components</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="componentRegistration.html">Component registration</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -63,7 +63,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="componentInnerContent.html">Component inner content</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="nestedComponents.html">Nested components</a>
   </li>
 </ul>
@@ -141,7 +141,13 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/disableDataPropsDecoding.html">Disable data-props decoding</a>
+  </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -151,14 +157,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -175,79 +181,86 @@
   <ul>
     <li><a href="../index.html">Markuply</a></li>
     <li>Components</li>
-    <li><a href="componentRegistration.html">Component registration</a></li>
+    <li><a href="nestedComponents.html">Nested components</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/componentRegistration.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/nestedComponents.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Component registration</h1>
+<h1 class="page">Nested components</h1>
 <div class="sect1">
 <h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Component registration can be achieved using an approach similar to how request handlers are registered in Spring controller classes.</p>
+<p>Up to this point component inner content included only static HTML but in fact other Markuply components can be included there as well.</p>
 </div>
-<div class="paragraph">
-<p>First make sure that the class containing methods for component rendering is registered as a Spring bean either with <code>@Component</code> annotation or through <code>@ComponentScan</code>.</p>
 </div>
-<div class="paragraph">
-<p>Then define a method that will handle a particular Markuply component.</p>
 </div>
+<div class="sect1">
+<h2 id="_wrapper_with_nested_component"><a class="anchor" href="#_wrapper_with_nested_component"></a>Wrapper with nested component</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>To provide custom component ID use <code>@Markuply("componentId")</code> annotation on that method.
-If it is not provided then the method name will be used instead.</p>
+<p>Let&#8217;s define a wrapper component just like the one in <a href="componentInnerContent.html" class="page">Component inner content</a>.
+On top on that we create a simple Hello World component definition.</p>
 </div>
 <div class="listingblock">
-<div class="title">HelloWorldComponent.java</div>
+<div class="title">MarkuplyComponents.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
-public class HelloWorldComponent {
+public class MarkuplyComponents {
 
-  @Markuply("componentId")
-  public Mono&lt;String&gt; render(@Props String props, PageContext context) {
-    // details omitted
+  @Markuply("wrapper")
+  public Mono&lt;String&gt; wrapper(ChildrenRenderer children) {
+    return children.render().map(innerContent -&gt; "&lt;span&gt;" + innerContent + "&lt;/span&gt;");
+  }
+
+  @Markuply("hello")
+  public Mono&lt;String&gt; wrapper() {
+    return Mono.just("Hello World!");
   }
 
 }</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_parameter_resolution"><a class="anchor" href="#_parameter_resolution"></a>Parameter resolution</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>There are 5 types of arguments you can define in your component render method:</p>
+<p>Given the input HTML below</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>@Props String parameter</code> - unchanged <code>data-props</code> attribute value</p>
-</li>
-<li>
-<p><code>@Props T parameter</code> - <code>data-props</code> attribute value parsed as the <code>&lt;T&gt;</code> type using Jackson</p>
-</li>
-<li>
-<p><code>PageContext context</code> - full page context object</p>
-</li>
-<li>
-<p><code>@Context T context</code> - value extracted from PageContext using the provided <code>&lt;T&gt;</code> type as the key</p>
-</li>
-<li>
-<p><code>ChildrenRenderer children</code> - allows evaluating component inner content</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="title">input.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div data-markuply-component="wrapper"&gt;
+      &lt;div data-markuply-component="hello" /&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>the result HTML will be as follows.</p>
+</div>
+<div class="listingblock">
+<div class="title">output.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;span&gt;Hello World!&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../projectSetup.html">Project setup</a></span>
-  <span class="next"><a href="pageContext.html">Page context</a></span>
+  <span class="prev"><a href="componentInnerContent.html">Component inner content</a></span>
+  <span class="next"><a href="../processor/httpPageProcessor.html">HTTP pipeline</a></span>
 </nav>
 </article>
   </div>
@@ -256,7 +269,7 @@ public class HelloWorldComponent {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/components/componentRegistration.html'
+  window.antora.pagePath = '/markuply/0.10.0/components/nestedComponents.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

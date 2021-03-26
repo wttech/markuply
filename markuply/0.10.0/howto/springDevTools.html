@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Integrate with Javascript :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/developWithJavascript.html">
-    <link rel="prev" href="processInnerContentAsTemplate.html">
+    <title>Develop with Spring dev tools :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/howto/springDevTools.html">
+    <meta name="description" content="How to develop with Spring Dev tools">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -15,7 +15,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -31,7 +31,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -137,10 +137,16 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disableDataPropsDecoding.html">Disable data-props decoding</a>
+  </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -150,14 +156,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -173,30 +179,67 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>How to</li>
-    <li><a href="developWithJavascript.html">Integrate with Javascript</a></li>
+    <li><a href="springDevTools.html">Develop with Spring dev tools</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/developWithJavascript.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/springDevTools.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Integrate with Javascript</h1>
+<h1 class="page">Develop with Spring dev tools</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>Thanks to GraalVM we can now execute any JS script from within Java.</p>
+<p>Spring Dev tools can be used in a Markuply project to speed up the development process when implementing the Java logic or changing the contents of resources located on the classpath ie. page templates.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_enabling_dev_tools"><a class="anchor" href="#_enabling_dev_tools"></a>Enabling dev tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To enable Dev tools just add the <code>spring-boot-devtools</code> dependency to the <code>developmentOnly</code> configuration which is provided automatically by the Spring Boot Gradle plugin.</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle.kts</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">dependencies {
+    implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    implementation("io.wttech.markuply:markuply-spring-boot-starter:0.10.0")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Conveniently there&#8217;s already a library developed specifically to treat Javascript code as a rendering engine which can be used within Markuply context.</p>
+<p>When <code>:bootRun</code> task is executed the Spring application will listen for classpath changes and restart the server.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_watching_changes"><a class="anchor" href="#_watching_changes"></a>Watching changes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Depending on your IDE and configuration changing the source code might not result in Spring app classpath being modified.</p>
 </div>
 <div class="paragraph">
-<p>For more information visit <a href="https://wttech.github.io/graal-templating">Graal templating library homepage</a>.</p>
+<p>To make sure all changes are in fact reflected on the server execute the following command <code>./gradlew -t :your-module:build</code>.</p>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="processInnerContentAsTemplate.html">Process inner content as a component template</a></span>
-</nav>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_limitations"><a class="anchor" href="#_limitations"></a>Limitations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If Dev tools are enabled then Markuply invokes component logic methods through standard reflections API instead of Lambda Metafactory.</p>
+</div>
+<div class="paragraph">
+<p>Avoid running performance tests with Dev tools enabled.</p>
+</div>
+</div>
+</div>
 </article>
   </div>
 </main>
@@ -204,7 +247,7 @@
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/howto/developWithJavascript.html'
+  window.antora.pagePath = '/markuply/0.10.0/howto/springDevTools.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Defining multiple HTTP pipelines :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/defineMultipleHttpPipelines.html">
+    <title>Process inner content as a component template :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/howto/processInnerContentAsTemplate.html">
+    <link rel="prev" href="defineMultipleHttpPipelines.html">
+    <link rel="next" href="developWithJavascript.html">
+    <meta name="description" content="How to process inner content as a component template">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -14,7 +17,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -30,7 +33,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -130,16 +133,22 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="transformAllPages.html">Process all pages</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="disableDataPropsDecoding.html">Disable data-props decoding</a>
+  </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -149,14 +158,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -173,128 +182,63 @@
   <ul>
     <li><a href="../index.html">Markuply</a></li>
     <li>How to</li>
-    <li><a href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a></li>
+    <li><a href="processInnerContentAsTemplate.html">Process inner content as a component template</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/defineMultipleHttpPipelines.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/processInnerContentAsTemplate.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Defining multiple HTTP pipelines</h1>
-<div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
+<h1 class="page">Process inner content as a component template</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In some cases it might be useful to combine two separate HTTP pipelines processing HTML pages from different sources within the context of a single Spring application.</p>
+<p>While components usually use their own templates to render the final markup there&#8217;s nothing stopping you from implementing a component which will process the template passed to Markuply inside component placeholder.</p>
 </div>
 <div class="paragraph">
-<p>This can be only achieved with Spring code configuration classes as <code>application.yml</code> file supports defining only a single global pipeline.</p>
+<p>In this example I&#8217;ll be using Pebble templating engine but any other can be integrated in the same way. It&#8217;s a very simplistic implementation and should not be considered production ready.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dependency_injection_qualifiers"><a class="anchor" href="#_dependency_injection_qualifiers"></a>Dependency injection qualifiers</h2>
+<h2 id="_pebble_component"><a class="anchor" href="#_pebble_component"></a>Pebble component</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>First let&#8217;s define two annotations meta-annotated with <code>@Qualifier</code> to be able to discern both pipeline variants when injecting them into a target bean.</p>
+<p>First let&#8217;s define the Pebble Markuply component which will handle all incoming templates.</p>
 </div>
 <div class="listingblock">
-<div class="title">MainPipeline.java</div>
+<div class="title">PebbleRenderer.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Qualifier("mainPipeline")
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface MainPipeline {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class PebbleRenderer {
 
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The second one should look exactly the same except for the annotation name and the <code>@Qualifier</code> annotation value.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_pipeline_configuration"><a class="anchor" href="#_pipeline_configuration"></a>Pipeline configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The same things achievable with <code>application.yml</code> are also possible with code configuration in a very similar way.</p>
-</div>
-<div class="listingblock">
-<div class="title">SpringConfiguration.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-@MainPipeline
-HttpPipeline mainPipeline(WebClient webClient, RenderFunctionFactory factory) {
-  HttpPageProcessorConfigurator builder = HttpPageProcessorConfigurator.instance(factory);
-  return builder
-      .repository(repository -&gt; repository.urlPrefix("http://localhost:8082/main").webClient(webClient))
-      .requestProxy(proxy -&gt; proxy.proxyHeader("Cookie").setHeader("X-User-Agent", "Markuply Main"))
-      .responseProxy(proxy -&gt; proxy.proxyHeader("Set-Cookie").setHeader("Server", "Markuply Main"))
-      .renderFunctionCache(caffeine -&gt; caffeine.maximumSize(1000).expireAfterAccess(Duration.ofSeconds(5)))
-      .build();
-  }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The configuration above corresponds to the following <code>application.yml</code> snippet except the fact that <code>application.yml</code> variant will register the pipeline without any qualifier.</p>
-</div>
-<div class="listingblock">
-<div class="title">application.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">markuply:
-  http:
-    repository:
-      urlPrefix: "http://localhost:8082/main"
-    proxy:
-      request:
-        copyHeaders:
-          - "Cookie"
-        addHeaders:
-          - "X-User-Agent:Markuply Main"
-      response:
-        copyHeaders:
-          - Set-Cookie
-        addHeaders:
-          - "Server:Markuply Main"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The second pipeline can be configured in pretty much the same way. Just use <code>@SecondaryPipeline</code> qualifier annotation or any other of your choosing instead of <code>@MainPipeline</code>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_exposing_pipelines"><a class="anchor" href="#_exposing_pipelines"></a>Exposing pipelines</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Now that we have both configurations in place we can expose them both using two different endpoints in a controller class.</p>
-</div>
-<div class="listingblock">
-<div class="title">TemplatingController.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
-public class TemplatingController {
+  private final PebbleEngine engine;
 
-  private final HttpPipeline main;
-  private final HttpPipeline secondary;
-
-  public TemplatingController(@MainPipeline HttpPipeline main, @SecondaryPipeline HttpPipeline secondary) {
-    this.main = main;
-    this.secondary = secondary;
+  @Markuply("pebble")
+  public Mono&lt;String&gt; render(@Props Map&lt;String, Object&gt; props, ChildrenRenderer children) {
+    // process the inner content
+    return children.render()
+        // and pass it to the Pebble engine
+        .map(innerContent -&gt; processTemplate(innerContent, props));
   }
 
-  @GetMapping(value = "/main/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
-  public Mono&lt;String&gt; primaryPipelineEndpoint(@PathVariable String pathToProcess) {
-    return main.render(pathToProcess).map(HttpPageResponse::getBody);
-  }
+  private String processTemplate(String template, Map&lt;String, Object&gt; props) {
+    try {
+      // compile the template
+      PebbleTemplate compiledTemplate = engine.getLiteralTemplate(template);
 
-  @GetMapping(value = "/secondary/{*pathToProcess}", produces = MediaType.TEXT_HTML_VALUE)
-  public Mono&lt;String&gt; secondaryPipelineEndpoint(@PathVariable String pathToProcess) {
-    return secondary.render(pathToProcess).map(HttpPageResponse::getBody);
+      // render to a String using props
+      Writer writer = new StringWriter();
+      compiledTemplate.evaluate(writer, props);
+
+      // trim() to remove the additional new line characters around the template itself
+      // not mandatory
+      return writer.toString().trim();
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
 }</code></pre>
@@ -302,6 +246,51 @@ public class TemplatingController {
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_usage"><a class="anchor" href="#_usage"></a>Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we have to create the original HTML page with the pebble component placeholder.</p>
+</div>
+<div class="listingblock">
+<div class="title">pebbleInput.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Pebble processing example&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div data-props='{"name": "Mitchell"}' data-markuply-component="pebble"&gt;
+      &lt;p&gt;The provided name parameter value is: {{ name }}&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After being processed by Markuply the following HTML will be returned.</p>
+</div>
+<div class="listingblock">
+<div class="title">pebbleInput.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Pebble processing example&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;The provided name parameter value is: Mitchell&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a></span>
+  <span class="next"><a href="developWithJavascript.html">Integrate with Javascript</a></span>
+</nav>
 </article>
   </div>
 </main>
@@ -309,7 +298,7 @@ public class TemplatingController {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/howto/defineMultipleHttpPipelines.html'
+  window.antora.pagePath = '/markuply/0.10.0/howto/processInnerContentAsTemplate.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

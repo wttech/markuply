@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Page context :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/components/pageContext.html">
-    <link rel="prev" href="componentRegistration.html">
-    <link rel="next" href="componentInnerContent.html">
+    <title>Component inner content :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/components/componentInnerContent.html">
+    <link rel="prev" href="pageContext.html">
+    <link rel="next" href="nestedComponents.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -16,7 +16,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -32,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -57,10 +57,10 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="componentRegistration.html">Component registration</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="pageContext.html">Page context</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="componentInnerContent.html">Component inner content</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -141,7 +141,13 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/disableDataPropsDecoding.html">Disable data-props decoding</a>
+  </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -151,14 +157,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -175,101 +181,82 @@
   <ul>
     <li><a href="../index.html">Markuply</a></li>
     <li>Components</li>
-    <li><a href="pageContext.html">Page context</a></li>
+    <li><a href="componentInnerContent.html">Component inner content</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/pageContext.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/componentInnerContent.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Page context</h1>
+<h1 class="page">Component inner content</h1>
 <div class="sect1">
 <h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Think of page context as a place to expose to components information about path parameters, query parameters, header values and any other information related to a particular page components on that page would like to consume.</p>
+<p>Components not only can be parametrized through <code>data-props</code> attribute but they can also consume the HTML found within the element marked with <code>data-markuply-component</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>What&#8217;s more the inner content can be grouped into separate section so then the component logic can decide which section should be rendered and where.</p>
+</div>
+<div class="paragraph">
+<p>This feature more or less resembles the <code>props.children</code> from React and <code>&lt;ng-template&gt;</code> from Angular.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_controller"><a class="anchor" href="#_controller"></a>Controller</h2>
+<h2 id="_wrapper_example"><a class="anchor" href="#_wrapper_example"></a>Wrapper example</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>First let&#8217;s define a new controller method handling the <code>/hello/{name}</code> URL. There we will extract the path parameter and pass it to page context keyed under <code>String.class</code>.
-This is the simplest example. Normally you would use your custom data class instead of <code>String</code>.</p>
+<p>Let&#8217;s create a component whose only job is to wrap the received inner content into a <code>&lt;span&gt;</code> element.
+It will retrieve the inner content by rendering the default unnamed section which is available
+when there is no direct child element marked with <code>data-markuply-section</code> attribute.</p>
 </div>
-<div class="listingblock">
-<div class="title">TemplatingController.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
-public class TemplatingController {
-
-  private final HttpPipeline pageProcessor;
-
-  @Inject
-  public TemplatingController(HttpPipeline pageProcessor) {
-    this.pageProcessor = pageProcessor;
-  }
-
-  @GetMapping("/hello/{name}")
-  public Mono&lt;String&gt; helloWorldPage(@PathVariable String name) {
-    // manually create the context
-    PageContext context = PageContext.of(name);
-    // explicitly indicate which HTML resource should be used
-    return pageProcessor.render("/helloWorld.html", context);
-  }
-
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_component_definition"><a class="anchor" href="#_component_definition"></a>Component definition</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Now we have to implement the Hello component.</p>
+<p>Component inner content can be accessed through ChildrenRenderer which should be defined as component method argument.</p>
 </div>
 <div class="listingblock">
-<div class="title">HelloComponent.java</div>
+<div class="title">MarkuplyComponents.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
-public class HelloComponent {
+public class MarkuplyComponents {
 
-  @Markuply("hello")
-  public Mono&lt;String&gt; renderHelloComponent(PageContext context) {
-    String nameFromContext = context.get(String.class);
-    String name = nameFromContext.isEmpty()
-        ? "World"
-        : nameFromContext;
-    return Mono.just(String.format("&lt;div&gt;Hello %s!&lt;/div&gt;", name));
+  @Markuply("wrapper")
+  public Mono&lt;String&gt; wrapper(ChildrenRenderer children) {
+    return children.render().map(innerContent -&gt; "&lt;span&gt;" + innerContent + "&lt;/span&gt;");
   }
 
 }</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_component_usage"><a class="anchor" href="#_component_usage"></a>Component usage</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The <code>helloWorld.html</code> looks really similar to other examples. The only difference is that <code>data-props</code> attribute is not needed.</p>
+<p>Given the input HTML below</p>
 </div>
 <div class="listingblock">
-<div class="title">helloWorld.html</div>
+<div class="title">input.html</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Hello World page&lt;/title&gt;
-  &lt;/head&gt;
   &lt;body&gt;
-    &lt;div data-markuply-component="hello"&gt;
+    &lt;div data-markuply-component="wrapper"&gt;
+      Wrapped content
     &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>the result HTML will be as follows.</p>
+</div>
+<div class="listingblock">
+<div class="title">output.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;span&gt;Wrapped content&lt;/span&gt;
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 </div>
@@ -277,16 +264,97 @@ public class HelloComponent {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_testing"><a class="anchor" href="#_testing"></a>Testing</h2>
+<h2 id="_conditional_example"><a class="anchor" href="#_conditional_example"></a>Conditional example</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Start the server with <code>./gradlew :bootRun</code> and open the <code><a href="http://localhost:8080/hello/Leela" class="bare">http://localhost:8080/hello/Leela</a></code> page to see <code>Hello Leela!</code> printed out. Change the last part of URL to pass any other name.</p>
+<p>Imagine a component whose only role is to decide if the provided HTML should be displayed or not. Let&#8217;s name that component <code>conditional</code>.</p>
+</div>
+<div class="paragraph">
+<p>If value provided in <code>data-props</code> is <code>true</code> then the content will be displayed. Otherwise a message should be shown.</p>
+</div>
+<div class="paragraph">
+<p>The template HTML can look like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;div data-markuply-component="conditional"
+         data-props="true"&gt;
+      &lt;div data-markuply-section="then"&gt;Props equal true&lt;/div&gt;
+      &lt;div data-markuply-section="else"&gt;Otherwise another message is shown&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>conditional</code> component is the parent while two div elements are child sections.</p>
+</div>
+<div class="paragraph">
+<p>To consume the HTML produced based on the child elements we can use the third argument passed to the component render function.</p>
+</div>
+<div class="listingblock">
+<div class="title">MarkuplyComponents.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
+public class MarkuplyComponents {
+
+  @Markuply("conditional")
+  public Mono&lt;String&gt; renderConditionalComponent(@Props String props, PageContext context, ChildrenRenderer children) {
+    if ("true".equals(props)) {
+      return children.render("then");
+    } else {
+      return children.render("else");
+    }
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ChildrenRenderer</code> accepts two optional arguments: section name and new page context.
+Section name governs which child element marked with <code>data-markuply-section</code> should be rendered.
+If no name is provided then the default section will be used.
+As for context we can either use the old one as is, enrich it with new values or create a completely new one.</p>
+</div>
+<div class="paragraph">
+<p>Nested HTML will not be evaluated unless <code>ChildrenRenderer</code> is explicitly called.</p>
+</div>
+<div class="paragraph">
+<p>With conditional component <code>data-props</code> set to true this will be result.</p>
+</div>
+<div class="listingblock">
+<div class="title">data-props="true"</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    Props equal true
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With conditional component data-props set to "false" another section will be rendered instead</p>
+</div>
+<div class="listingblock">
+<div class="title">data-props="false"</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    Otherwise another message is shown
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="componentRegistration.html">Component registration</a></span>
-  <span class="next"><a href="componentInnerContent.html">Component inner content</a></span>
+  <span class="prev"><a href="pageContext.html">Page context</a></span>
+  <span class="next"><a href="nestedComponents.html">Nested components</a></span>
 </nav>
 </article>
   </div>
@@ -295,7 +363,7 @@ public class HelloComponent {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/components/pageContext.html'
+  window.antora.pagePath = '/markuply/0.10.0/components/componentInnerContent.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

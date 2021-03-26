@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Request scoped cache :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/cache/requestScopedCache.html">
-    <link rel="prev" href="../errorHandling/missingComponent.html">
-    <link rel="next" href="parsedTemplateCache.html">
-    <meta name="description" content="Request scoped cache description">
+    <title>Component processing error :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/errorHandling/componentProcessingError.html">
+    <link rel="prev" href="handlingErrors.html">
+    <link rel="next" href="missingComponent.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -17,7 +16,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -33,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -86,13 +85,13 @@
     <span class="nav-text">Error handling</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../errorHandling/handlingErrors.html">Handling errors</a>
+    <a class="nav-link" href="handlingErrors.html">Handling errors</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="componentProcessingError.html">Component processing error</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../errorHandling/componentProcessingError.html">Component processing error</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../errorHandling/missingComponent.html">Missing component</a>
+    <a class="nav-link" href="missingComponent.html">Missing component</a>
   </li>
 </ul>
   </li>
@@ -100,11 +99,11 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Cache</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="requestScopedCache.html">Request scoped cache</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cache/requestScopedCache.html">Request scoped cache</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="parsedTemplateCache.html">Parsed template cache</a>
+    <a class="nav-link" href="../cache/parsedTemplateCache.html">Parsed template cache</a>
   </li>
 </ul>
   </li>
@@ -142,7 +141,13 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/disableDataPropsDecoding.html">Disable data-props decoding</a>
+  </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -152,14 +157,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -175,53 +180,113 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>Cache</li>
-    <li><a href="requestScopedCache.html">Request scoped cache</a></li>
+    <li>Error handling</li>
+    <li><a href="componentProcessingError.html">Component processing error</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/cache/requestScopedCache.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/errorHandling/componentProcessingError.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Request scoped cache</h1>
+<h1 class="page">Component processing error</h1>
 <div class="sect1">
 <h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If there are multiple components using the same data on a single page you might want to cache this data in the scope of the current request.
-This mechanism proves especially useful for data retrieved over the network from an external server.</p>
+<p>Execution of the component rendering method can result in an error represented by an Exception.</p>
 </div>
 <div class="paragraph">
-<p>To cache method invocation result just annotate that method with <code>@RequestCache</code>. For caching to work this method must return either Mono or Flux.</p>
+<p>To handle such cases a common error handler is provided which logs the component name, props and the exception stack.
+Instead of fully stopping the rendering process it behaves as if the faulty component never existed on the page.</p>
 </div>
 <div class="paragraph">
-<p>Returned value is cached based on method parameters so be sure to pass objects properly implementing <code>equals()</code> and <code>hashcode()</code>.</p>
+<p>It can be customized by providing a list of throwable subtypes which should not be handled but rather propagated downstream.</p>
+</div>
+<div class="listingblock">
+<div class="title">SpringConfiguration.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+ComponentErrorHandler handler() {
+  return ComponentErrorHandlers.logAllExcept(RuntimeExceptionSubtypeA.class, RuntimeExceptionSubtypeB.class);
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_other_caching_layers"><a class="anchor" href="#_other_caching_layers"></a>Other caching layers</h2>
+<h2 id="_customized_handler"><a class="anchor" href="#_customized_handler"></a>Customized handler</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Using request scoped cache does not interfere with other caching mechanism. If a cache layer spanning multiple requests is needed then you can
-introduce any available caching solution into your project. Markuply won&#8217;t complain.</p>
+<p>If the default behaviour is not enough developers can provide their own implementation.
+To do so just register implementation of the <code>ComponentErrorHandler</code> type as a Spring bean.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_limitations"><a class="anchor" href="#_limitations"></a>Limitations</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p><code>@RequestCache</code> annotation must be placed on a method returning either <code>Mono&lt;&gt;</code> or <code>Flux&lt;&gt;</code>.</p>
+<p>Here&#8217;s an implementation handling all exceptions by logging them and providing an empty string as a fallback value.</p>
+</div>
+<div class="listingblock">
+<div class="title">CatchAllAndLogErrorHandler.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Slf4j
+public class CatchAllAndLogErrorHandler implements ComponentErrorHandler {
+
+  @Override
+  public Mono&lt;String&gt; handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    log.error("Error occurred during component rendering. Component: {}, props: {}", componentId, props, throwable);
+    return Mono.just("");
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The handler can either provide a fallback value or can pass the error along.</p>
+</div>
+<div class="listingblock">
+<div class="title">PropagateError.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class PropagageError implements ComponentErrorHandler {
+
+  @Override
+  public Mono&lt;String&gt; handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    return Mono.error(throwable);
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In some cases it might be useful to handle only a certain class of exceptions on this level.
+To do so use <code>instanceof</code> checks in the handleError method body.</p>
+</div>
+<div class="listingblock">
+<div class="title">HandleErrorSubtype.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class HandleErrorSubtype implements ComponentErrorHandler {
+
+  @Override
+  public Mono&lt;String&gt; handleError(Throwable throwable, String componentId, String props,
+      PageContext context) {
+    if (throwable instanceof CustomExceptionType) {
+      // handle it
+      return Mono.just("fallback value");
+    } else {
+      return Mono.error(throwable);
+    }
+  }
+
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../errorHandling/missingComponent.html">Missing component</a></span>
-  <span class="next"><a href="parsedTemplateCache.html">Parsed template cache</a></span>
+  <span class="prev"><a href="handlingErrors.html">Handling errors</a></span>
+  <span class="next"><a href="missingComponent.html">Missing component</a></span>
 </nav>
 </article>
   </div>
@@ -230,7 +295,7 @@ introduce any available caching solution into your project. Markuply won&#8217;t
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/cache/requestScopedCache.html'
+  window.antora.pagePath = '/markuply/0.10.0/errorHandling/componentProcessingError.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

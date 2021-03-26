@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Handle 404 from external data source :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/howto/handleDataNotFound.html">
-    <link rel="prev" href="../tutorials/httpTutorial.html">
-    <link rel="next" href="accessLog.html">
+    <title>Page context :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/components/pageContext.html">
+    <link rel="prev" href="componentRegistration.html">
+    <link rel="next" href="componentInnerContent.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
 <link rel="stylesheet" href="../../../_/css/search.css">
@@ -16,7 +16,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -32,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -55,16 +55,16 @@
     <span class="nav-text">Components</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../components/componentRegistration.html">Component registration</a>
+    <a class="nav-link" href="componentRegistration.html">Component registration</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="pageContext.html">Page context</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../components/pageContext.html">Page context</a>
+    <a class="nav-link" href="componentInnerContent.html">Component inner content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../components/componentInnerContent.html">Component inner content</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../components/nestedComponents.html">Nested components</a>
+    <a class="nav-link" href="nestedComponents.html">Nested components</a>
   </li>
 </ul>
   </li>
@@ -123,25 +123,31 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">How to</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="handleDataNotFound.html">Handle 404 from external data source</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/handleDataNotFound.html">Handle 404 from external data source</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="accessLog.html">Maintain access log</a>
+    <a class="nav-link" href="../howto/accessLog.html">Maintain access log</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="transformAllPages.html">Process all pages</a>
+    <a class="nav-link" href="../howto/transformAllPages.html">Process all pages</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
+    <a class="nav-link" href="../howto/defineMultipleHttpPipelines.html">Defining multiple HTTP pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="processInnerContentAsTemplate.html">Process inner content as a component template</a>
+    <a class="nav-link" href="../howto/processInnerContentAsTemplate.html">Process inner content as a component template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="developWithJavascript.html">Integrate with Javascript</a>
+    <a class="nav-link" href="../howto/developWithJavascript.html">Integrate with Javascript</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../howto/disableDataPropsDecoding.html">Disable data-props decoding</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -151,14 +157,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">0.9.0</a>
+          <a href="../index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -174,99 +180,119 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Markuply</a></li>
-    <li>How to</li>
-    <li><a href="handleDataNotFound.html">Handle 404 from external data source</a></li>
+    <li>Components</li>
+    <li><a href="pageContext.html">Page context</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/howto/handleDataNotFound.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/components/pageContext.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Handle 404 from external data source</h1>
+<h1 class="page">Page context</h1>
 <div class="sect1">
-<h2 id="_problem"><a class="anchor" href="#_problem"></a>Problem</h2>
+<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You want to serve under <code>/books/{isbn}</code> a dynamically generated page for every book retrieved from an external API .</p>
-</div>
-<div class="paragraph">
-<p>When sending GET requests to external API to retrieve book details for some ISBNs the API returns 404 Not Found status.</p>
-</div>
-<div class="paragraph">
-<p>How to make Spring return 404 as well?</p>
+<p>Think of page context as a place to expose to components information about path parameters, query parameters, header values and any other information related to a particular page components on that page would like to consume.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_solution"><a class="anchor" href="#_solution"></a>Solution</h2>
+<h2 id="_controller"><a class="anchor" href="#_controller"></a>Controller</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To handle special cases in an uniform way Spring <code>@ResponseStatus</code> can be applied to a custom exception class.</p>
+<p>First let&#8217;s define a new controller method handling the <code>/hello/{name}</code> URL. There we will extract the path parameter and pass it to page context keyed under <code>String.class</code>.
+This is the simplest example. Normally you would use your custom data class instead of <code>String</code>.</p>
 </div>
 <div class="listingblock">
-<div class="title">BookNotFoundException.java</div>
+<div class="title">TemplatingController.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ResponseStatus(value=HttpStatus.NOT_FOUND)
-public class BookNotFoundException extends RuntimeException {
-  // ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>When controller encounters such exception Spring will set the response type according to the value defined in the annotation.</p>
-</div>
-<div class="paragraph">
-<p>Exceptions should be thrown right away so the best place to so is the service class responsible for invoking the external API.</p>
-</div>
-<div class="listingblock">
-<div class="title">BookApiClient.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ResponseStatus(value=HttpStatus.NOT_FOUND)
-@Component
-public class BookApiClient {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+public class TemplatingController {
 
-  private final WebClient webClient = WebClient.builder().build();
+  private final HttpPipeline pageProcessor;
 
-  public Mono&lt;Book&gt; getBook(String isbn) {
-    webClient.get()
-      .uri("https://book.api/books/" + isbn)
-      .retrieve()
-      .onStatus(status -&gt; status.equals(HttpStatus.NOT_FOUND),
-          response -&gt; Mono.error(new BookNotFoundException()))
-      .bodyToMono(Book.class);
+  @Inject
+  public TemplatingController(HttpPipeline pageProcessor) {
+    this.pageProcessor = pageProcessor;
+  }
+
+  @GetMapping("/hello/{name}")
+  public Mono&lt;String&gt; helloWorldPage(@PathVariable String name) {
+    // manually create the context
+    PageContext context = PageContext.of(name);
+    // explicitly indicate which HTML resource should be used
+    return pageProcessor.render("/helloWorld.html", context);
   }
 
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>If <code>getBook()</code> method is invoked outside Markuply context (in controller) then <code>BookNotFoundException</code> will reach Spring
-exception handling mechanism.</p>
 </div>
-<div class="paragraph">
-<p>However if that same method is invoked within Markuply component then it will be swallowed by the default <code>ComponentErrorHandler</code>.</p>
 </div>
+<div class="sect1">
+<h2 id="_component_definition"><a class="anchor" href="#_component_definition"></a>Component definition</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>To mitigate that we have to customize the error handler by providing it with exception types which should be passed downstream
-as they should affect the generation of the whole page rather than just a fragment.</p>
+<p>Now we have to implement the Hello component.</p>
 </div>
 <div class="listingblock">
-<div class="title">SpringConfiguration.java</div>
+<div class="title">HelloComponent.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-ComponentErrorHandler handler() {
-  return ComponentErrorHandlers.logAllExcept(BookNotFoundException.class);
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
+public class HelloComponent {
+
+  @Markuply("hello")
+  public Mono&lt;String&gt; renderHelloComponent(PageContext context) {
+    String nameFromContext = context.get(String.class);
+    String name = nameFromContext.isEmpty()
+        ? "World"
+        : nameFromContext;
+    return Mono.just(String.format("&lt;div&gt;Hello %s!&lt;/div&gt;", name));
+  }
+
 }</code></pre>
 </div>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_component_usage"><a class="anchor" href="#_component_usage"></a>Component usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>helloWorld.html</code> looks really similar to other examples. The only difference is that <code>data-props</code> attribute is not needed.</p>
+</div>
+<div class="listingblock">
+<div class="title">helloWorld.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div data-markuply-component="hello"&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing"><a class="anchor" href="#_testing"></a>Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Start the server with <code>./gradlew :bootRun</code> and open the <code><a href="http://localhost:8080/hello/Leela" class="bare">http://localhost:8080/hello/Leela</a></code> page to see <code>Hello Leela!</code> printed out. Change the last part of URL to pass any other name.</p>
+</div>
+</div>
+</div>
 <nav class="pagination">
-  <span class="prev"><a href="../tutorials/httpTutorial.html">HTTP pipeline tutorial</a></span>
-  <span class="next"><a href="accessLog.html">Maintain access log</a></span>
+  <span class="prev"><a href="componentRegistration.html">Component registration</a></span>
+  <span class="next"><a href="componentInnerContent.html">Component inner content</a></span>
 </nav>
 </article>
   </div>
@@ -275,7 +301,7 @@ ComponentErrorHandler handler() {
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../../..'
-  window.antora.pagePath = '/markuply/0.9.0/howto/handleDataNotFound.html'
+  window.antora.pagePath = '/markuply/0.10.0/components/pageContext.html'
 </script>
 <script src="../../../_/js/site.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>

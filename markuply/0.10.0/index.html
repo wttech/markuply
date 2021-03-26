@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Architecture :: Markuply reference</title>
-    <link rel="canonical" href="https://io.github.com/wttech/markuply/markuply/0.9.0/architecture.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="projectSetup.html">
+    <title>What&#8217;s Markuply? :: Markuply reference</title>
+    <link rel="canonical" href="https://wttech.github.io/markuply/markuply/0.10.0/index.html">
+    <link rel="next" href="architecture.html">
+    <meta name="description" content="Markuply documentation">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="stylesheet" href="../../_/css/search.css">
@@ -16,7 +16,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://io.github.com/wttech/markuply">Markuply reference</a>
+      <a class="navbar-item" href="https://wttech.github.io/markuply">Markuply reference</a>
         <div class="navbar-item">
           <input id="search-input" type="text" placeholder="Search docs">
         </div>
@@ -32,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="markuply" data-version="0.9.0">
+<div class="nav-container" data-component="markuply" data-version="0.10.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -41,10 +41,10 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="index.html">What&#8217;s Markuply?</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -141,7 +141,13 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="howto/developWithJavascript.html">Integrate with Javascript</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="howto/disableDataPropsDecoding.html">Disable data-props decoding</a>
+  </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.io/doc/io.wttech.markuply/markuply/0.10.0">Javadoc</a>
   </li>
 </ul>
   </li>
@@ -151,14 +157,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Markuply</span>
-    <span class="version">0.9.0</span>
+    <span class="version">0.10.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="index.html">Markuply</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="index.html">0.9.0</a>
+          <a href="index.html">0.10.0</a>
         </li>
       </ul>
     </li>
@@ -170,102 +176,63 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link"></a>
+  <a href="index.html" class="home-link is-current"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Markuply</a></li>
-    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="index.html">What&#8217;s Markuply?</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/architecture.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/markuply/edit/main/engine/src/docs/antora/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Architecture</h1>
-<div id="preamble">
-<div class="sectionbody">
+<h1 class="page">What&#8217;s Markuply?</h1>
 <div class="paragraph">
-<p>Markuply is a platform for enriching static HTML template with dynamic parts using a template engine of your choosing. It&#8217;s designed as a library so you have full control where and how it is used in your app.</p>
+<p>Markuply is a Spring Boot library used to fill static HTML templates with dynamic data from external data sources.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_integration"><a class="anchor" href="#_integration"></a>Integration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In order to make use of Markuply every project has to complete the following steps:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Configure the template processing pipeline.</p>
-</li>
-<li>
-<p>Expose the pipeline through a controller method or a <code>RouterFunction</code>.</p>
-</li>
-<li>
-<p>Create original HTML with component placeholders to be retrieved by the pipeline.</p>
-</li>
-<li>
-<p>Register component logic.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_request_flow"><a class="anchor" href="#_request_flow"></a>Request flow</h2>
-<div class="sectionbody">
 <div class="imageblock">
 <div class="content">
 <img src="_images/architecture.svg" alt="Markuply architecture">
 </div>
 </div>
 <div class="paragraph">
-<p>Standard flow consists of the following steps:</p>
+<p>Features:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>External client (browser) sends an HTTP request to a server hosting Spring application.</p>
+<p>Fully reactive</p>
 </li>
 <li>
-<p>Request is intercepted by one of handlers registered within Spring. It can be a controller method or a RouterFunction bean.</p>
+<p>Nested components</p>
 </li>
 <li>
-<p>(optional) Page context data is retrieved.</p>
+<p>Propagating headers both ways</p>
 </li>
 <li>
-<p>Markuply pipeline is invoked with page path and page context data.</p>
-</li>
-<li>
-<p>Original HTML template is retrieved using the configured page repository.</p>
-</li>
-<li>
-<p>HTML template is parsed.</p>
-</li>
-<li>
-<p>For each component placeholder found in the HTML Markuply tries to find the corresponding component definition and execute it to produce the dynamic HTML part.</p>
-</li>
-<li>
-<p>Placeholders are substituted with generated HTML.</p>
-</li>
-<li>
-<p>Fully processed HTML is returned by the Markuply pipeline.</p>
-</li>
-<li>
-<p>Request handler sends the generated HTML as response body.</p>
+<p>Templating engine independent</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>When combined with Graal templating:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Javascript Server Side Rendering support on GraalVM</p>
+</li>
+<li>
+<p>Rapid development with webpack dev server</p>
+</li>
+</ul>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">What&#8217;s Markuply?</a></span>
-  <span class="next"><a href="projectSetup.html">Project setup</a></span>
+  <span class="next"><a href="architecture.html">Architecture</a></span>
 </nav>
 </article>
   </div>
@@ -274,7 +241,7 @@
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../..'
-  window.antora.pagePath = '/markuply/0.9.0/architecture.html'
+  window.antora.pagePath = '/markuply/0.10.0/index.html'
 </script>
 <script src="../../_/js/site.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
