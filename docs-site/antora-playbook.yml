@@ -1,6 +1,6 @@
 site:
   title: Markuply reference
-  url: https://io.github.com/wttech/markuply
+  url: https://wttech.github.io/markuply
   start_page: markuply::index.adoc
 content:
   sources:
