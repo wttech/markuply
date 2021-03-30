@@ -22,9 +22,9 @@ public class LambdaSpreaderFactory<T> {
   private final Class<T> functionType;
   private final Function<T, ParameterSpreader> spreaderCreator;
 
-  public ParameterSpreader<Mono<String>> buildRenderSpreader(Object instance, Method method) {
-    if (!method.getReturnType().equals(Mono.class)) {
-      throw new IllegalArgumentException("Method to augment must return Mono<String>");
+  public <R> ParameterSpreader<R> buildRenderSpreader(Object instance, Method method) {
+    if (!method.getReturnType().equals(Mono.class) && !method.getReturnType().equals(String.class)) {
+      throw new IllegalArgumentException("Method to augment must return either Mono<String> or String");
     }
     try {
       Class<?>[] parameterTypes = method.getParameterTypes();

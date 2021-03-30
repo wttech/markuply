@@ -1,10 +1,15 @@
 package io.wttech.markuply.engine.component.method;
 
 import io.wttech.markuply.engine.component.ComponentDefinitionException;
+import io.wttech.markuply.engine.component.MarkuplyComponent;
 import io.wttech.markuply.engine.component.method.function.TriFunction;
 import io.wttech.markuply.engine.component.method.function.UnifiedSupplier;
+import io.wttech.markuply.engine.component.method.invoker.LambdaInvoker;
+import io.wttech.markuply.engine.component.method.invoker.MethodInvoker;
+import io.wttech.markuply.engine.component.method.invoker.ReflectiveInvoker;
 import io.wttech.markuply.engine.component.method.resolver.MethodArgumentResolver;
 import io.wttech.markuply.engine.component.method.resolver.MethodArgumentResolverFactory;
+import io.wttech.markuply.engine.component.method.result.ResultConverter;
 import io.wttech.markuply.engine.component.method.spreader.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -35,25 +40,48 @@ public class LambdaComponentFactory {
 
   private final List<MethodArgumentResolverFactory> resolverFactories;
 
-  public MethodComponent build(Object instance, Method method) {
-    if (method.getParameterCount() > 3) {
-      throw new ComponentDefinitionException(
-          "Method to augment cannot contain more than three arguments");
-    }
+  public MarkuplyComponent build(Object instance, Method method) {
+    checkArguments(method);
+    checkReturnType(method);
     LambdaSpreaderFactory<?> lambdaSpreaderFactory = SPREADER_FACTORIES
         .get(method.getParameterCount());
-    ParameterSpreader<Mono<String>> parameterSpreader = lambdaSpreaderFactory.buildRenderSpreader(instance, method);
     List<MethodArgumentResolver> resolvers = buildResolvers(method);
-    return MethodComponent.of(parameterSpreader, resolvers);
+    if (method.getReturnType().equals(Mono.class)) {
+      ParameterSpreader<Mono<String>> parameterSpreader = lambdaSpreaderFactory.buildRenderSpreader(instance, method);
+      MethodInvoker<Mono<String>> invoker = LambdaInvoker.of(parameterSpreader);
+      return MethodComponent.of(invoker, resolvers, ResultConverter.IDENTITY);
+    } else {
+      ParameterSpreader<String> parameterSpreader = lambdaSpreaderFactory.buildRenderSpreader(instance, method);
+      MethodInvoker<String> invoker = LambdaInvoker.of(parameterSpreader);
+      return MethodComponent.of(invoker, resolvers, Mono::just);
+    }
   }
 
-  public ReflectiveMethodComponent buildReflective(Object instance, Method method) {
+  public MarkuplyComponent buildReflective(Object instance, Method method) {
+    checkArguments(method);
+    checkReturnType(method);
+    List<MethodArgumentResolver> resolvers = buildResolvers(method);
+    if (method.getReturnType().equals(Mono.class)) {
+      MethodInvoker<Mono<String>> invoker = ReflectiveInvoker.of(instance, method);
+      return MethodComponent.of(invoker, resolvers, ResultConverter.IDENTITY);
+    } else {
+      MethodInvoker<String> invoker = ReflectiveInvoker.of(instance, method);
+      return MethodComponent.of(invoker, resolvers, Mono::just);
+    }
+  }
+
+  private void checkArguments(Method method) {
     if (method.getParameterCount() > 3) {
       throw new ComponentDefinitionException(
           "Method to augment cannot contain more than three arguments");
     }
-    List<MethodArgumentResolver> resolvers = buildResolvers(method);
-    return ReflectiveMethodComponent.of(instance, method, resolvers);
+  }
+
+  private void checkReturnType(Method method) {
+    if (!method.getReturnType().equals(Mono.class) && !method.getReturnType().equals(String.class)) {
+      throw new ComponentDefinitionException(
+          "Method to augment must return either Mono<String> or String");
+    }
   }
 
   private List<MethodArgumentResolver> buildResolvers(Method method) {

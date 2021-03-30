@@ -12,7 +12,23 @@ Then define a method that will handle a particular Markuply component.
 To provide custom component ID use `@Markuply("componentId")` annotation on that method.
 If it is not provided then the method name will be used instead.
 
+Markuply component method must return either `Mono<String>` or `String`. No other return types are supported at this moment.
+
 .HelloWorldComponent.java
+[source,java]
+----
+@Component
+public class HelloWorldComponent {
+
+  @Markuply("componentId")
+  public String render(@Props String props, PageContext context) {
+    // details omitted
+  }
+
+}
+----
+
+.ReactiveHelloWorldComponent.java
 [source,java]
 ----
 @Component

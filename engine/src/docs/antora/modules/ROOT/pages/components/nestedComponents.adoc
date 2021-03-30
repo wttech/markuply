@@ -22,8 +22,8 @@ public class MarkuplyComponents {
   }
 
   @Markuply("hello")
-  public Mono<String> wrapper() {
-    return Mono.just("Hello World!");
+  public String hello() {
+    return "Hello World!";
   }
 
 }

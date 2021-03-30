@@ -1,6 +1,7 @@
 package io.wttech.markuply.engine.component.method;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.wttech.markuply.engine.component.MarkuplyComponent;
 import io.wttech.markuply.engine.component.MarkuplyComponentContext;
 import io.wttech.markuply.engine.component.method.resolver.MethodArgumentResolverFactory;
 import io.wttech.markuply.engine.component.method.resolver.context.PageContextResolverFactory;
@@ -34,7 +35,7 @@ public class SpringComponentTest {
 
   @Test
   void rawProps() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("rawProps", String.class);
+    MarkuplyComponent methodComponent = getTestMethod("rawProps", String.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of("Hello World", PageContext.empty(), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>Hello World</div>").verifyComplete();
@@ -42,7 +43,7 @@ public class SpringComponentTest {
 
   @Test
   void typedProps() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("typedProps", SimpleProps.class);
+    MarkuplyComponent methodComponent = getTestMethod("typedProps", SimpleProps.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of(SIMPLE_PROPS_JSON, PageContext.empty(), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>World</div>").verifyComplete();
@@ -50,7 +51,7 @@ public class SpringComponentTest {
 
   @Test
   void rawContext() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("rawContext", PageContext.class);
+    MarkuplyComponent methodComponent = getTestMethod("rawContext", PageContext.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of("Hello World", PageContext.empty(), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>true</div>").verifyComplete();
@@ -58,7 +59,7 @@ public class SpringComponentTest {
 
   @Test
   void typedContext() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("typedContext", String.class);
+    MarkuplyComponent methodComponent = getTestMethod("typedContext", String.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of("", PageContext.of("Hello World"), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>Hello World</div>").verifyComplete();
@@ -66,7 +67,7 @@ public class SpringComponentTest {
 
   @Test
   void fullSet() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("fullSet", SimpleProps.class, Integer.class);
+    MarkuplyComponent methodComponent = getTestMethod("fullSet", SimpleProps.class, Integer.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of(SIMPLE_PROPS_JSON, PageContext.of(Integer.class, 5), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>true</div>").verifyComplete();
@@ -74,13 +75,13 @@ public class SpringComponentTest {
 
   @Test
   void fullSetReordered() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("fullSetReordered", SimpleProps.class, ChildrenRenderer.class);
+    MarkuplyComponent methodComponent = getTestMethod("fullSetReordered", SimpleProps.class, ChildrenRenderer.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of(SIMPLE_PROPS_JSON, PageContext.of(Integer.class, 5), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>true</div>").verifyComplete();
   }
 
-  private MethodComponent getTestMethod(String name, Class<?>... argumentTypes)
+  private MarkuplyComponent getTestMethod(String name, Class<?>... argumentTypes)
       throws NoSuchMethodException {
     List<MethodArgumentResolverFactory> resolverFactories = createResolverFactories();
     LambdaComponentFactory factory = new LambdaComponentFactory(resolverFactories);

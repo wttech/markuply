@@ -14,6 +14,14 @@ public class TestHandler {
     return Mono.just("<div>" + props + "</div>");
   }
 
+  public String nonReactiveRawProps(@Props String props) {
+    return "<div>" + props + "</div>";
+  }
+
+  public int incorrectReturnType(@Props String props) {
+    return 2;
+  }
+
   public Mono<String> typedProps(@Props SimpleProps props) {
     return Mono.just("<div>" + props.getName() + "</div>");
   }

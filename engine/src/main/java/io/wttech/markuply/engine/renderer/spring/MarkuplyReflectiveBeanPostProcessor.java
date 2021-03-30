@@ -1,8 +1,8 @@
 package io.wttech.markuply.engine.renderer.spring;
 
 import io.wttech.markuply.engine.component.Markuply;
+import io.wttech.markuply.engine.component.MarkuplyComponent;
 import io.wttech.markuply.engine.component.method.LambdaComponentFactory;
-import io.wttech.markuply.engine.component.method.ReflectiveMethodComponent;
 import io.wttech.markuply.engine.renderer.registry.ComponentRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
@@ -26,7 +26,7 @@ public class MarkuplyReflectiveBeanPostProcessor implements BeanPostProcessor {
       if (method.isAnnotationPresent(Markuply.class)) {
         Markuply markuplyAnnotation = method.getAnnotation(Markuply.class);
         String componentName = markuplyAnnotation.value().isEmpty() ? method.getName() : markuplyAnnotation.value();
-        ReflectiveMethodComponent component = methodComponentFactory.buildReflective(bean, method);
+        MarkuplyComponent component = methodComponentFactory.buildReflective(bean, method);
         registry.register(componentName, component);
       }
     }

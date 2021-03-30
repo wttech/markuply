@@ -44,12 +44,12 @@ Now we have to implement the Hello component.
 public class HelloComponent {
 
   @Markuply("hello")
-  public Mono<String> renderHelloComponent(PageContext context) {
+  public String renderHelloComponent(PageContext context) {
     String nameFromContext = context.get(String.class);
     String name = nameFromContext.isEmpty()
         ? "World"
         : nameFromContext;
-    return Mono.just(String.format("<div>Hello %s!</div>", name));
+    return String.format("<div>Hello %s!</div>", name);
   }
 
 }

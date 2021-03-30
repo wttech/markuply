@@ -1,6 +1,8 @@
 package io.wttech.markuply.engine.component.method;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.wttech.markuply.engine.component.ComponentDefinitionException;
+import io.wttech.markuply.engine.component.MarkuplyComponent;
 import io.wttech.markuply.engine.component.MarkuplyComponentContext;
 import io.wttech.markuply.engine.component.method.resolver.MethodArgumentResolverFactory;
 import io.wttech.markuply.engine.component.method.resolver.context.PageContextResolverFactory;
@@ -19,21 +21,38 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class LambdaComponentFactoryTest {
 
   private static final String SIMPLE_PROPS_JSON = "{\"name\": \"World\"}";
 
   @Test
   void rawProps() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("rawProps", String.class);
+    MarkuplyComponent methodComponent = getTestMethod("rawProps", String.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of("Hello World", PageContext.empty(), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>Hello World</div>").verifyComplete();
   }
 
   @Test
+  void nonReactiveRawProps() throws NoSuchMethodException {
+    MarkuplyComponent methodComponent = getTestMethod("nonReactiveRawProps", String.class);
+    Mono<String> result = methodComponent
+        .render(MarkuplyComponentContext.of("Hello World", PageContext.empty(), NamedRenderFunctions.NO_OP));
+    StepVerifier.create(result).expectNext("<div>Hello World</div>").verifyComplete();
+  }
+
+  @Test
+  void incorrectReturnType() {
+    assertThrows(ComponentDefinitionException.class, () -> {
+      getTestMethod("incorrectReturnType", String.class);
+    });
+  }
+
+  @Test
   void typedProps() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("typedProps", SimpleProps.class);
+    MarkuplyComponent methodComponent = getTestMethod("typedProps", SimpleProps.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of(SIMPLE_PROPS_JSON, PageContext.empty(), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>World</div>").verifyComplete();
@@ -41,7 +60,7 @@ public class LambdaComponentFactoryTest {
 
   @Test
   void rawContext() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("rawContext", PageContext.class);
+    MarkuplyComponent methodComponent = getTestMethod("rawContext", PageContext.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of("Hello World", PageContext.empty(), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>true</div>").verifyComplete();
@@ -49,7 +68,7 @@ public class LambdaComponentFactoryTest {
 
   @Test
   void typedContext() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("typedContext", String.class);
+    MarkuplyComponent methodComponent = getTestMethod("typedContext", String.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of("", PageContext.of("Hello World"), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>Hello World</div>").verifyComplete();
@@ -57,7 +76,7 @@ public class LambdaComponentFactoryTest {
 
   @Test
   void childrenRenderer() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("childrenRenderer", ChildrenRenderer.class);
+    MarkuplyComponent methodComponent = getTestMethod("childrenRenderer", ChildrenRenderer.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of("", PageContext.empty(), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>true</div>").verifyComplete();
@@ -65,7 +84,7 @@ public class LambdaComponentFactoryTest {
 
   @Test
   void fullSet() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("fullSet", SimpleProps.class, Integer.class);
+    MarkuplyComponent methodComponent = getTestMethod("fullSet", SimpleProps.class, Integer.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of(SIMPLE_PROPS_JSON, PageContext.of(Integer.class, 5), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>true</div>").verifyComplete();
@@ -73,13 +92,13 @@ public class LambdaComponentFactoryTest {
 
   @Test
   void fullSetReordered() throws NoSuchMethodException {
-    MethodComponent methodComponent = getTestMethod("fullSetReordered", SimpleProps.class, ChildrenRenderer.class);
+    MarkuplyComponent methodComponent = getTestMethod("fullSetReordered", SimpleProps.class, ChildrenRenderer.class);
     Mono<String> result = methodComponent
         .render(MarkuplyComponentContext.of(SIMPLE_PROPS_JSON, PageContext.of(Integer.class, 5), NamedRenderFunctions.NO_OP));
     StepVerifier.create(result).expectNext("<div>true</div>").verifyComplete();
   }
 
-  private MethodComponent getTestMethod(String name, Class<?>... argumentTypes)
+  private MarkuplyComponent getTestMethod(String name, Class<?>... argumentTypes)
       throws NoSuchMethodException {
     List<MethodArgumentResolverFactory> resolverFactories = createResolverFactories();
     LambdaComponentFactory factory = new LambdaComponentFactory(resolverFactories);

@@ -47,7 +47,7 @@ The handler can either provide a fallback value or can pass the error along.
 .PropagateError.java
 [source,java]
 ----
-public class PropagageError implements ComponentErrorHandler {
+public class PropagateError implements ComponentErrorHandler {
 
   @Override
   public Mono<String> handleError(Throwable throwable, String componentId, String props,
